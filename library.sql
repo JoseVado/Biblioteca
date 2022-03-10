@@ -12,16 +12,21 @@ USE library;
 -- nombre del libro, código isbn, categorías, fecha de ingreso, el autor, una descripción del libro y cantidad
 
 CREATE TABLE `libros` (
-  `id` 					INT(11) PRIMARY KEY NOT NULL AUTO_INCREMENT,
-  `isbn` 				INT(255) NOT NULL,
+  `id` 					INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
+  `isbn` 				VARCHAR(13) NOT NULL,
   `nombre` 				VARCHAR(255) NOT NULL,
   `autor` 				VARCHAR(255) NOT NULL,
-  `fecha de ingreso`	VARCHAR(255) NOT NULL,
   `categorias` 		VARCHAR(255) NOT NULL,
-  `cantidad` 			VARCHAR(255) NOT NULL,
-  `disponible`  		INT(11) NOT NULL,
-  `descripcion` 		VARCHAR(255) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  `cantidad` 			INT NOT NULL,
+  `disponible`  		INT NOT NULL,
+  `descripcion` 		VARCHAR(255) NOT NULL,
+  `fecha_de_ingreso`	DATE NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=UTF8;
+
+INSERT INTO `libros` (`isbn`,`nombre`,`autor`,`categorias`,`cantidad`,`disponible`,`descripcion`,`fecha_de_ingreso`) VALUES
+	('2313','LIBRO','DON PRUEBAS', 'NINGUNA', 2, 2, 'DESCRIPCION PRUEBA', '2022/03/09'),
+	('2313','LIBRO','DON PRUEBAS', 'NINGUNA', 2, 2, 'DESCRIPCION PRUEBA', '2022/03/09')
+	;
 
 -- --------------------------------------------------------
 
@@ -30,11 +35,11 @@ CREATE TABLE `libros` (
 --
 
 CREATE TABLE `prestamos` (
-  `id` 				INT(11) NOT NULL PRIMARY KEY NOT NULL AUTO_INCREMENT,
-  `user_id` 		INT(11) NOT NULL,
-  `book_id` 		INT(11) NOT NULL,
-  `date_out` 		VARCHAR(255) NOT NULL,
-  `date_return` 	VARCHAR(255) NOT NULL
+  `id` 				INT NOT NULL PRIMARY KEY NOT NULL AUTO_INCREMENT,
+  `usuario` 		INT NOT NULL,
+  `libro` 			INT NOT NULL,
+  `date_out` 		DATE NOT NULL,
+  `date_return` 	DATE NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
@@ -45,13 +50,13 @@ CREATE TABLE `prestamos` (
 -- Nombre completo, fecha de nacimiento, dirección, CURP, telefono, correo electronico 
 
 CREATE TABLE `usuarios` (
-  `id` 						INT(11) NOT NULL PRIMARY KEY NOT NULL AUTO_INCREMENT,
+  `id` 						INT NOT NULL PRIMARY KEY NOT NULL AUTO_INCREMENT,
   `curp` 					VARCHAR(18) NOT NULL,
   `nombre_completo` 		VARCHAR(100) NOT NULL,
   `domicilio` 				VARCHAR(250) NOT NULL,
   `tel` 						VARCHAR(25) NOT NULL,
   `correo_electronico` 	VARCHAR(250) NOT NULL,
-  `sanciones` 				INT(11) DEFAULT '0'
+  `sanciones` 				INT DEFAULT '0'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
@@ -62,7 +67,7 @@ CREATE TABLE `usuarios` (
 -- CURP, nombre completo, fecha de nacimiento y fecha de ingreso
 
 CREATE TABLE `empleados` (
-  `id` 						INT(11) NOT NULL PRIMARY KEY NOT NULL AUTO_INCREMENT,
+  `id` 						INT NOT NULL PRIMARY KEY NOT NULL AUTO_INCREMENT,
   `curp` 					VARCHAR(18) NOT NULL,
   `nombre_completo` 		VARCHAR(100) NOT NULL,
   `fecha_nacimiento` 	DATE NOT NULL,
@@ -77,7 +82,7 @@ CREATE TABLE `empleados` (
 -- dias, precio, cliente, fecha_inicio, fecha_pago
 
 CREATE TABLE `multas` (
-  `id` 							INT(11) NOT NULL PRIMARY KEY NOT NULL AUTO_INCREMENT,
+  `id` 							INT NOT NULL PRIMARY KEY NOT NULL AUTO_INCREMENT,
   `cliente` 					VARCHAR(250) NOT NULL,
   `fecha_final` 				DATE NOT NULL,
   `fecha_pago` 				DATE DEFAULT NULL
