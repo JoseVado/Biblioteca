@@ -1,58 +1,87 @@
 --
 -- Base de datos: `library`
 --
-DROP DATABASE IF EXISTS library
-create database library;
-use library;
+DROP DATABASE IF EXISTS library;
+CREATE DATABASE library;
+USE library;
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `books`
---
+-- Estructura de tabla para la tabla `libros`
+-- 
+-- nombre del libro, código isbn, categorías, fecha de ingreso, el autor, una descripción del libro y cantidad
 
-CREATE TABLE `books` (
-  `id` int(11) PRIMARY KEY NOT NULL AUTO_INCREMENT,
-  `title` varchar(255) NOT NULL,
-  `date` varchar(255) NOT NULL,
-  `author` varchar(255) NOT NULL,
-  `category` varchar(255) NOT NULL,
-  `edit` varchar(255) NOT NULL,
-  `lang` varchar(255) NOT NULL,
-  `pages` varchar(255) NOT NULL,
-  `description` varchar(255) NOT NULL,
-  `ejemplares` varchar(255) NOT NULL,
-  `stock` int(11) NOT NULL,
-  `available` int(11) NOT NULL
+CREATE TABLE `libros` (
+  `id` 					INT(11) PRIMARY KEY NOT NULL AUTO_INCREMENT,
+  `isbn` 				INT(255) NOT NULL,
+  `nombre` 				VARCHAR(255) NOT NULL,
+  `autor` 				VARCHAR(255) NOT NULL,
+  `fecha de ingreso`	VARCHAR(255) NOT NULL,
+  `categorias` 		VARCHAR(255) NOT NULL,
+  `cantidad` 			VARCHAR(255) NOT NULL,
+  `disponible`  		INT(11) NOT NULL,
+  `descripcion` 		VARCHAR(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `lendings`
+-- Estructura de tabla para la tabla `prestamos`
 --
 
-CREATE TABLE `lendings` (
-  `id` int(11) NOT NULL PRIMARY KEY NOT NULL AUTO_INCREMENT,
-  `user_id` int(11) NOT NULL,
-  `book_id` int(11) NOT NULL,
-  `date_out` varchar(255) NOT NULL,
-  `date_return` varchar(255) NOT NULL
+CREATE TABLE `prestamos` (
+  `id` 				INT(11) NOT NULL PRIMARY KEY NOT NULL AUTO_INCREMENT,
+  `user_id` 		INT(11) NOT NULL,
+  `book_id` 		INT(11) NOT NULL,
+  `date_out` 		VARCHAR(255) NOT NULL,
+  `date_return` 	VARCHAR(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `users`
+-- Estructura de tabla para la tabla `usuarios`
 --
+-- Nombre completo, fecha de nacimiento, dirección, CURP, telefono, correo electronico 
 
-CREATE TABLE `users` (
-  `id` int(11) NOT NULL PRIMARY KEY NOT NULL AUTO_INCREMENT,
-  `name` varchar(30) NOT NULL,
-  `last_name_p` varchar(30) NOT NULL,
-  `last_name_m` varchar(30) NOT NULL,
-  `domicilio` varchar(250) DEFAULT NULL,
-  `tel` varchar(25) DEFAULT NULL,
-  `sanctions` int(11) DEFAULT '0',
-  `sanc_money` int(11) NOT NULL DEFAULT '0'
+CREATE TABLE `usuarios` (
+  `id` 						INT(11) NOT NULL PRIMARY KEY NOT NULL AUTO_INCREMENT,
+  `curp` 					VARCHAR(18) NOT NULL,
+  `nombre_completo` 		VARCHAR(100) NOT NULL,
+  `domicilio` 				VARCHAR(250) NOT NULL,
+  `tel` 						VARCHAR(25) NOT NULL,
+  `correo_electronico` 	VARCHAR(250) NOT NULL,
+  `sanciones` 				INT(11) DEFAULT '0'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `empleados`
+--
+-- CURP, nombre completo, fecha de nacimiento y fecha de ingreso
+
+CREATE TABLE `empleados` (
+  `id` 						INT(11) NOT NULL PRIMARY KEY NOT NULL AUTO_INCREMENT,
+  `curp` 					VARCHAR(18) NOT NULL,
+  `nombre_completo` 		VARCHAR(100) NOT NULL,
+  `fecha_nacimiento` 	DATE NOT NULL,
+  `fecha_ingreso` 		DATE NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=UTF8;
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `multas`
+--
+-- dias, precio, cliente, fecha_inicio, fecha_pago
+
+CREATE TABLE `multas` (
+  `id` 							INT(11) NOT NULL PRIMARY KEY NOT NULL AUTO_INCREMENT,
+  `cliente` 					VARCHAR(250) NOT NULL,
+  `fecha_final` 				DATE NOT NULL,
+  `fecha_pago` 				DATE DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=UTF8;
+
+
 
