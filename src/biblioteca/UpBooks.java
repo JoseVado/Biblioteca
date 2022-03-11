@@ -7,9 +7,7 @@ package biblioteca;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
-import java.sql.Connection;
 import java.sql.SQLException;
-import java.sql.Statement;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JPanel;
@@ -22,9 +20,6 @@ import java.util.Date;
  */
 public class UpBooks extends javax.swing.JPanel {
 
-    Conexion conn;
-    Connection reg;
-    
     boolean edition;
     String origId;
     private javax.swing.JTextField[] campos;
@@ -48,8 +43,7 @@ public class UpBooks extends javax.swing.JPanel {
      */
     public UpBooks() {
         initComponents();
-        conn = new Conexion();
-        reg = conn.getConnection();
+
         edition = false;
         
         campos = new javax.swing.JTextField[]{
@@ -63,8 +57,7 @@ public class UpBooks extends javax.swing.JPanel {
     
     public UpBooks(String[] libro){
         initComponents();
-        conn = new Conexion();
-        reg = conn.getConnection();
+
         edition = true;
         
         campos = new javax.swing.JTextField[]{
@@ -401,14 +394,16 @@ public class UpBooks extends javax.swing.JPanel {
                 if(edition){
                     try {
                         ComunicacionBD.actualizarBD("libros", subir, origId);
-                        javax.swing.JOptionPane.showMessageDialog(this, "¡Libro editado correctamente! \n", "HECHO", javax.swing.JOptionPane.INFORMATION_MESSAGE);
+                        javax.swing.JOptionPane.showMessageDialog(this, 
+                                "¡Libro editado correctamente! \n", "HECHO", javax.swing.JOptionPane.INFORMATION_MESSAGE);
                     } catch (SQLException ex) {
                         Logger.getLogger(UpBooks.class.getName()).log(Level.SEVERE, null, ex);
                     }
                 }else{
                     try {
                         ComunicacionBD.subirBD("libros", subir);
-                        javax.swing.JOptionPane.showMessageDialog(this, "¡Libro registrado correctamente! \n", "HECHO", javax.swing.JOptionPane.INFORMATION_MESSAGE);
+                        javax.swing.JOptionPane.showMessageDialog(this,
+                                "¡Libro registrado correctamente! \n", "HECHO", javax.swing.JOptionPane.INFORMATION_MESSAGE);
                     } catch (SQLException ex) {
                         Logger.getLogger(UpBooks.class.getName()).log(Level.SEVERE, null, ex);
                     }
@@ -518,23 +513,6 @@ public class UpBooks extends javax.swing.JPanel {
         panel.setBackground(new Color(18,90,173));
     }
     
-    public void InsertBook(String isbn, String titu, String autor, String categorias, String cantidad, String disponible, String descripcion, String fecha) throws SQLException{
-        Statement stm = reg.createStatement();
-        
-
-        stm.executeUpdate("INSERT INTO `libros` (`isbn`,`nombre`,`autor`,`categorias`,`cantidad`,`disponible`,`descripcion`,`fecha_de_ingreso`) " 
-                + "VALUES ('"+isbn+"', '"+titu+"', '"+ autor +"', '"+ categorias +"', '"+ cantidad +"', '"+ disponible +"', '"+ descripcion +"', '"+ fecha +"');");
-        javax.swing.JOptionPane.showMessageDialog(this, "¡Libro registrado correctamente! \n", "HECHO", javax.swing.JOptionPane.INFORMATION_MESSAGE);
-        
-    }
-    
-    public void EditBook(String id, String titu, String fech, String auth, String cate, String ed, String idiom, int pags, String desc, int stck, int avai, String ej) throws SQLException{
-        Statement stm = reg.createStatement();
-        
-        stm.executeUpdate("UPDATE `books` SET `id` = '"+id+"', `title` = '"+titu+"', `date` = '"+fech+"', `author` = '"+auth+"', `category` = '"+cate+"', `edit` = '"+ed+"', `lang` = '"+idiom+"', `pages` = '"+pags+"', `description` = '"+desc+"', `ejemplares` = '"+ej+"', `stock` = '"+stck+"', `available` = '"+avai+"' WHERE `id` = '"+ origId +"';");
-        javax.swing.JOptionPane.showMessageDialog(this, "¡Libro editado correctamente! \n", "HECHO", javax.swing.JOptionPane.INFORMATION_MESSAGE);
-        
-    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel Text10;
