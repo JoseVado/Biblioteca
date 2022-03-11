@@ -398,21 +398,9 @@ public class Empleados extends javax.swing.JPanel {
                 if(id == null || id.equals("")){
                     javax.swing.JOptionPane.showMessageDialog(this, "Debe seleccionar el libro a editar. \n", "AVISO", javax.swing.JOptionPane.INFORMATION_MESSAGE);
                 }
-                else{
-                    String bid = ""+list[idcell][0];
-                    String btitle = list[idcell][1];
-                    String bdate = list[idcell][2];
-                    String bauthor = list[idcell][3];
-                    String bcategory = list[idcell][4];
-                    String bedit = list[idcell][5];
-                    String blang = list[idcell][6];
-                    String bpages = list[idcell][7];
-                    String bdesc = list[idcell][8];
-                    String bejem = list[idcell][9];
-                    String bstock = list[idcell][10];
-                    String bavai = list[idcell][11];            
+                else{           
 
-                    UpBooks p1 = new UpBooks(bid, btitle, bdate, bauthor, bcategory, bedit, blang, bpages, bdesc, bejem, bstock, bavai);
+                    UpBooks p1 = new UpBooks(list[idcell]);
                     p1.setSize(750, 430);
                     p1.setLocation(5, 5);
 

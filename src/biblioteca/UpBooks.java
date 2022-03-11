@@ -14,6 +14,8 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JPanel;
 import static biblioteca.Dashboard.content;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 /**
  *
  * @author Antonio
@@ -22,8 +24,25 @@ public class UpBooks extends javax.swing.JPanel {
 
     Conexion conn;
     Connection reg;
+    
     boolean edition;
     String origId;
+    private javax.swing.JTextField[] campos;
+    
+    private String pattern = "yyyy/MM/dd";
+    SimpleDateFormat simpleDateFormat = new SimpleDateFormat(pattern);
+    private final String[] instrucciones = new String[]{
+            "Ingrese el ISBN del Libro",
+            "Ingrese el Título",
+            "Ingrese el Autor/es",
+            "Ingrese las Categorias separadas por coma",
+            "Ingrese la Cantidad total",
+            "Ingrese los Disponibles",
+            "Ingrese la descripción del Libro",
+            simpleDateFormat.format(new Date())
+        };
+    
+    
     /**
      * Creates new form Principal
      */
@@ -32,27 +51,30 @@ public class UpBooks extends javax.swing.JPanel {
         conn = new Conexion();
         reg = conn.getConnection();
         edition = false;
+        
+        campos = new javax.swing.JTextField[]{
+            isbn,titulo,autor,categorias,cantidad,disponibles,descripcion,fecha
+                        };
+        
+        for(int i = 0; i<campos.length; i++){
+            campos[i].setText(instrucciones[i]);
+        } 
     }
     
-    public UpBooks(String bid, String btitle, String bdate, String bauthor, String bcategory, String bedit, String blang, String bpages, String bdesc, String bejem, String bstock, String bavai){
+    public UpBooks(String[] libro){
         initComponents();
         conn = new Conexion();
         reg = conn.getConnection();
         edition = true;
         
-        origId = bid;
-        id.setText(bid);
-        title.setText(btitle);
-        date.setText(bdate);
-        author.setText(bauthor);
-        category.setText(bcategory);
-        edit.setText(bedit);
-        lang.setText(blang);
-        pages.setText(bpages);
-        descr.setText(bdesc);
-        ejem.setText(bejem);
-        stock.setText(bstock);
-        available.setText(bavai);
+        campos = new javax.swing.JTextField[]{
+            isbn,titulo,autor,categorias,cantidad,disponibles,descripcion,fecha
+                        };
+        
+        for(int i = 0; i<campos.length; i++){
+            campos[i].setText(libro[i+1]);
+        }  
+        origId = libro[0];
         
         jLabel1.setText("Guardar");
     }
@@ -72,41 +94,29 @@ public class UpBooks extends javax.swing.JPanel {
         button = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         Text3 = new javax.swing.JLabel();
-        id = new javax.swing.JTextField();
+        isbn = new javax.swing.JTextField();
         jSeparator4 = new javax.swing.JSeparator();
         Text6 = new javax.swing.JLabel();
-        title = new javax.swing.JTextField();
+        titulo = new javax.swing.JTextField();
         jSeparator7 = new javax.swing.JSeparator();
         Text7 = new javax.swing.JLabel();
-        date = new javax.swing.JTextField();
+        autor = new javax.swing.JTextField();
         jSeparator8 = new javax.swing.JSeparator();
         Text8 = new javax.swing.JLabel();
-        author = new javax.swing.JTextField();
+        categorias = new javax.swing.JTextField();
         jSeparator9 = new javax.swing.JSeparator();
         Text9 = new javax.swing.JLabel();
-        category = new javax.swing.JTextField();
+        cantidad = new javax.swing.JTextField();
         jSeparator10 = new javax.swing.JSeparator();
-        edit = new javax.swing.JTextField();
+        disponibles = new javax.swing.JTextField();
         jSeparator11 = new javax.swing.JSeparator();
         Text10 = new javax.swing.JLabel();
-        Text4 = new javax.swing.JLabel();
-        lang = new javax.swing.JTextField();
-        jSeparator5 = new javax.swing.JSeparator();
-        Text11 = new javax.swing.JLabel();
-        pages = new javax.swing.JTextField();
-        jSeparator12 = new javax.swing.JSeparator();
         Text12 = new javax.swing.JLabel();
-        descr = new javax.swing.JTextField();
+        descripcion = new javax.swing.JTextField();
         jSeparator13 = new javax.swing.JSeparator();
-        Text13 = new javax.swing.JLabel();
-        stock = new javax.swing.JTextField();
-        jSeparator14 = new javax.swing.JSeparator();
         Text14 = new javax.swing.JLabel();
-        ejem = new javax.swing.JTextField();
+        fecha = new javax.swing.JTextField();
         jSeparator15 = new javax.swing.JSeparator();
-        available = new javax.swing.JTextField();
-        jSeparator16 = new javax.swing.JSeparator();
-        Text15 = new javax.swing.JLabel();
 
         setBackground(new java.awt.Color(255, 255, 255));
         setMinimumSize(new java.awt.Dimension(750, 430));
@@ -150,292 +160,190 @@ public class UpBooks extends javax.swing.JPanel {
         add(button, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 360, 260, 50));
 
         Text3.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        Text3.setText("Libro ID");
+        Text3.setText("ISBN");
         add(Text3, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 40, -1, -1));
 
-        id.setFont(new java.awt.Font("Segoe UI", 0, 12)); // NOI18N
-        id.setForeground(new java.awt.Color(102, 102, 102));
-        id.setText("Ingrese el ID del Libro");
-        id.setBorder(null);
-        id.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mousePressed(java.awt.event.MouseEvent evt) {
-                idMousePressed(evt);
+        isbn.setFont(new java.awt.Font("Segoe UI", 0, 12)); // NOI18N
+        isbn.setForeground(new java.awt.Color(102, 102, 102));
+        isbn.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        isbn.setText("Ingrese el ISBN del Libro");
+        isbn.setBorder(null);
+        isbn.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                isbnFocusGained(evt);
+            }
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                isbnFocusLost(evt);
             }
         });
-        id.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                idActionPerformed(evt);
-            }
-        });
-        add(id, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 60, 260, 30));
+        add(isbn, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 60, 310, 30));
 
         jSeparator4.setForeground(new java.awt.Color(0, 153, 255));
         jSeparator4.setPreferredSize(new java.awt.Dimension(200, 10));
-        add(jSeparator4, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 90, 260, 10));
+        add(jSeparator4, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 90, 310, 10));
 
         Text6.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         Text6.setText("Título");
         add(Text6, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 100, -1, -1));
 
-        title.setFont(new java.awt.Font("Segoe UI", 0, 12)); // NOI18N
-        title.setForeground(new java.awt.Color(102, 102, 102));
-        title.setText("Ingrese el Título");
-        title.setBorder(null);
-        title.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mousePressed(java.awt.event.MouseEvent evt) {
-                titleMousePressed(evt);
+        titulo.setFont(new java.awt.Font("Segoe UI", 0, 12)); // NOI18N
+        titulo.setForeground(new java.awt.Color(102, 102, 102));
+        titulo.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        titulo.setText("Ingrese el Título");
+        titulo.setBorder(null);
+        titulo.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                tituloFocusGained(evt);
+            }
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                tituloFocusLost(evt);
             }
         });
-        title.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                titleActionPerformed(evt);
-            }
-        });
-        add(title, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 120, 260, 30));
+        add(titulo, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 120, 310, 30));
 
         jSeparator7.setForeground(new java.awt.Color(0, 153, 255));
         jSeparator7.setPreferredSize(new java.awt.Dimension(200, 10));
-        add(jSeparator7, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 150, 260, 10));
+        add(jSeparator7, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 150, 310, 10));
 
         Text7.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        Text7.setText("Fecha de Publicación");
+        Text7.setText("Autor");
         add(Text7, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 160, -1, -1));
 
-        date.setFont(new java.awt.Font("Segoe UI", 0, 12)); // NOI18N
-        date.setForeground(new java.awt.Color(102, 102, 102));
-        date.setText("Ingrese la Fecha de Publicación");
-        date.setBorder(null);
-        date.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mousePressed(java.awt.event.MouseEvent evt) {
-                dateMousePressed(evt);
+        autor.setFont(new java.awt.Font("Segoe UI", 0, 12)); // NOI18N
+        autor.setForeground(new java.awt.Color(102, 102, 102));
+        autor.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        autor.setText("Ingrese el Autor/es");
+        autor.setBorder(null);
+        autor.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                autorFocusGained(evt);
+            }
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                autorFocusLost(evt);
             }
         });
-        date.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                dateActionPerformed(evt);
-            }
-        });
-        add(date, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 180, 260, 30));
+        add(autor, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 180, 310, 30));
 
         jSeparator8.setForeground(new java.awt.Color(0, 153, 255));
         jSeparator8.setPreferredSize(new java.awt.Dimension(200, 10));
-        add(jSeparator8, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 210, 260, 10));
+        add(jSeparator8, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 210, 310, 10));
 
         Text8.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        Text8.setText("Autor");
+        Text8.setText("Categorias");
         add(Text8, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 220, -1, -1));
 
-        author.setFont(new java.awt.Font("Segoe UI", 0, 12)); // NOI18N
-        author.setForeground(new java.awt.Color(102, 102, 102));
-        author.setText("Ingrese el nombre del Autor/es");
-        author.setBorder(null);
-        author.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mousePressed(java.awt.event.MouseEvent evt) {
-                authorMousePressed(evt);
+        categorias.setFont(new java.awt.Font("Segoe UI", 0, 12)); // NOI18N
+        categorias.setForeground(new java.awt.Color(102, 102, 102));
+        categorias.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        categorias.setText("Ingrese las Categorias separadas por coma");
+        categorias.setBorder(null);
+        categorias.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                categoriasFocusGained(evt);
+            }
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                categoriasFocusLost(evt);
             }
         });
-        author.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                authorActionPerformed(evt);
-            }
-        });
-        add(author, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 240, 260, 30));
+        add(categorias, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 240, 310, 30));
 
         jSeparator9.setForeground(new java.awt.Color(0, 153, 255));
         jSeparator9.setPreferredSize(new java.awt.Dimension(200, 10));
-        add(jSeparator9, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 270, 260, 10));
+        add(jSeparator9, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 270, 310, 10));
 
         Text9.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        Text9.setText("Categoría");
+        Text9.setText("Cantidad");
         add(Text9, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 290, -1, -1));
 
-        category.setFont(new java.awt.Font("Segoe UI", 0, 12)); // NOI18N
-        category.setForeground(new java.awt.Color(102, 102, 102));
-        category.setText("Ingrese la Categoría del Libro");
-        category.setBorder(null);
-        category.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mousePressed(java.awt.event.MouseEvent evt) {
-                categoryMousePressed(evt);
+        cantidad.setFont(new java.awt.Font("Segoe UI", 0, 12)); // NOI18N
+        cantidad.setForeground(new java.awt.Color(102, 102, 102));
+        cantidad.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        cantidad.setText("Ingrese la Cantidad total");
+        cantidad.setBorder(null);
+        cantidad.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                cantidadFocusGained(evt);
+            }
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                cantidadFocusLost(evt);
             }
         });
-        category.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                categoryActionPerformed(evt);
-            }
-        });
-        add(category, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 310, 260, 30));
+        add(cantidad, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 310, 140, 30));
 
         jSeparator10.setForeground(new java.awt.Color(0, 153, 255));
         jSeparator10.setPreferredSize(new java.awt.Dimension(200, 10));
-        add(jSeparator10, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 340, 260, 10));
+        add(jSeparator10, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 340, 140, 10));
 
-        edit.setFont(new java.awt.Font("Segoe UI", 0, 12)); // NOI18N
-        edit.setForeground(new java.awt.Color(102, 102, 102));
-        edit.setText("Ingrese la edición");
-        edit.setBorder(null);
-        edit.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mousePressed(java.awt.event.MouseEvent evt) {
-                editMousePressed(evt);
+        disponibles.setFont(new java.awt.Font("Segoe UI", 0, 12)); // NOI18N
+        disponibles.setForeground(new java.awt.Color(102, 102, 102));
+        disponibles.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        disponibles.setText("Ingrese los Disponibles");
+        disponibles.setBorder(null);
+        disponibles.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                disponiblesFocusGained(evt);
+            }
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                disponiblesFocusLost(evt);
             }
         });
-        edit.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                editActionPerformed(evt);
-            }
-        });
-        add(edit, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 380, 260, 30));
+        add(disponibles, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 310, 140, 30));
 
         jSeparator11.setForeground(new java.awt.Color(0, 153, 255));
         jSeparator11.setPreferredSize(new java.awt.Dimension(200, 10));
-        add(jSeparator11, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 410, 260, 10));
+        add(jSeparator11, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 340, 140, 10));
 
         Text10.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        Text10.setText("Edición");
-        add(Text10, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 360, -1, -1));
-
-        Text4.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        Text4.setText("Idioma");
-        add(Text4, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 30, -1, -1));
-
-        lang.setFont(new java.awt.Font("Segoe UI", 0, 12)); // NOI18N
-        lang.setForeground(new java.awt.Color(102, 102, 102));
-        lang.setText("Ingrese el idioma del Libro");
-        lang.setBorder(null);
-        lang.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mousePressed(java.awt.event.MouseEvent evt) {
-                langMousePressed(evt);
-            }
-        });
-        lang.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                langActionPerformed(evt);
-            }
-        });
-        add(lang, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 50, 260, 30));
-
-        jSeparator5.setForeground(new java.awt.Color(0, 153, 255));
-        jSeparator5.setPreferredSize(new java.awt.Dimension(200, 10));
-        add(jSeparator5, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 80, 260, 10));
-
-        Text11.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        Text11.setText("Páginas");
-        add(Text11, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 90, -1, -1));
-
-        pages.setFont(new java.awt.Font("Segoe UI", 0, 12)); // NOI18N
-        pages.setForeground(new java.awt.Color(102, 102, 102));
-        pages.setText("Ingrese la cantidad de páginas totales");
-        pages.setBorder(null);
-        pages.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mousePressed(java.awt.event.MouseEvent evt) {
-                pagesMousePressed(evt);
-            }
-        });
-        pages.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                pagesActionPerformed(evt);
-            }
-        });
-        add(pages, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 110, 260, 30));
-
-        jSeparator12.setForeground(new java.awt.Color(0, 153, 255));
-        jSeparator12.setPreferredSize(new java.awt.Dimension(200, 10));
-        add(jSeparator12, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 140, 260, 10));
+        Text10.setText("Disponibles");
+        add(Text10, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 290, -1, -1));
 
         Text12.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         Text12.setText("Descripción");
-        add(Text12, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 150, -1, -1));
+        add(Text12, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 40, -1, -1));
 
-        descr.setFont(new java.awt.Font("Segoe UI", 0, 12)); // NOI18N
-        descr.setForeground(new java.awt.Color(102, 102, 102));
-        descr.setText("Ingrese la descripción del Libro");
-        descr.setBorder(null);
-        descr.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mousePressed(java.awt.event.MouseEvent evt) {
-                descrMousePressed(evt);
+        descripcion.setFont(new java.awt.Font("Segoe UI", 0, 12)); // NOI18N
+        descripcion.setForeground(new java.awt.Color(102, 102, 102));
+        descripcion.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        descripcion.setText("Ingrese la descripción del Libro");
+        descripcion.setBorder(null);
+        descripcion.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                descripcionFocusGained(evt);
+            }
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                descripcionFocusLost(evt);
             }
         });
-        descr.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                descrActionPerformed(evt);
-            }
-        });
-        add(descr, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 170, 260, 30));
+        add(descripcion, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 60, 260, 180));
 
         jSeparator13.setForeground(new java.awt.Color(0, 153, 255));
         jSeparator13.setPreferredSize(new java.awt.Dimension(200, 10));
-        add(jSeparator13, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 200, 260, 10));
-
-        Text13.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        Text13.setText("Stock");
-        add(Text13, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 210, -1, -1));
-
-        stock.setFont(new java.awt.Font("Segoe UI", 0, 12)); // NOI18N
-        stock.setForeground(new java.awt.Color(102, 102, 102));
-        stock.setText("Cantidad Total");
-        stock.setBorder(null);
-        stock.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mousePressed(java.awt.event.MouseEvent evt) {
-                stockMousePressed(evt);
-            }
-        });
-        stock.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                stockActionPerformed(evt);
-            }
-        });
-        add(stock, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 230, 80, 30));
-
-        jSeparator14.setForeground(new java.awt.Color(0, 153, 255));
-        jSeparator14.setPreferredSize(new java.awt.Dimension(200, 10));
-        add(jSeparator14, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 260, 80, 10));
+        add(jSeparator13, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 240, 260, 10));
 
         Text14.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        Text14.setText("Ejemplares");
+        Text14.setText("Fecha de ingreso");
         add(Text14, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 280, -1, -1));
 
-        ejem.setFont(new java.awt.Font("Segoe UI", 0, 12)); // NOI18N
-        ejem.setForeground(new java.awt.Color(102, 102, 102));
-        ejem.setText("Ingrese la cantidad de ejemplares");
-        ejem.setBorder(null);
-        ejem.addMouseListener(new java.awt.event.MouseAdapter() {
+        fecha.setEditable(false);
+        fecha.setFont(new java.awt.Font("Segoe UI", 0, 12)); // NOI18N
+        fecha.setForeground(new java.awt.Color(102, 102, 102));
+        fecha.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        fecha.setBorder(null);
+        fecha.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mousePressed(java.awt.event.MouseEvent evt) {
-                ejemMousePressed(evt);
+                fechaMousePressed(evt);
             }
         });
-        ejem.addActionListener(new java.awt.event.ActionListener() {
+        fecha.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                ejemActionPerformed(evt);
+                fechaActionPerformed(evt);
             }
         });
-        add(ejem, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 300, 260, 30));
+        add(fecha, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 300, 260, 30));
 
         jSeparator15.setForeground(new java.awt.Color(0, 153, 255));
         jSeparator15.setPreferredSize(new java.awt.Dimension(200, 10));
         add(jSeparator15, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 330, 260, 10));
-
-        available.setFont(new java.awt.Font("Segoe UI", 0, 12)); // NOI18N
-        available.setForeground(new java.awt.Color(102, 102, 102));
-        available.setText("Cantidad a prestar");
-        available.setBorder(null);
-        available.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mousePressed(java.awt.event.MouseEvent evt) {
-                availableMousePressed(evt);
-            }
-        });
-        available.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                availableActionPerformed(evt);
-            }
-        });
-        add(available, new org.netbeans.lib.awtextra.AbsoluteConstraints(560, 230, 100, 30));
-
-        jSeparator16.setForeground(new java.awt.Color(0, 153, 255));
-        jSeparator16.setPreferredSize(new java.awt.Dimension(200, 10));
-        add(jSeparator16, new org.netbeans.lib.awtextra.AbsoluteConstraints(560, 260, 100, 10));
-
-        Text15.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        Text15.setText("Disponibles");
-        add(Text15, new org.netbeans.lib.awtextra.AbsoluteConstraints(560, 210, -1, -1));
     }// </editor-fold>//GEN-END:initComponents
 
     private void buttonMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_buttonMouseEntered
@@ -446,461 +354,162 @@ public class UpBooks extends javax.swing.JPanel {
         resetColor(button);
     }//GEN-LAST:event_buttonMouseExited
 
-    private void idMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_idMousePressed
-       if(id.getText().equals("Ingrese el ID del Libro"))
-        id.setText("");
-       if(title.getText().equals("") || title.getText() == null || title.getText().equals(" "))
-        title.setText("Ingrese el Título");
-       if(date.getText().equals("") || date.getText() == null || date.getText().equals(" "))
-        date.setText("Ingrese la Fecha de Publicación");
-       if(author.getText().equals("") || author.getText() == null || author.getText().equals(" "))
-        author.setText("Ingrese el nombre del Autor/es");
-       if(category.getText().equals("") || category.getText() == null || category.getText().equals(" "))
-        category.setText("Ingrese la Categoría del Libro");
-       if(edit.getText().equals("") || edit.getText() == null || edit.getText().equals(" "))
-        edit.setText("Ingrese la edición");
-       if(lang.getText().equals("") || lang.getText() == null || lang.getText().equals(" "))
-        lang.setText("Ingrese el idioma del Libro");
-       if(pages.getText().equals("") || pages.getText() == null || pages.getText().equals(" "))
-        pages.setText("Ingrese la cantidad de páginas totales");
-       if(descr.getText().equals("") || descr.getText() == null || descr.getText().equals(" "))
-        descr.setText("Ingrese la descripción del Libro");
-       if(stock.getText().equals("") || stock.getText() == null || stock.getText().equals(" "))
-        stock.setText("Cantidad Total");
-       if(available.getText().equals("") || available.getText() == null || available.getText().equals(" "))
-        available.setText("Cantidad a prestar");
-       if(ejem.getText().equals("") || ejem.getText() == null || ejem.getText().equals(" "))
-        ejem.setText("Ingrese la cantidad de ejemplares");
-    }//GEN-LAST:event_idMousePressed
+    private void fechaMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_fechaMousePressed
 
-    private void idActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_idActionPerformed
+    }//GEN-LAST:event_fechaMousePressed
+
+    private void fechaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_fechaActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_idActionPerformed
-
-    private void titleMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_titleMousePressed
-        if(title.getText().equals("Ingrese el Título"))
-        title.setText("");
-       if(id.getText().equals("") || id.getText() == null || id.getText().equals(" "))
-        id.setText("Ingrese el ID del Libro");
-       if(date.getText().equals("") || date.getText() == null || date.getText().equals(" "))
-        date.setText("Ingrese la Fecha de Publicación");
-       if(author.getText().equals("") || author.getText() == null || author.getText().equals(" "))
-        author.setText("Ingrese el nombre del Autor/es");
-       if(category.getText().equals("") || category.getText() == null || category.getText().equals(" "))
-        category.setText("Ingrese la Categoría del Libro");
-       if(edit.getText().equals("") || edit.getText() == null || edit.getText().equals(" "))
-        edit.setText("Ingrese la edición");
-       if(lang.getText().equals("") || lang.getText() == null || lang.getText().equals(" "))
-        lang.setText("Ingrese el idioma del Libro");
-       if(pages.getText().equals("") || pages.getText() == null || pages.getText().equals(" "))
-        pages.setText("Ingrese la cantidad de páginas totales");
-       if(descr.getText().equals("") || descr.getText() == null || descr.getText().equals(" "))
-        descr.setText("Ingrese la descripción del Libro");
-       if(stock.getText().equals("") || stock.getText() == null || stock.getText().equals(" "))
-        stock.setText("Cantidad Total");
-       if(available.getText().equals("") || available.getText() == null || available.getText().equals(" "))
-        available.setText("Cantidad a prestar");
-       if(ejem.getText().equals("") || ejem.getText() == null || ejem.getText().equals(" "))
-        ejem.setText("Ingrese la cantidad de ejemplares");
-    }//GEN-LAST:event_titleMousePressed
-
-    private void titleActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_titleActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_titleActionPerformed
-
-    private void dateMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_dateMousePressed
-        if(date.getText().equals("Ingrese la Fecha de Publicación"))
-        date.setText("");
-       if(id.getText().equals("") || id.getText() == null || id.getText().equals(" "))
-        id.setText("Ingrese el ID del Libro");
-       if(title.getText().equals("") || title.getText() == null || title.getText().equals(" "))
-        title.setText("Ingrese el Título");
-       if(author.getText().equals("") || author.getText() == null || author.getText().equals(" "))
-        author.setText("Ingrese el nombre del Autor/es");
-       if(category.getText().equals("") || category.getText() == null || category.getText().equals(" "))
-        category.setText("Ingrese la Categoría del Libro");
-       if(edit.getText().equals("") || edit.getText() == null || edit.getText().equals(" "))
-        edit.setText("Ingrese la edición");
-       if(lang.getText().equals("") || lang.getText() == null || lang.getText().equals(" "))
-        lang.setText("Ingrese el idioma del Libro");
-       if(pages.getText().equals("") || pages.getText() == null || pages.getText().equals(" "))
-        pages.setText("Ingrese la cantidad de páginas totales");
-       if(descr.getText().equals("") || descr.getText() == null || descr.getText().equals(" "))
-        descr.setText("Ingrese la descripción del Libro");
-       if(stock.getText().equals("") || stock.getText() == null || stock.getText().equals(" "))
-        stock.setText("Cantidad Total");
-       if(available.getText().equals("") || available.getText() == null || available.getText().equals(" "))
-        available.setText("Cantidad a prestar");
-       if(ejem.getText().equals("") || ejem.getText() == null || ejem.getText().equals(" "))
-        ejem.setText("Ingrese la cantidad de ejemplares");
-    }//GEN-LAST:event_dateMousePressed
-
-    private void dateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_dateActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_dateActionPerformed
-
-    private void authorMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_authorMousePressed
-        if(author.getText().equals("Ingrese el nombre del Autor/es"))
-        author.setText("");
-       if(id.getText().equals("") || id.getText() == null || id.getText().equals(" "))
-        id.setText("Ingrese el ID del Libro");
-       if(title.getText().equals("") || title.getText() == null || title.getText().equals(" "))
-        title.setText("Ingrese el Título");
-       if(date.getText().equals("") || date.getText() == null || date.getText().equals(" "))
-        date.setText("Ingrese la Fecha de Publicación");
-       if(category.getText().equals("") || category.getText() == null || category.getText().equals(" "))
-        category.setText("Ingrese la Categoría del Libro");
-       if(edit.getText().equals("") || edit.getText() == null || edit.getText().equals(" "))
-        edit.setText("Ingrese la edición");
-       if(lang.getText().equals("") || lang.getText() == null || lang.getText().equals(" "))
-        lang.setText("Ingrese el idioma del Libro");
-       if(pages.getText().equals("") || pages.getText() == null || pages.getText().equals(" "))
-        pages.setText("Ingrese la cantidad de páginas totales");
-       if(descr.getText().equals("") || descr.getText() == null || descr.getText().equals(" "))
-        descr.setText("Ingrese la descripción del Libro");
-       if(stock.getText().equals("") || stock.getText() == null || stock.getText().equals(" "))
-        stock.setText("Cantidad Total");
-       if(available.getText().equals("") || available.getText() == null || available.getText().equals(" "))
-        available.setText("Cantidad a prestar");
-       if(ejem.getText().equals("") || ejem.getText() == null || ejem.getText().equals(" "))
-        ejem.setText("Ingrese la cantidad de ejemplares");
-    }//GEN-LAST:event_authorMousePressed
-
-    private void authorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_authorActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_authorActionPerformed
-
-    private void categoryMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_categoryMousePressed
-        if(category.getText().equals("Ingrese la Categoría del Libro"))
-        category.setText("");
-       if(id.getText().equals("") || id.getText() == null || id.getText().equals(" "))
-        id.setText("Ingrese el ID del Libro");
-       if(title.getText().equals("") || title.getText() == null || title.getText().equals(" "))
-        title.setText("Ingrese el Título");
-       if(date.getText().equals("") || date.getText() == null || date.getText().equals(" "))
-        date.setText("Ingrese la Fecha de Publicación");
-       if(author.getText().equals("") || author.getText() == null || author.getText().equals(" "))
-        author.setText("Ingrese el nombre del Autor/es");
-       if(edit.getText().equals("") || edit.getText() == null || edit.getText().equals(" "))
-        edit.setText("Ingrese la edición");
-       if(lang.getText().equals("") || lang.getText() == null || lang.getText().equals(" "))
-        lang.setText("Ingrese el idioma del Libro");
-       if(pages.getText().equals("") || pages.getText() == null || pages.getText().equals(" "))
-        pages.setText("Ingrese la cantidad de páginas totales");
-       if(descr.getText().equals("") || descr.getText() == null || descr.getText().equals(" "))
-        descr.setText("Ingrese la descripción del Libro");
-       if(stock.getText().equals("") || stock.getText() == null || stock.getText().equals(" "))
-        stock.setText("Cantidad Total");
-       if(available.getText().equals("") || available.getText() == null || available.getText().equals(" "))
-        available.setText("Cantidad a prestar");
-       if(ejem.getText().equals("") || ejem.getText() == null || ejem.getText().equals(" "))
-        ejem.setText("Ingrese la cantidad de ejemplares");
-    }//GEN-LAST:event_categoryMousePressed
-
-    private void categoryActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_categoryActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_categoryActionPerformed
-
-    private void editMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_editMousePressed
-        if(edit.getText().equals("Ingrese la edición"))
-        edit.setText("");
-       if(id.getText().equals("") || id.getText() == null || id.getText().equals(" "))
-        id.setText("Ingrese el ID del Libro");
-       if(title.getText().equals("") || title.getText() == null || title.getText().equals(" "))
-        title.setText("Ingrese el Título");
-       if(date.getText().equals("") || date.getText() == null || date.getText().equals(" "))
-        date.setText("Ingrese la Fecha de Publicación");
-       if(author.getText().equals("") || author.getText() == null || author.getText().equals(" "))
-        author.setText("Ingrese el nombre del Autor/es");
-       if(category.getText().equals("") || category.getText() == null || category.getText().equals(" "))
-        category.setText("Ingrese la Categoría del Libro");
-       if(lang.getText().equals("") || lang.getText() == null || lang.getText().equals(" "))
-        lang.setText("Ingrese el idioma del Libro");
-       if(pages.getText().equals("") || pages.getText() == null || pages.getText().equals(" "))
-        pages.setText("Ingrese la cantidad de páginas totales");
-       if(descr.getText().equals("") || descr.getText() == null || descr.getText().equals(" "))
-        descr.setText("Ingrese la descripción del Libro");
-       if(stock.getText().equals("") || stock.getText() == null || stock.getText().equals(" "))
-        stock.setText("Cantidad Total");
-       if(available.getText().equals("") || available.getText() == null || available.getText().equals(" "))
-        available.setText("Cantidad a prestar");
-       if(ejem.getText().equals("") || ejem.getText() == null || ejem.getText().equals(" "))
-        ejem.setText("Ingrese la cantidad de ejemplares");
-    }//GEN-LAST:event_editMousePressed
-
-    private void editActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_editActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_editActionPerformed
-
-    private void langMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_langMousePressed
-       if(lang.getText().equals("Ingrese el idioma del Libro"))
-        lang.setText("");
-       if(id.getText().equals("") || id.getText() == null || id.getText().equals(" "))
-        id.setText("Ingrese el ID del Libro");
-       if(title.getText().equals("") || title.getText() == null || title.getText().equals(" "))
-        title.setText("Ingrese el Título");
-       if(date.getText().equals("") || date.getText() == null || date.getText().equals(" "))
-        date.setText("Ingrese la Fecha de Publicación");
-       if(author.getText().equals("") || author.getText() == null || author.getText().equals(" "))
-        author.setText("Ingrese el nombre del Autor/es");
-       if(category.getText().equals("") || category.getText() == null || category.getText().equals(" "))
-        category.setText("Ingrese la Categoría del Libro");
-       if(edit.getText().equals("") || edit.getText() == null || edit.getText().equals(" "))
-        edit.setText("Ingrese la edición");
-       if(pages.getText().equals("") || pages.getText() == null || pages.getText().equals(" "))
-        pages.setText("Ingrese la cantidad de páginas totales");
-       if(descr.getText().equals("") || descr.getText() == null || descr.getText().equals(" "))
-        descr.setText("Ingrese la descripción del Libro");
-       if(stock.getText().equals("") || stock.getText() == null || stock.getText().equals(" "))
-        stock.setText("Cantidad Total");
-       if(available.getText().equals("") || available.getText() == null || available.getText().equals(" "))
-        available.setText("Cantidad a prestar");
-       if(ejem.getText().equals("") || ejem.getText() == null || ejem.getText().equals(" "))
-        ejem.setText("Ingrese la cantidad de ejemplares");
-    }//GEN-LAST:event_langMousePressed
-
-    private void langActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_langActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_langActionPerformed
-
-    private void pagesMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_pagesMousePressed
-        if(pages.getText().equals("Ingrese la cantidad de páginas totales"))
-        pages.setText("");
-       if(id.getText().equals("") || id.getText() == null || id.getText().equals(" "))
-        id.setText("Ingrese el ID del Libro");
-       if(title.getText().equals("") || title.getText() == null || title.getText().equals(" "))
-        title.setText("Ingrese el Título");
-       if(date.getText().equals("") || date.getText() == null || date.getText().equals(" "))
-        date.setText("Ingrese la Fecha de Publicación");
-       if(author.getText().equals("") || author.getText() == null || author.getText().equals(" "))
-        author.setText("Ingrese el nombre del Autor/es");
-       if(category.getText().equals("") || category.getText() == null || category.getText().equals(" "))
-        category.setText("Ingrese la Categoría del Libro");
-       if(edit.getText().equals("") || edit.getText() == null || edit.getText().equals(" "))
-        edit.setText("Ingrese la edición");
-       if(lang.getText().equals("") || lang.getText() == null || lang.getText().equals(" "))
-        lang.setText("Ingrese el idioma del Libro");
-       if(descr.getText().equals("") || descr.getText() == null || descr.getText().equals(" "))
-        descr.setText("Ingrese la descripción del Libro");
-       if(stock.getText().equals("") || stock.getText() == null || stock.getText().equals(" "))
-        stock.setText("Cantidad Total");
-       if(available.getText().equals("") || available.getText() == null || available.getText().equals(" "))
-        available.setText("Cantidad a prestar");
-       if(ejem.getText().equals("") || ejem.getText() == null || ejem.getText().equals(" "))
-        ejem.setText("Ingrese la cantidad de ejemplares");
-    }//GEN-LAST:event_pagesMousePressed
-
-    private void pagesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_pagesActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_pagesActionPerformed
-
-    private void descrMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_descrMousePressed
-        if(descr.getText().equals("Ingrese la descripción del Libro"))
-        descr.setText("");
-       if(id.getText().equals("") || id.getText() == null || id.getText().equals(" "))
-        id.setText("Ingrese el ID del Libro");
-       if(title.getText().equals("") || title.getText() == null || title.getText().equals(" "))
-        title.setText("Ingrese el Título");
-       if(date.getText().equals("") || date.getText() == null || date.getText().equals(" "))
-        date.setText("Ingrese la Fecha de Publicación");
-       if(author.getText().equals("") || author.getText() == null || author.getText().equals(" "))
-        author.setText("Ingrese el nombre del Autor/es");
-       if(category.getText().equals("") || category.getText() == null || category.getText().equals(" "))
-        category.setText("Ingrese la Categoría del Libro");
-       if(edit.getText().equals("") || edit.getText() == null || edit.getText().equals(" "))
-        edit.setText("Ingrese la edición");
-       if(lang.getText().equals("") || lang.getText() == null || lang.getText().equals(" "))
-        lang.setText("Ingrese el idioma del Libro");
-       if(pages.getText().equals("") || pages.getText() == null || pages.getText().equals(" "))
-        pages.setText("Ingrese la cantidad de páginas totales");
-       if(stock.getText().equals("") || stock.getText() == null || stock.getText().equals(" "))
-        stock.setText("Cantidad Total");
-       if(available.getText().equals("") || available.getText() == null || available.getText().equals(" "))
-        available.setText("Cantidad a prestar");
-       if(ejem.getText().equals("") || ejem.getText() == null || ejem.getText().equals(" "))
-        ejem.setText("Ingrese la cantidad de ejemplares");
-    }//GEN-LAST:event_descrMousePressed
-
-    private void descrActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_descrActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_descrActionPerformed
-
-    private void stockMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_stockMousePressed
-        if(stock.getText().equals("Cantidad Total"))
-        stock.setText("");
-       if(id.getText().equals("") || id.getText() == null || id.getText().equals(" "))
-        id.setText("Ingrese el ID del Libro");
-       if(title.getText().equals("") || title.getText() == null || title.getText().equals(" "))
-        title.setText("Ingrese el Título");
-       if(date.getText().equals("") || date.getText() == null || date.getText().equals(" "))
-        date.setText("Ingrese la Fecha de Publicación");
-       if(author.getText().equals("") || author.getText() == null || author.getText().equals(" "))
-        author.setText("Ingrese el nombre del Autor/es");
-       if(category.getText().equals("") || category.getText() == null || category.getText().equals(" "))
-        category.setText("Ingrese la Categoría del Libro");
-       if(edit.getText().equals("") || edit.getText() == null || edit.getText().equals(" "))
-        edit.setText("Ingrese la edición");
-       if(lang.getText().equals("") || lang.getText() == null || lang.getText().equals(" "))
-        lang.setText("Ingrese el idioma del Libro");
-       if(pages.getText().equals("") || pages.getText() == null || pages.getText().equals(" "))
-        pages.setText("Ingrese la cantidad de páginas totales");
-       if(descr.getText().equals("") || descr.getText() == null || descr.getText().equals(" "))
-        descr.setText("Ingrese la descripción del Libro");
-       if(available.getText().equals("") || available.getText() == null || available.getText().equals(" "))
-        available.setText("Cantidad a prestar");
-       if(ejem.getText().equals("") || ejem.getText() == null || ejem.getText().equals(" "))
-        ejem.setText("Ingrese la cantidad de ejemplares");
-    }//GEN-LAST:event_stockMousePressed
-
-    private void stockActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_stockActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_stockActionPerformed
-
-    private void ejemMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_ejemMousePressed
-        if(ejem.getText().equals("Ingrese la cantidad de ejemplares"))
-        ejem.setText("");
-       if(id.getText().equals("") || id.getText() == null || id.getText().equals(" "))
-        id.setText("Ingrese el ID del Libro");
-       if(title.getText().equals("") || title.getText() == null || title.getText().equals(" "))
-        title.setText("Ingrese el Título");
-       if(date.getText().equals("") || date.getText() == null || date.getText().equals(" "))
-        date.setText("Ingrese la Fecha de Publicación");
-       if(author.getText().equals("") || author.getText() == null || author.getText().equals(" "))
-        author.setText("Ingrese el nombre del Autor/es");
-       if(category.getText().equals("") || category.getText() == null || category.getText().equals(" "))
-        category.setText("Ingrese la Categoría del Libro");
-       if(edit.getText().equals("") || edit.getText() == null || edit.getText().equals(" "))
-        edit.setText("Ingrese la edición");
-       if(lang.getText().equals("") || lang.getText() == null || lang.getText().equals(" "))
-        lang.setText("Ingrese el idioma del Libro");
-       if(pages.getText().equals("") || pages.getText() == null || pages.getText().equals(" "))
-        pages.setText("Ingrese la cantidad de páginas totales");
-       if(descr.getText().equals("") || descr.getText() == null || descr.getText().equals(" "))
-        descr.setText("Ingrese la descripción del Libro");
-       if(stock.getText().equals("") || stock.getText() == null || stock.getText().equals(" "))
-        stock.setText("Cantidad Total");
-       if(available.getText().equals("") || available.getText() == null || available.getText().equals(" "))
-        available.setText("Cantidad a prestar");
-    }//GEN-LAST:event_ejemMousePressed
-
-    private void ejemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ejemActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_ejemActionPerformed
-
-    private void availableMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_availableMousePressed
-        if(available.getText().equals("Cantidad a prestar"))
-        available.setText("");
-       if(id.getText().equals("") || id.getText() == null || id.getText().equals(" "))
-        id.setText("Ingrese el ID del Libro");
-       if(title.getText().equals("") || title.getText() == null || title.getText().equals(" "))
-        title.setText("Ingrese el Título");
-       if(date.getText().equals("") || date.getText() == null || date.getText().equals(" "))
-        date.setText("Ingrese la Fecha de Publicación");
-       if(author.getText().equals("") || author.getText() == null || author.getText().equals(" "))
-        author.setText("Ingrese el nombre del Autor/es");
-       if(category.getText().equals("") || category.getText() == null || category.getText().equals(" "))
-        category.setText("Ingrese la Categoría del Libro");
-       if(edit.getText().equals("") || edit.getText() == null || edit.getText().equals(" "))
-        edit.setText("Ingrese la edición");
-       if(lang.getText().equals("") || lang.getText() == null || lang.getText().equals(" "))
-        lang.setText("Ingrese el idioma del Libro");
-       if(pages.getText().equals("") || pages.getText() == null || pages.getText().equals(" "))
-        pages.setText("Ingrese la cantidad de páginas totales");
-       if(descr.getText().equals("") || descr.getText() == null || descr.getText().equals(" "))
-        descr.setText("Ingrese la descripción del Libro");
-       if(stock.getText().equals("") || stock.getText() == null || stock.getText().equals(" "))
-        stock.setText("Cantidad Total");
-       if(ejem.getText().equals("") || ejem.getText() == null || ejem.getText().equals(" "))
-        ejem.setText("Ingrese la cantidad de ejemplares");
-    }//GEN-LAST:event_availableMousePressed
-
-    private void availableActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_availableActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_availableActionPerformed
+    }//GEN-LAST:event_fechaActionPerformed
 
     // SUBIR
     private void buttonMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_buttonMousePressed
-        if(id.getText().equals("Ingrese el ID del Libro") || title.getText().equals("Ingrese el Título")
-            || date.getText().equals("Ingrese la Fecha de Publicación") || author.getText().equals("Ingrese el nombre del Autor/es")
-            || category.getText().equals("Ingrese la Categoría del Libro")|| edit.getText().equals("Ingrese la edición")
-            || lang.getText().equals("Ingrese el idioma del Libro")|| pages.getText().equals("Ingrese la cantidad de páginas totales")
-            || descr.getText().equals("Ingrese la descripción del Libro")|| stock.getText().equals("Cantidad Total")
-            || available.getText().equals("Cantidad a prestar")|| ejem.getText().equals("Ingrese la cantidad de ejemplares")){
-            javax.swing.JOptionPane.showMessageDialog(this, "Debe llenar todos los campos \n", "AVISO", javax.swing.JOptionPane.INFORMATION_MESSAGE);
-            id.requestFocus();
-        }
-        else
-        {
-            String bid = id.getText();
-            String btitle = title.getText();
-            String bdate = date.getText();
-            String bathor = author.getText();
-            String bcategory = category.getText();
-            String bedit = edit.getText();
-            String blang = lang.getText();
-            String bpages = pages.getText();
-            String bdescr = descr.getText();
-            String bstock = stock.getText();
-            String bavailable = available.getText();
-            String bejem = ejem.getText();
-            int pag=0;
-            int stc=0;
-            int av=0;
-
-            if(bid == null || "".equals(bid) || btitle == null || "".equals(btitle) || bdate == null || "".equals(bdate) 
-                    || bathor == null || "".equals(bathor) || bcategory == null || "".equals(bcategory) 
-                    || bedit == null || "".equals(bedit) || blang == null || "".equals(blang) || bpages == null || "".equals(bpages) 
-                    || bdescr == null || "".equals(bdescr) || bstock == null || "".equals(bstock) 
-                    || bavailable == null || "".equals(bavailable) || bejem == null || "".equals(bejem)){
-                javax.swing.JOptionPane.showMessageDialog(this, "Debe llenar todos los campos \n", "AVISO", javax.swing.JOptionPane.INFORMATION_MESSAGE);
-                id.requestFocus();
+        boolean algunDatoVacio = false;
+        String[] subir = new String [campos.length];
+        for(int i = 0; i < campos.length-1; i++){
+            subir[i] = campos[i].getText();
+            if(campos[i].getText().equals(instrucciones[i])){
+                algunDatoVacio = true;
+                break;
             }
-            else{ 
-                try{
-                    pag = Integer.parseInt(bpages);
-                    stc = Integer.parseInt(bstock);
-                    av = Integer.parseInt(bavailable);
-
+        }
+        subir[campos.length-1] = campos[campos.length-1].getText();
+        
+        if(algunDatoVacio){
+            javax.swing.JOptionPane.showMessageDialog(this, "Debe llenar todos los campos \n", "AVISO", javax.swing.JOptionPane.INFORMATION_MESSAGE);
+        }else{
+            String errores = "";
+            if( !isbn.getText().matches("^\\d+$") ){
+                errores += "ERROR isbn invalido";
+            }
+            if( !titulo.getText().matches("^[a-zA-Z0-9\\s]+$") ){
+                errores += "ERROR titulo debe ser alfanumerico";
+            }
+            if( !autor.getText().matches("^[a-zA-Z\\s]+$") ){
+                errores += "ERROR titulo debe ser alfabetico";
+            }
+            if( !cantidad.getText().matches("^\\d+$") ){
+                errores += "ERROR cantidad invalida";
+            }
+            if( !disponibles.getText().matches("^\\d+$")){
+                errores += "ERROR disponibles invalida";
+            }
+            
+            if(errores.length() > 1){
+                javax.swing.JOptionPane.showMessageDialog(this, errores, "AVISO", javax.swing.JOptionPane.INFORMATION_MESSAGE);
+            }else{
+                if(edition){
                     try {
-                        if(edition)
-                            EditBook(bid, btitle, bdate, bathor, bcategory, bedit, blang, pag, bdescr, stc, av, bejem);
-                        else
-                            InsertBook(bid, btitle, bdate, bathor, bcategory, bedit, blang, pag, bdescr, stc, av, bejem);
-
-                        id.setText("");
-                        title.setText("");
-                        date.setText("");
-                        author.setText("");
-                        category.setText("");
-                        edit.setText("");
-                        lang.setText("");
-                        pages.setText("");
-                        descr.setText("");
-                        stock.setText("");
-                        available.setText("");
-                        ejem.setText("");
-
-                        if(edition){
-                            Libros p1 = new Libros();
-                            p1.setSize(750, 430);
-                            p1.setLocation(5, 5);
-
-                            content.removeAll();
-                            content.add(p1, BorderLayout.CENTER);
-                            content.revalidate();
-                            content.repaint();
-                        }
+                        ComunicacionBD.actualizarBD("libros", subir, origId);
+                        javax.swing.JOptionPane.showMessageDialog(this, "¡Libro editado correctamente! \n", "HECHO", javax.swing.JOptionPane.INFORMATION_MESSAGE);
                     } catch (SQLException ex) {
-                        Logger.getLogger(UpUsers.class.getName()).log(Level.SEVERE, null, ex);
+                        Logger.getLogger(UpBooks.class.getName()).log(Level.SEVERE, null, ex);
                     }
-                }catch(NumberFormatException ex){
-                    javax.swing.JOptionPane.showMessageDialog(this, "Las páginas, el Stock y el Disponible, deben ser números enteros. \n", "AVISO", javax.swing.JOptionPane.INFORMATION_MESSAGE);
-                    id.requestFocus();
+                }else{
+                    try {
+                        ComunicacionBD.subirBD("libros", subir);
+                        javax.swing.JOptionPane.showMessageDialog(this, "¡Libro registrado correctamente! \n", "HECHO", javax.swing.JOptionPane.INFORMATION_MESSAGE);
+                    } catch (SQLException ex) {
+                        Logger.getLogger(UpBooks.class.getName()).log(Level.SEVERE, null, ex);
+                    }
                 }
+                
+                Libros p1 = new Libros();
+                p1.setSize(750, 430);
+                p1.setLocation(5, 5);
 
+                content.removeAll();
+                content.add(p1, BorderLayout.CENTER);
+                content.revalidate();
+                content.repaint();
+                
             }
         }
     }//GEN-LAST:event_buttonMousePressed
+
+    private void isbnFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_isbnFocusGained
+        if(campos[0].getText().equals(instrucciones[0])){
+            campos[0].setText("");
+        }
+    }//GEN-LAST:event_isbnFocusGained
+
+    private void isbnFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_isbnFocusLost
+        if(campos[0].getText().isEmpty()){
+            campos[0].setText(instrucciones[0]);
+        }
+    }//GEN-LAST:event_isbnFocusLost
+
+    private void tituloFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_tituloFocusGained
+        if(campos[1].getText().equals(instrucciones[1])){
+            campos[1].setText("");
+        }
+    }//GEN-LAST:event_tituloFocusGained
+
+    private void tituloFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_tituloFocusLost
+        if(campos[1].getText().isEmpty()){
+            campos[1].setText(instrucciones[1]);
+        }
+    }//GEN-LAST:event_tituloFocusLost
+
+    private void autorFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_autorFocusGained
+        if(campos[2].getText().equals(instrucciones[2])){
+            campos[2].setText("");
+        }
+    }//GEN-LAST:event_autorFocusGained
+
+    private void autorFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_autorFocusLost
+        if(campos[2].getText().isEmpty()){
+            campos[2].setText(instrucciones[2]);
+        }
+    }//GEN-LAST:event_autorFocusLost
+
+    private void categoriasFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_categoriasFocusGained
+        if(campos[3].getText().equals(instrucciones[3])){
+            campos[3].setText("");
+        }
+    }//GEN-LAST:event_categoriasFocusGained
+
+    private void categoriasFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_categoriasFocusLost
+        if(campos[3].getText().isEmpty()){
+            campos[3].setText(instrucciones[3]);
+        }
+    }//GEN-LAST:event_categoriasFocusLost
+
+    private void cantidadFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_cantidadFocusGained
+        if(campos[4].getText().equals(instrucciones[4])){
+            campos[4].setText("");
+        }
+    }//GEN-LAST:event_cantidadFocusGained
+
+    private void cantidadFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_cantidadFocusLost
+        if(campos[4].getText().isEmpty()){
+            campos[4].setText(instrucciones[4]);
+        }
+    }//GEN-LAST:event_cantidadFocusLost
+
+    private void disponiblesFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_disponiblesFocusGained
+        if(campos[5].getText().equals(instrucciones[5])){
+            campos[5].setText("");
+        }
+    }//GEN-LAST:event_disponiblesFocusGained
+
+    private void disponiblesFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_disponiblesFocusLost
+        if(campos[5].getText().isEmpty()){
+            campos[5].setText(instrucciones[5]);
+        }
+    }//GEN-LAST:event_disponiblesFocusLost
+
+    private void descripcionFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_descripcionFocusGained
+        if(campos[6].getText().equals(instrucciones[6])){
+            campos[6].setText("");
+        }
+    }//GEN-LAST:event_descripcionFocusGained
+
+    private void descripcionFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_descripcionFocusLost
+        if(campos[6].getText().isEmpty()){
+            campos[6].setText(instrucciones[6]);
+        }
+    }//GEN-LAST:event_descripcionFocusLost
 
     void setColor(JPanel panel){
         panel.setBackground(new Color(21,101,192));
@@ -909,10 +518,12 @@ public class UpBooks extends javax.swing.JPanel {
         panel.setBackground(new Color(18,90,173));
     }
     
-    public void InsertBook(String id, String titu, String fech, String auth, String cate, String ed, String idiom, int pags, String desc, int stck, int avai, String ej) throws SQLException{
+    public void InsertBook(String isbn, String titu, String autor, String categorias, String cantidad, String disponible, String descripcion, String fecha) throws SQLException{
         Statement stm = reg.createStatement();
         
-        stm.executeUpdate("INSERT INTO `books` (`id`, `title`, `date`, `author`, `category`, `edit`, `lang`, `pages`, `description`, `ejemplares`, `stock`, `available`) VALUES ('"+id+"', '"+titu+"', '"+ fech +"', '"+ auth +"', '"+cate+"', '"+ed+"', '"+idiom+"', '"+pags+"', '"+desc+"', '"+ej+"', '"+stck+"', '"+avai+"')");
+
+        stm.executeUpdate("INSERT INTO `libros` (`isbn`,`nombre`,`autor`,`categorias`,`cantidad`,`disponible`,`descripcion`,`fecha_de_ingreso`) " 
+                + "VALUES ('"+isbn+"', '"+titu+"', '"+ autor +"', '"+ categorias +"', '"+ cantidad +"', '"+ disponible +"', '"+ descripcion +"', '"+ fecha +"');");
         javax.swing.JOptionPane.showMessageDialog(this, "¡Libro registrado correctamente! \n", "HECHO", javax.swing.JOptionPane.INFORMATION_MESSAGE);
         
     }
@@ -927,45 +538,33 @@ public class UpBooks extends javax.swing.JPanel {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel Text10;
-    private javax.swing.JLabel Text11;
     private javax.swing.JLabel Text12;
-    private javax.swing.JLabel Text13;
     private javax.swing.JLabel Text14;
-    private javax.swing.JLabel Text15;
     private javax.swing.JLabel Text3;
-    private javax.swing.JLabel Text4;
     private javax.swing.JLabel Text6;
     private javax.swing.JLabel Text7;
     private javax.swing.JLabel Text8;
     private javax.swing.JLabel Text9;
     private javax.swing.JLabel Title;
-    private javax.swing.JTextField author;
-    private javax.swing.JTextField available;
+    private javax.swing.JTextField autor;
     private javax.swing.JPanel body;
     private javax.swing.JPanel button;
-    private javax.swing.JTextField category;
-    private javax.swing.JTextField date;
-    private javax.swing.JTextField descr;
-    private javax.swing.JTextField edit;
-    private javax.swing.JTextField ejem;
-    private javax.swing.JTextField id;
+    private javax.swing.JTextField cantidad;
+    private javax.swing.JTextField categorias;
+    private javax.swing.JTextField descripcion;
+    private javax.swing.JTextField disponibles;
+    private javax.swing.JTextField fecha;
+    private javax.swing.JTextField isbn;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JSeparator jSeparator10;
     private javax.swing.JSeparator jSeparator11;
-    private javax.swing.JSeparator jSeparator12;
     private javax.swing.JSeparator jSeparator13;
-    private javax.swing.JSeparator jSeparator14;
     private javax.swing.JSeparator jSeparator15;
-    private javax.swing.JSeparator jSeparator16;
     private javax.swing.JSeparator jSeparator3;
     private javax.swing.JSeparator jSeparator4;
-    private javax.swing.JSeparator jSeparator5;
     private javax.swing.JSeparator jSeparator7;
     private javax.swing.JSeparator jSeparator8;
     private javax.swing.JSeparator jSeparator9;
-    private javax.swing.JTextField lang;
-    private javax.swing.JTextField pages;
-    private javax.swing.JTextField stock;
-    private javax.swing.JTextField title;
+    private javax.swing.JTextField titulo;
     // End of variables declaration//GEN-END:variables
 }

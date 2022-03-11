@@ -5,14 +5,13 @@
  */
 package biblioteca;
 
+
+import biblioteca.Clientes;
+import biblioteca.Prestamos;
 import java.awt.Color;
-import java.sql.Connection;
-import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.swing.DefaultListModel;
 import javax.swing.JPanel;
 import static biblioteca.Dashboard.content;
 import java.awt.BorderLayout;
@@ -23,17 +22,21 @@ import java.awt.BorderLayout;
  */
 public class Libros extends javax.swing.JPanel {
 
-    Conexion conn;
-    Connection reg;
+    private static String tabla = "libros";
+    
+    String[] datosTabla = new String [] {
+            "ID", "ISBN", "Titulo", "Autor", "Categorías", "Cantidad", "Disponible", "Descripición",
+            "Fecha de ingreso"
+            } ; 
+
     /**
      * Creates new form Principal
      */
     public Libros() {
         initComponents();
-        conn = new Conexion();
-        reg = conn.getConnection();
         try {
-            GetBooks();
+            jTable1.setModel(new javax.swing.table.DefaultTableModel(
+                            ComunicacionBD.datosBD(tabla),datosTabla));
         } catch (SQLException ex) {
             Logger.getLogger(Libros.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -52,15 +55,15 @@ public class Libros extends javax.swing.JPanel {
         Title = new javax.swing.JLabel();
         jSeparator2 = new javax.swing.JSeparator();
         bid = new javax.swing.JTextField();
-        button = new javax.swing.JPanel();
+        btnBuscarLibro = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
-        nuevo = new javax.swing.JPanel();
-        jLabel3 = new javax.swing.JLabel();
-        edit = new javax.swing.JPanel();
+        btnAgregarLibro = new javax.swing.JPanel();
+        labelAgregar = new javax.swing.JLabel();
+        btnModificarLibro = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
-        delete = new javax.swing.JPanel();
+        eliminar = new javax.swing.JPanel();
         jLabel4 = new javax.swing.JLabel();
-        jScrollPane1 = new javax.swing.JScrollPane();
+        jScrollPane2 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
 
         setBackground(new java.awt.Color(255, 255, 255));
@@ -91,133 +94,132 @@ public class Libros extends javax.swing.JPanel {
         });
         add(bid, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 40, 620, 30));
 
-        button.setBackground(new java.awt.Color(18, 90, 173));
-        button.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
-        button.addMouseListener(new java.awt.event.MouseAdapter() {
+        btnBuscarLibro.setBackground(new java.awt.Color(102, 51, 0));
+        btnBuscarLibro.setToolTipText("");
+        btnBuscarLibro.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        btnBuscarLibro.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseEntered(java.awt.event.MouseEvent evt) {
-                buttonMouseEntered(evt);
+                btnBuscarLibroMouseEntered(evt);
             }
             public void mouseExited(java.awt.event.MouseEvent evt) {
-                buttonMouseExited(evt);
+                btnBuscarLibroMouseExited(evt);
             }
             public void mousePressed(java.awt.event.MouseEvent evt) {
-                buttonMousePressed(evt);
+                btnBuscarLibroMousePressed(evt);
             }
         });
-        button.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+        btnBuscarLibro.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(255, 255, 255));
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel1.setText("Buscar");
-        button.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 0, 60, -1));
+        btnBuscarLibro.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 0, 60, -1));
 
-        add(button, new org.netbeans.lib.awtextra.AbsoluteConstraints(650, 40, 80, 30));
+        add(btnBuscarLibro, new org.netbeans.lib.awtextra.AbsoluteConstraints(650, 40, 80, 30));
 
-        nuevo.setBackground(new java.awt.Color(18, 90, 173));
-        nuevo.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
-        nuevo.addMouseListener(new java.awt.event.MouseAdapter() {
+        btnAgregarLibro.setBackground(new java.awt.Color(102, 51, 0));
+        btnAgregarLibro.setToolTipText("");
+        btnAgregarLibro.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        btnAgregarLibro.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseEntered(java.awt.event.MouseEvent evt) {
-                nuevoMouseEntered(evt);
+                btnAgregarLibroMouseEntered(evt);
             }
             public void mouseExited(java.awt.event.MouseEvent evt) {
-                nuevoMouseExited(evt);
+                btnAgregarLibroMouseExited(evt);
             }
             public void mousePressed(java.awt.event.MouseEvent evt) {
-                nuevoMousePressed(evt);
+                btnAgregarLibroMousePressed(evt);
             }
         });
-        nuevo.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+        btnAgregarLibro.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jLabel3.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
-        jLabel3.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel3.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel3.setText("Nuevo");
-        jLabel3.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mousePressed(java.awt.event.MouseEvent evt) {
-                jLabel3MousePressed(evt);
-            }
-        });
-        nuevo.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 0, 60, -1));
+        labelAgregar.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        labelAgregar.setForeground(new java.awt.Color(255, 255, 255));
+        labelAgregar.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        labelAgregar.setText("Nuevo");
+        btnAgregarLibro.add(labelAgregar, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 0, 60, -1));
 
-        add(nuevo, new org.netbeans.lib.awtextra.AbsoluteConstraints(490, 395, 80, -1));
+        add(btnAgregarLibro, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 390, 80, -1));
 
-        edit.setBackground(new java.awt.Color(18, 90, 173));
-        edit.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
-        edit.addMouseListener(new java.awt.event.MouseAdapter() {
+        btnModificarLibro.setBackground(new java.awt.Color(102, 51, 0));
+        btnModificarLibro.setToolTipText("");
+        btnModificarLibro.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        btnModificarLibro.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseEntered(java.awt.event.MouseEvent evt) {
-                editMouseEntered(evt);
+                btnModificarLibroMouseEntered(evt);
             }
             public void mouseExited(java.awt.event.MouseEvent evt) {
-                editMouseExited(evt);
+                btnModificarLibroMouseExited(evt);
             }
             public void mousePressed(java.awt.event.MouseEvent evt) {
-                editMousePressed(evt);
+                btnModificarLibroMousePressed(evt);
             }
         });
-        edit.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+        btnModificarLibro.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jLabel2.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         jLabel2.setForeground(new java.awt.Color(255, 255, 255));
         jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel2.setText("Editar");
-        edit.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 0, 60, -1));
+        jLabel2.setText("Modificar");
+        btnModificarLibro.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 0, 90, -1));
 
-        add(edit, new org.netbeans.lib.awtextra.AbsoluteConstraints(580, 395, 80, -1));
+        add(btnModificarLibro, new org.netbeans.lib.awtextra.AbsoluteConstraints(510, 390, 110, -1));
 
-        delete.setBackground(new java.awt.Color(18, 90, 173));
-        delete.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
-        delete.addMouseListener(new java.awt.event.MouseAdapter() {
+        eliminar.setBackground(new java.awt.Color(102, 51, 0));
+        eliminar.setToolTipText("");
+        eliminar.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        eliminar.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseEntered(java.awt.event.MouseEvent evt) {
-                deleteMouseEntered(evt);
+                eliminarMouseEntered(evt);
             }
             public void mouseExited(java.awt.event.MouseEvent evt) {
-                deleteMouseExited(evt);
+                eliminarMouseExited(evt);
             }
             public void mousePressed(java.awt.event.MouseEvent evt) {
-                deleteMousePressed(evt);
+                eliminarMousePressed(evt);
             }
         });
-        delete.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+        eliminar.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jLabel4.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         jLabel4.setForeground(new java.awt.Color(255, 255, 255));
         jLabel4.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel4.setText("Borrar");
-        delete.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 0, 60, -1));
+        jLabel4.setText("Eliminar");
+        eliminar.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 0, 70, -1));
 
-        add(delete, new org.netbeans.lib.awtextra.AbsoluteConstraints(670, 395, 80, -1));
+        add(eliminar, new org.netbeans.lib.awtextra.AbsoluteConstraints(640, 390, 90, -1));
 
         jTable1.setFont(new java.awt.Font("Segoe UI", 0, 11)); // NOI18N
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null, null, null, null}
+                {null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null}
             },
             new String [] {
-                "ID", "Título", "Fecha de Pub.", "Autor", "Categoría", "Edición", "Idioma", "Páginas", "Descripción", "Ejemplaresl", "Stock", "Disponibles"
+                "ID", "ISBN", "Titulo", "Autor", "Categoría", "Cantidad", "Disponible", "Descripcion", "Fecha de ingreso"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class
+                java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.Integer.class, java.lang.Integer.class, java.lang.String.class, java.lang.String.class
             };
             boolean[] canEdit = new boolean [] {
-                false, true, true, true, true, true, true, true, true, true, true, true
+                false, false, false, false, false, false, false, false, false
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -234,9 +236,15 @@ public class Libros extends javax.swing.JPanel {
                 jTable1MousePressed(evt);
             }
         });
-        jScrollPane1.setViewportView(jTable1);
+        jScrollPane2.setViewportView(jTable1);
+        if (jTable1.getColumnModel().getColumnCount() > 0) {
+            jTable1.getColumnModel().getColumn(0).setPreferredWidth(10);
+            jTable1.getColumnModel().getColumn(1).setPreferredWidth(60);
+            jTable1.getColumnModel().getColumn(5).setPreferredWidth(3);
+            jTable1.getColumnModel().getColumn(6).setPreferredWidth(3);
+        }
 
-        add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 90, 750, 300));
+        add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 80, 730, 300));
     }// </editor-fold>//GEN-END:initComponents
 
     private void bidMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_bidMousePressed
@@ -244,15 +252,7 @@ public class Libros extends javax.swing.JPanel {
         bid.setText("");
     }//GEN-LAST:event_bidMousePressed
 
-    private void buttonMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_buttonMouseEntered
-        setColor(button);
-    }//GEN-LAST:event_buttonMouseEntered
-
-    private void buttonMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_buttonMouseExited
-        resetColor(button);
-    }//GEN-LAST:event_buttonMouseExited
-
-    private void jLabel3MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel3MousePressed
+    private void btnAgregarLibroMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnAgregarLibroMousePressed
         // Abrir sección
         UpBooks p1 = new UpBooks();
         p1.setSize(750, 430);
@@ -262,157 +262,69 @@ public class Libros extends javax.swing.JPanel {
         content.add(p1, BorderLayout.CENTER);
         content.revalidate();
         content.repaint();
-    }//GEN-LAST:event_jLabel3MousePressed
+    }//GEN-LAST:event_btnAgregarLibroMousePressed
 
-    private void nuevoMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_nuevoMouseEntered
-        // TODO add your handling code here:
-    }//GEN-LAST:event_nuevoMouseEntered
+    private void eliminarMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_eliminarMouseEntered
+        setColor(eliminar);
+    }//GEN-LAST:event_eliminarMouseEntered
 
-    private void nuevoMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_nuevoMouseExited
-        // TODO add your handling code here:
-    }//GEN-LAST:event_nuevoMouseExited
-
-    private void nuevoMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_nuevoMousePressed
-        // Abrir sección
-        UpUsers p1 = new UpUsers();
-        p1.setSize(750, 430);
-        p1.setLocation(0,0);
-
-        content.removeAll();
-        content.add(p1, BorderLayout.CENTER);
-        content.revalidate();
-        content.repaint();
-    }//GEN-LAST:event_nuevoMousePressed
-
-    private void editMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_editMouseEntered
-        // TODO add your handling code here:
-    }//GEN-LAST:event_editMouseEntered
-
-    private void editMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_editMouseExited
-        // TODO add your handling code here:
-    }//GEN-LAST:event_editMouseExited
-
-    private void deleteMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_deleteMouseEntered
-        setColor(delete);
-    }//GEN-LAST:event_deleteMouseEntered
-
-    private void deleteMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_deleteMouseExited
-        resetColor(delete);
-    }//GEN-LAST:event_deleteMouseExited
+    private void eliminarMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_eliminarMouseExited
+        resetColor(eliminar);
+    }//GEN-LAST:event_eliminarMouseExited
 
     private void jTable1MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable1MousePressed
         if(bid.getText().equals("") || bid.getText() == null || bid.getText().equals(" "))
             bid.setText("Ingrese el ID del Libro a buscar");
     }//GEN-LAST:event_jTable1MousePressed
+    
+    
+    
     // BORRAR
-    private void deleteMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_deleteMousePressed
+    private void eliminarMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_eliminarMousePressed
         try {
             int idcell = jTable1.getSelectedRow();
             if(idcell <= -1){
                 javax.swing.JOptionPane.showMessageDialog(this, "Debe seleccionar el libro a borrar. \n", "AVISO", javax.swing.JOptionPane.INFORMATION_MESSAGE);
             }
-            else{
-                Statement stm = reg.createStatement();
-                ResultSet counter = stm.executeQuery("SELECT * FROM `books`");
-
-                int count = 0;
-                while(counter.next()){count++;}
-
-                String list[][] = new String[count][12];
-                int i = 0;
-                ResultSet re = stm.executeQuery("SELECT * FROM `books`");
-                while(re.next()){
-                    list[i][0] = re.getString("id");
-                    list[i][1] = re.getString("title");
-                    list[i][2] = re.getString("date");
-                    list[i][3] = re.getString("author");
-                    list[i][4] = re.getString("category");
-                    list[i][5] = re.getString("edit");
-                    list[i][6] = re.getString("lang");
-                    list[i][7] = re.getString("pages");
-                    list[i][8] = re.getString("description");
-                    list[i][9] = re.getString("ejemplares");
-                    list[i][10] = re.getString("stock");
-                    list[i][11] = re.getString("available");
-                    i++;
-                }
+            else{                
+                String list[][] = ComunicacionBD.datosBD(tabla);
+                
                 String id = list[idcell][0];
+                
                 if(id == null || id.equals("")){
                     javax.swing.JOptionPane.showMessageDialog(this, "Debe seleccionar el libro a borrar. \n", "AVISO", javax.swing.JOptionPane.INFORMATION_MESSAGE);
                 }
                 else{
-                    Statement stm2=null;
-                    try {
-                    stm2 = reg.createStatement();
-                    } catch (SQLException ex) {
-                    Logger.getLogger(Prestamos.class.getName()).log(Level.SEVERE, null, ex);
-                    }
-                    try {
-                    stm2.executeUpdate("DELETE FROM `books` WHERE `id` = '"+id+"' LIMIT 1");
+                    ComunicacionBD.eliminarBD(tabla, id);
                     javax.swing.JOptionPane.showMessageDialog(this, "¡Libro borrado! \n", "HECHO", javax.swing.JOptionPane.INFORMATION_MESSAGE);
-                    GetBooks();
-                    } catch (SQLException ex) {
-                    Logger.getLogger(Prestamos.class.getName()).log(Level.SEVERE, null, ex);
-                    }
+                    jTable1.setModel(new javax.swing.table.DefaultTableModel(
+                            ComunicacionBD.datosBD(tabla),datosTabla));
+                   
                 }
             }
         } catch (SQLException ex) {
             Logger.getLogger(Clientes.class.getName()).log(Level.SEVERE, null, ex);
         }
-    }//GEN-LAST:event_deleteMousePressed
+    }//GEN-LAST:event_eliminarMousePressed
 
     // EDITAR
-    private void editMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_editMousePressed
+    private void btnModificarLibroMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnModificarLibroMousePressed
         try {
             int idcell = jTable1.getSelectedRow();
             if(idcell <= -1){
                 javax.swing.JOptionPane.showMessageDialog(this, "Debe seleccionar el libro a editar. \n", "AVISO", javax.swing.JOptionPane.INFORMATION_MESSAGE);
             }
             else{
-                
-                Statement stm = reg.createStatement();
-                ResultSet counter = stm.executeQuery("SELECT * FROM `books`");
 
-                int count = 0;
-                while(counter.next()){count++;}
-
-                String list[][] = new String[count][12];
-                int i = 0;
-                ResultSet re = stm.executeQuery("SELECT * FROM `books`");
-                while(re.next()){
-                    list[i][0] = re.getString("id");
-                    list[i][1] = re.getString("title");
-                    list[i][2] = re.getString("date");
-                    list[i][3] = re.getString("author");
-                    list[i][4] = re.getString("category");
-                    list[i][5] = re.getString("edit");
-                    list[i][6] = re.getString("lang");
-                    list[i][7] = re.getString("pages");
-                    list[i][8] = re.getString("description");
-                    list[i][9] = re.getString("ejemplares");
-                    list[i][10] = re.getString("stock");
-                    list[i][11] = re.getString("available");
-                    i++;
-                }
+                String list[][] = ComunicacionBD.datosBD(tabla);
                 String id = list[idcell][0];
+                
                 if(id == null || id.equals("")){
                     javax.swing.JOptionPane.showMessageDialog(this, "Debe seleccionar el libro a editar. \n", "AVISO", javax.swing.JOptionPane.INFORMATION_MESSAGE);
                 }
                 else{
-                    String bid = ""+list[idcell][0];
-                    String btitle = list[idcell][1];
-                    String bdate = list[idcell][2];
-                    String bauthor = list[idcell][3];
-                    String bcategory = list[idcell][4];
-                    String bedit = list[idcell][5];
-                    String blang = list[idcell][6];
-                    String bpages = list[idcell][7];
-                    String bdesc = list[idcell][8];
-                    String bejem = list[idcell][9];
-                    String bstock = list[idcell][10];
-                    String bavai = list[idcell][11];            
-
-                    UpBooks p1 = new UpBooks(bid, btitle, bdate, bauthor, bcategory, bedit, blang, bpages, bdesc, bejem, bstock, bavai);
+           
+                    UpBooks p1 = new UpBooks(list[idcell]);
                     p1.setSize(750, 430);
                     p1.setLocation(5, 5);
 
@@ -425,9 +337,10 @@ public class Libros extends javax.swing.JPanel {
         } catch (SQLException ex) {
             Logger.getLogger(Clientes.class.getName()).log(Level.SEVERE, null, ex);
         }
-    }//GEN-LAST:event_editMousePressed
+    }//GEN-LAST:event_btnModificarLibroMousePressed
     // BUSCAR
-    private void buttonMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_buttonMousePressed
+    private void btnBuscarLibroMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnBuscarLibroMousePressed
+        /*
         try {
             String inf = bid.getText();
             Statement stm = reg.createStatement();
@@ -456,69 +369,57 @@ public class Libros extends javax.swing.JPanel {
         }
         
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
-        list,
-        new String [] {
-            "ID", "Título", "Fecha de Pub.", "Autor", "Categoría", "Edición", "Idioma", "Páginas", "Descripción", "Ejemplaresl", "Stock", "Disponibles"
-        }));
+                            ComunicacionBD.datosBD("libros"),datosTabla));
         } catch (SQLException ex) {
             Logger.getLogger(Clientes.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }//GEN-LAST:event_buttonMousePressed
+        }*/
+    }//GEN-LAST:event_btnBuscarLibroMousePressed
+
+    private void btnAgregarLibroMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnAgregarLibroMouseEntered
+        setColor(btnAgregarLibro);
+    }//GEN-LAST:event_btnAgregarLibroMouseEntered
+
+    private void btnAgregarLibroMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnAgregarLibroMouseExited
+        resetColor(btnAgregarLibro);
+    }//GEN-LAST:event_btnAgregarLibroMouseExited
+
+    private void btnBuscarLibroMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnBuscarLibroMouseEntered
+        setColor(btnBuscarLibro);
+    }//GEN-LAST:event_btnBuscarLibroMouseEntered
+
+    private void btnBuscarLibroMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnBuscarLibroMouseExited
+        resetColor(btnBuscarLibro);
+    }//GEN-LAST:event_btnBuscarLibroMouseExited
+
+    private void btnModificarLibroMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnModificarLibroMouseEntered
+        setColor(btnModificarLibro);
+    }//GEN-LAST:event_btnModificarLibroMouseEntered
+
+    private void btnModificarLibroMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnModificarLibroMouseExited
+        resetColor(btnModificarLibro);
+    }//GEN-LAST:event_btnModificarLibroMouseExited
 
     void setColor(JPanel panel){
-        panel.setBackground(new Color(21,101,192));
+        panel.setBackground(new Color(204,102,0));
     }
     void resetColor(JPanel panel){
-        panel.setBackground(new Color(18,90,173));
+        panel.setBackground(new Color(102,51,0));
     }
-    
-    private void GetBooks() throws SQLException{
-        Statement stm = reg.createStatement();
-        ResultSet counter = stm.executeQuery("SELECT * FROM `books`");
-        
-        int count = 0;
-        while(counter.next()){count++;}
-        
-        String list[][] = new String[count][12];
-        int i = 0;
-        ResultSet re = stm.executeQuery("SELECT * FROM `books`");
-        while(re.next()){
-            list[i][0] = re.getString("id");
-            list[i][1] = re.getString("title");
-            list[i][2] = re.getString("date");
-            list[i][3] = re.getString("author");
-            list[i][4] = re.getString("category");
-            list[i][5] = re.getString("edit");
-            list[i][6] = re.getString("lang");
-            list[i][7] = re.getString("pages");
-            list[i][8] = re.getString("description");
-            list[i][9] = re.getString("ejemplares");
-            list[i][10] = re.getString("stock");
-            list[i][11] = re.getString("available");
-            i++;
-        }
-        
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
-        list,
-        new String [] {
-            "ID", "Título", "Fecha de Pub.", "Autor", "Categoría", "Edición", "Idioma", "Páginas", "Descripción", "Ejemplaresl", "Stock", "Disponibles"
-        }));
-    }
-
+ 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel Title;
     private javax.swing.JTextField bid;
     private javax.swing.JPanel body;
-    private javax.swing.JPanel button;
-    private javax.swing.JPanel delete;
-    private javax.swing.JPanel edit;
+    private javax.swing.JPanel btnAgregarLibro;
+    private javax.swing.JPanel btnBuscarLibro;
+    private javax.swing.JPanel btnModificarLibro;
+    private javax.swing.JPanel eliminar;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
-    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JSeparator jSeparator2;
     private javax.swing.JTable jTable1;
-    private javax.swing.JPanel nuevo;
+    private javax.swing.JLabel labelAgregar;
     // End of variables declaration//GEN-END:variables
 }
