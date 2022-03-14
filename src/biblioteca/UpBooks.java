@@ -373,19 +373,19 @@ public class UpBooks extends javax.swing.JPanel {
         }else{
             String errores = "";
             if( !isbn.getText().matches("^\\d+$") ){
-                errores += "ERROR isbn invalido";
+                errores += "ERROR isbn invalido\n";
             }
             if( !titulo.getText().matches("^[a-zA-Z0-9\\s]+$") ){
-                errores += "ERROR titulo debe ser alfanumerico";
+                errores += "ERROR titulo debe ser alfanumerico\n";
             }
-            if( !autor.getText().matches("^[a-zA-Z\\s]+$") ){
-                errores += "ERROR titulo debe ser alfabetico";
+            if( !autor.getText().matches("^[a-zA-Z.\\s]+$") ){
+                errores += "ERROR autor debe ser alfabetico\n";
             }
             if( !cantidad.getText().matches("^\\d+$") ){
-                errores += "ERROR cantidad invalida";
+                errores += "ERROR cantidad invalida\n";
             }
             if( !disponibles.getText().matches("^\\d+$")){
-                errores += "ERROR disponibles invalida";
+                errores += "ERROR disponibles invalida\n";
             }
             
             if(errores.length() > 1){
@@ -411,7 +411,7 @@ public class UpBooks extends javax.swing.JPanel {
                 
                 Libros p1 = new Libros();
                 p1.setSize(750, 430);
-                p1.setLocation(5, 5);
+                p1.setLocation(0,0);
 
                 content.removeAll();
                 content.add(p1, BorderLayout.CENTER);
