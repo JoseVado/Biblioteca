@@ -112,6 +112,16 @@ public class ComunicacionBD {
                 return new String [] {
                     "id", "isbn", "nombre", "autor", "categorias", "cantidad",
                     "disponible", "descripcion","fecha_de_ingreso"} ; 
+            case "usuarios":
+                return new String []{
+                    "id", "curp", "nombre_completo", "domicilio", "tel", 
+                    "correo_electronico", "sanciones"
+                };
+            case "empleados":
+                return new String []{
+                  "id", "curp", "nombre_completo", "fecha_nacimiento",
+                    "fecha_ingreso"
+                };
             default:
                 return new String[1];
         }
