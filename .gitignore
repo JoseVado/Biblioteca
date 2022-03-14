@@ -7,3 +7,7 @@
 build/
 nbbuild/
 nbdist/
+
+nbproject/private/private.properties
+nbproject/genfiles.properties
+nbproject/build-impl.xml
