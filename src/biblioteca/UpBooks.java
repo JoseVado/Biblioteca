@@ -159,7 +159,6 @@ public class UpBooks extends javax.swing.JPanel {
         isbn.setFont(new java.awt.Font("Segoe UI", 0, 12)); // NOI18N
         isbn.setForeground(new java.awt.Color(102, 102, 102));
         isbn.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        isbn.setText("Ingrese el ISBN del Libro");
         isbn.setBorder(null);
         isbn.addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusGained(java.awt.event.FocusEvent evt) {
@@ -182,7 +181,6 @@ public class UpBooks extends javax.swing.JPanel {
         titulo.setFont(new java.awt.Font("Segoe UI", 0, 12)); // NOI18N
         titulo.setForeground(new java.awt.Color(102, 102, 102));
         titulo.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        titulo.setText("Ingrese el Título");
         titulo.setBorder(null);
         titulo.addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusGained(java.awt.event.FocusEvent evt) {
@@ -205,7 +203,6 @@ public class UpBooks extends javax.swing.JPanel {
         autor.setFont(new java.awt.Font("Segoe UI", 0, 12)); // NOI18N
         autor.setForeground(new java.awt.Color(102, 102, 102));
         autor.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        autor.setText("Ingrese el Autor/es");
         autor.setBorder(null);
         autor.addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusGained(java.awt.event.FocusEvent evt) {
@@ -228,7 +225,6 @@ public class UpBooks extends javax.swing.JPanel {
         categorias.setFont(new java.awt.Font("Segoe UI", 0, 12)); // NOI18N
         categorias.setForeground(new java.awt.Color(102, 102, 102));
         categorias.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        categorias.setText("Ingrese las Categorias separadas por coma");
         categorias.setBorder(null);
         categorias.addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusGained(java.awt.event.FocusEvent evt) {
@@ -251,7 +247,6 @@ public class UpBooks extends javax.swing.JPanel {
         cantidad.setFont(new java.awt.Font("Segoe UI", 0, 12)); // NOI18N
         cantidad.setForeground(new java.awt.Color(102, 102, 102));
         cantidad.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        cantidad.setText("Ingrese la Cantidad total");
         cantidad.setBorder(null);
         cantidad.addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusGained(java.awt.event.FocusEvent evt) {
@@ -270,7 +265,6 @@ public class UpBooks extends javax.swing.JPanel {
         disponibles.setFont(new java.awt.Font("Segoe UI", 0, 12)); // NOI18N
         disponibles.setForeground(new java.awt.Color(102, 102, 102));
         disponibles.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        disponibles.setText("Ingrese los Disponibles");
         disponibles.setBorder(null);
         disponibles.addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusGained(java.awt.event.FocusEvent evt) {
@@ -297,7 +291,6 @@ public class UpBooks extends javax.swing.JPanel {
         descripcion.setFont(new java.awt.Font("Segoe UI", 0, 12)); // NOI18N
         descripcion.setForeground(new java.awt.Color(102, 102, 102));
         descripcion.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        descripcion.setText("Ingrese la descripción del Libro");
         descripcion.setBorder(null);
         descripcion.addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusGained(java.awt.event.FocusEvent evt) {

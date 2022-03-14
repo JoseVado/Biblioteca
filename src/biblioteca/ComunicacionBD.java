@@ -65,7 +65,7 @@ public class ComunicacionBD {
         Conexion conn = new Conexion();
         Connection reg = conn.getConnection();
         Statement stm = reg.createStatement();
-        stm.executeUpdate("DELETE FROM `libros` WHERE `id` = '"+id+"' LIMIT 1");
+        stm.executeUpdate("DELETE FROM `"+tabla+"` WHERE `id` = '"+id+"' LIMIT 1");
         
     }
     

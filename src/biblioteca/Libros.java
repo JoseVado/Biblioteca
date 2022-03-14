@@ -20,9 +20,8 @@ import java.awt.BorderLayout;
  */
 public class Libros extends javax.swing.JPanel {
 
-    private static String tabla = "libros";
-    
-    String[] datosTabla = new String [] {
+    private static final String tabla = "libros";
+    private static final String[] datosTabla = new String [] {
             "ID", "ISBN", "Titulo", "Autor", "Categorías", "Cantidad", "Disponible", "Descripición",
             "Fecha de ingreso"
             } ; 
@@ -289,7 +288,7 @@ public class Libros extends javax.swing.JPanel {
                 
                 String id = list[idcell][0];
                 
-                if(id == null || id.equals("")){
+                if(id.isEmpty()){
                     javax.swing.JOptionPane.showMessageDialog(this, "Debe seleccionar el libro a borrar. \n", "AVISO", javax.swing.JOptionPane.INFORMATION_MESSAGE);
                 }
                 else{
@@ -317,7 +316,7 @@ public class Libros extends javax.swing.JPanel {
                 String list[][] = ComunicacionBD.datosBD(tabla);
                 String id = list[idcell][0];
                 
-                if(id == null || id.equals("")){
+                if(id.isEmpty()){
                     javax.swing.JOptionPane.showMessageDialog(this, "Debe seleccionar el libro a editar. \n", "AVISO", javax.swing.JOptionPane.INFORMATION_MESSAGE);
                 }
                 else{
