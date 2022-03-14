@@ -35,31 +35,6 @@ public class ComunicacionBD {
         
         return list;
     }
-    public static String[][] datosBD(String tabla, String columna,String comparar)throws SQLException{
-        Conexion conn = new Conexion();
-        Connection reg = conn.getConnection();
-        Statement stm = reg.createStatement();
-        
-        String[] datosBD = nombreColumnas(tabla);
-        
-        ResultSet counter = stm.executeQuery("SELECT COUNT(*) AS contar FROM `"+ tabla +"`  WHERE "+ columna +" LIKE '%"+comparar+"%'");
-        counter.next();
-        int count = counter.getInt("contar");
-        counter.close();
-
-        String list[][] = new String[count][datosBD.length];
-        
-        ResultSet re = stm.executeQuery("SELECT * FROM `"+ tabla +"`  WHERE "+ columna +" LIKE '%"+comparar+"%'");
-        for(int i = 0; i < count; i++){
-            re.next();
-            for(int c = 0; c < datosBD.length; c++){
-                list[i][c] = re.getString(datosBD[c]);
-            }
-        }
-        re.close();
-        
-        return list;
-    }
     
     public static void eliminarBD(String tabla, String id)throws SQLException{
         Conexion conn = new Conexion();

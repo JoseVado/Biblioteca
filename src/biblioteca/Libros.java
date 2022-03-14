@@ -6,6 +6,8 @@
 package biblioteca;
 
 
+import biblioteca.Clientes;
+import biblioteca.Prestamos;
 import java.awt.Color;
 import java.sql.SQLException;
 import java.util.logging.Level;
@@ -271,8 +273,8 @@ public class Libros extends javax.swing.JPanel {
     }//GEN-LAST:event_eliminarMouseExited
 
     private void jTable1MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable1MousePressed
-        if(bid.getText().isEmpty())
-            bid.setText("Ingrese el ISBN o el Titulo Libro a buscar");
+        if(bid.getText().equals("") || bid.getText() == null || bid.getText().equals(" "))
+            bid.setText("Ingrese el ID del Libro a buscar");
     }//GEN-LAST:event_jTable1MousePressed
     
     
@@ -301,7 +303,7 @@ public class Libros extends javax.swing.JPanel {
                 }
             }
         } catch (SQLException ex) {
-            Logger.getLogger(Libros.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(Clientes.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_eliminarMousePressed
 
@@ -333,24 +335,44 @@ public class Libros extends javax.swing.JPanel {
                 }
             }
         } catch (SQLException ex) {
-            Logger.getLogger(Libros.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(Clientes.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_btnModificarLibroMousePressed
     // BUSCAR
     private void btnBuscarLibroMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnBuscarLibroMousePressed
-        
-        String inf = bid.getText();
+        /*
         try {
-            String[][] datosISBN =  ComunicacionBD.datosBD(tabla, "isbn", inf);
-            String[][] datosNombre = ComunicacionBD.datosBD(tabla, "nombre", inf);
+            String inf = bid.getText();
+            Statement stm = reg.createStatement();
+            ResultSet counter = stm.executeQuery("SELECT * FROM `books` WHERE id LIKE '"+inf+"%'");
             
-            jTable1.setModel(new javax.swing.table.DefaultTableModel(
-            ((datosISBN.length>datosNombre.length)?datosISBN:datosNombre),datosTabla));
+            int count = 0;
+            while(counter.next()){count++;}
             
-        } catch (SQLException ex) {
-            Logger.getLogger(Libros.class.getName()).log(Level.SEVERE, null, ex);
+            String list[][] = new String[count][12];
+            int i = 0;
+            ResultSet re = stm.executeQuery("SELECT * FROM `books` WHERE id LIKE '"+inf+"%'");
+            while(re.next()){
+            list[i][0] = re.getString("id");
+            list[i][1] = re.getString("title");
+            list[i][2] = re.getString("date");
+            list[i][3] = re.getString("author");
+            list[i][4] = re.getString("category");
+            list[i][5] = re.getString("edit");
+            list[i][6] = re.getString("lang");
+            list[i][7] = re.getString("pages");
+            list[i][8] = re.getString("description");
+            list[i][9] = re.getString("ejemplares");
+            list[i][10] = re.getString("stock");
+            list[i][11] = re.getString("available");
+            i++;
         }
-
+        
+        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+                            ComunicacionBD.datosBD("libros"),datosTabla));
+        } catch (SQLException ex) {
+            Logger.getLogger(Clientes.class.getName()).log(Level.SEVERE, null, ex);
+        }*/
     }//GEN-LAST:event_btnBuscarLibroMousePressed
 
     private void btnAgregarLibroMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnAgregarLibroMouseEntered
