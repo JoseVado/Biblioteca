@@ -111,7 +111,7 @@ public class Dashboard extends javax.swing.JFrame {
         Menu.setBackground(new java.awt.Color(153, 51, 0));
         Menu.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        btnInicio.setBackground(new java.awt.Color(102, 51, 0));
+        btnInicio.setBackground(new java.awt.Color(204, 102, 0));
         btnInicio.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         btnInicio.setName("btnInicio"); // NOI18N
         btnInicio.addMouseListener(new java.awt.event.MouseAdapter() {
