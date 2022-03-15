@@ -1,3 +1,13 @@
 
-# Compiled class file
-*.class
+#.xml
+
+**/nbproject/private/
+**/nbproject/Makefile-*.mk
+**/nbproject/Package-*.bash
+build/
+nbbuild/
+nbdist/
+
+nbproject/private/private.properties
+nbproject/genfiles.properties
+nbproject/build-impl.xml

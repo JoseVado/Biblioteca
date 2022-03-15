@@ -35,12 +35,37 @@ public class ComunicacionBD {
         
         return list;
     }
+    public static String[][] datosBD(String tabla, String columna,String comparar)throws SQLException{
+        Conexion conn = new Conexion();
+        Connection reg = conn.getConnection();
+        Statement stm = reg.createStatement();
+        
+        String[] datosBD = nombreColumnas(tabla);
+        
+        ResultSet counter = stm.executeQuery("SELECT COUNT(*) AS contar FROM `"+ tabla +"`  WHERE "+ columna +" LIKE '%"+comparar+"%'");
+        counter.next();
+        int count = counter.getInt("contar");
+        counter.close();
+
+        String list[][] = new String[count][datosBD.length];
+        
+        ResultSet re = stm.executeQuery("SELECT * FROM `"+ tabla +"`  WHERE "+ columna +" LIKE '%"+comparar+"%'");
+        for(int i = 0; i < count; i++){
+            re.next();
+            for(int c = 0; c < datosBD.length; c++){
+                list[i][c] = re.getString(datosBD[c]);
+            }
+        }
+        re.close();
+        
+        return list;
+    }
     
     public static void eliminarBD(String tabla, String id)throws SQLException{
         Conexion conn = new Conexion();
         Connection reg = conn.getConnection();
         Statement stm = reg.createStatement();
-        stm.executeUpdate("DELETE FROM `libros` WHERE `id` = '"+id+"' LIMIT 1");
+        stm.executeUpdate("DELETE FROM `"+tabla+"` WHERE `id` = '"+id+"' LIMIT 1");
         
     }
     
@@ -87,6 +112,16 @@ public class ComunicacionBD {
                 return new String [] {
                     "id", "isbn", "nombre", "autor", "categorias", "cantidad",
                     "disponible", "descripcion","fecha_de_ingreso"} ; 
+            case "usuarios":
+                return new String []{
+                    "id", "curp", "nombre_completo", "domicilio", "tel", 
+                    "correo_electronico", "sanciones"
+                };
+            case "empleados":
+                return new String []{
+                  "id", "curp", "nombre_completo", "fecha_nacimiento",
+                    "fecha_ingreso"
+                };
             default:
                 return new String[1];
         }

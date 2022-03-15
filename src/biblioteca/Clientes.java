@@ -7,13 +7,9 @@ package biblioteca;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
-import java.sql.Connection;
-import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.swing.DefaultListModel;
 import javax.swing.JPanel;
 import static biblioteca.Dashboard.content;
 
@@ -23,17 +19,19 @@ import static biblioteca.Dashboard.content;
  */
 public class Clientes extends javax.swing.JPanel {
 
-    Conexion conn;
-    Connection reg;
+    private static final String tabla = "usuarios";
+    private static final String[] datosTabla = new String [] {
+        "ID", "Curp", "Nombre", "Domicilio", "Teléfono","Correo","Sanciones"
+    };
+    
     /**
      * Creates new form Principal
      */
     public Clientes() {
         initComponents();
-        conn = new Conexion();
-        reg = conn.getConnection();
         try {
-            GetUsers();
+            jTable1.setModel(new javax.swing.table.DefaultTableModel(
+                            ComunicacionBD.datosBD(tabla),datosTabla));
         } catch (SQLException ex) {
             Logger.getLogger(Clientes.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -73,7 +71,7 @@ public class Clientes extends javax.swing.JPanel {
         add(body, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
 
         Title.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
-        Title.setText("Usuarios");
+        Title.setText("Clientes");
         add(Title, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 10, -1, -1));
 
         jSeparator2.setForeground(new java.awt.Color(0, 153, 255));
@@ -82,7 +80,7 @@ public class Clientes extends javax.swing.JPanel {
 
         usrnm.setFont(new java.awt.Font("Segoe UI", 0, 12)); // NOI18N
         usrnm.setForeground(new java.awt.Color(102, 102, 102));
-        usrnm.setText("Ingrese el nombre de usuario a buscar");
+        usrnm.setText("Ingrese el nombre del cliente  a buscar");
         usrnm.setBorder(null);
         usrnm.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mousePressed(java.awt.event.MouseEvent evt) {
@@ -182,11 +180,6 @@ public class Clientes extends javax.swing.JPanel {
         jLabel3.setForeground(new java.awt.Color(255, 255, 255));
         jLabel3.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel3.setText("Nuevo");
-        jLabel3.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mousePressed(java.awt.event.MouseEvent evt) {
-                jLabel3MousePressed(evt);
-            }
-        });
         nuevo.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 0, 60, -1));
 
         add(nuevo, new org.netbeans.lib.awtextra.AbsoluteConstraints(490, 395, 80, -1));
@@ -246,7 +239,7 @@ public class Clientes extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void usrnmMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_usrnmMousePressed
-       if(usrnm.getText().equals("Ingrese el nombre de usuario a buscar"))
+       if(usrnm.getText().equals("Ingrese el nombre del cliente  a buscar"))
         usrnm.setText("");
     }//GEN-LAST:event_usrnmMousePressed
 
@@ -284,7 +277,7 @@ public class Clientes extends javax.swing.JPanel {
 
     private void nuevoMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_nuevoMousePressed
         // Abrir sección
-        UpUsers p1 = new UpUsers();
+        UpClients p1 = new UpClients();
         p1.setSize(750, 430);
         p1.setLocation(0,0);
         
@@ -294,73 +287,37 @@ public class Clientes extends javax.swing.JPanel {
         content.repaint();
     }//GEN-LAST:event_nuevoMousePressed
 
-    private void jLabel3MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel3MousePressed
-        // Abrir sección
-        UpUsers p1 = new UpUsers();
-        p1.setSize(750, 430);
-        p1.setLocation(0,0);
-        
-        content.removeAll();
-        content.add(p1, BorderLayout.CENTER);
-        content.revalidate();
-        content.repaint();
-    }//GEN-LAST:event_jLabel3MousePressed
-
     private void usrnmMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_usrnmMouseReleased
         //nothing
     }//GEN-LAST:event_usrnmMouseReleased
 
     private void jTable1MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable1MousePressed
-        if(usrnm.getText().equals("") || usrnm.getText() == null || usrnm.getText().equals(" "))
-            usrnm.setText("Ingrese el nombre de usuario a buscar");
+        if(usrnm.getText().isEmpty())
+            usrnm.setText("Ingrese el nombre del cliente a buscar");
     }//GEN-LAST:event_jTable1MousePressed
     // BORRAR
     private void deleteMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_deleteMousePressed
         try {
             int idcell = jTable1.getSelectedRow();
             if(idcell <= -1){
-                javax.swing.JOptionPane.showMessageDialog(this, "Debe seleccionar el usuario a borrar. \n", "AVISO", javax.swing.JOptionPane.INFORMATION_MESSAGE);
+                javax.swing.JOptionPane.showMessageDialog(this, "Debe seleccionar un cliente a borrar. \n", "AVISO", javax.swing.JOptionPane.INFORMATION_MESSAGE);
             }
             else{
-                Statement stm = reg.createStatement();
-                ResultSet counter = stm.executeQuery("SELECT * FROM `users`");
-
-                int count = 0;
-                while(counter.next()){count++;}
-
-                String list[][] = new String[count][6];
-                int i = 0;
-                ResultSet re = stm.executeQuery("SELECT * FROM `users`");
-                while(re.next()){
-                    list[i][0] = re.getString("id");
-                    list[i][1] = re.getString("name");
-                    list[i][2] = re.getString("last_name_p");
-                    list[i][3] = re.getString("last_name_m");
-                    list[i][4] = re.getString("domicilio");
-                    list[i][5] = re.getString("tel");
-                    i++;
-                }
-                int id = Integer.parseInt(list[idcell][0]);
-                if(id <= 0){
-                    javax.swing.JOptionPane.showMessageDialog(this, "Debe seleccionar el usuario a borrar. \n", "AVISO", javax.swing.JOptionPane.INFORMATION_MESSAGE);
+                String list[][] = ComunicacionBD.datosBD(tabla);
+                
+                String id = list[idcell][0];
+                
+                if(id.isEmpty()){
+                    javax.swing.JOptionPane.showMessageDialog(this, "Debe seleccionar el cliente a borrar. \n", "AVISO", javax.swing.JOptionPane.INFORMATION_MESSAGE);
                 }
                 else{
-                    Statement stm2=null;
-                    try {
-                    stm2 = reg.createStatement();
-                    } catch (SQLException ex) {
-                    Logger.getLogger(Prestamos.class.getName()).log(Level.SEVERE, null, ex);
-                    }
-                    try {
-                    stm2.executeUpdate("DELETE FROM `users` WHERE `id` = "+id+" LIMIT 1");
-                    javax.swing.JOptionPane.showMessageDialog(this, "¡Usuario borrado! \n", "HECHO", javax.swing.JOptionPane.INFORMATION_MESSAGE);
-                    GetUsers();
-                    } catch (SQLException ex) {
-                    Logger.getLogger(Prestamos.class.getName()).log(Level.SEVERE, null, ex);
-                    }
+                    ComunicacionBD.eliminarBD(tabla, id);
+                    javax.swing.JOptionPane.showMessageDialog(this, "¡Cliente borrado! \n", "HECHO", javax.swing.JOptionPane.INFORMATION_MESSAGE);
+                    jTable1.setModel(new javax.swing.table.DefaultTableModel(
+                            ComunicacionBD.datosBD(tabla),datosTabla));
                 }
-            }
-        } catch (SQLException ex) {
+            } 
+        }catch (SQLException ex) {
             Logger.getLogger(Clientes.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_deleteMousePressed
@@ -369,41 +326,19 @@ public class Clientes extends javax.swing.JPanel {
         try {
             int idcell = jTable1.getSelectedRow();
             if(idcell <= -1){
-                javax.swing.JOptionPane.showMessageDialog(this, "Debe seleccionar el usuario a borrar. \n", "AVISO", javax.swing.JOptionPane.INFORMATION_MESSAGE);
+                javax.swing.JOptionPane.showMessageDialog(this, "Debe seleccionar un cliente a ediar. \n", "AVISO", javax.swing.JOptionPane.INFORMATION_MESSAGE);
             }
             else{
                 
-                Statement stm = reg.createStatement();
-                ResultSet counter = stm.executeQuery("SELECT * FROM `users`");
+                String list[][] = ComunicacionBD.datosBD(tabla);
+                String id = list[idcell][0];
 
-                int count = 0;
-                while(counter.next()){count++;}
-
-                String list[][] = new String[count][6];
-                int i = 0;
-                ResultSet re = stm.executeQuery("SELECT * FROM `users`");
-                while(re.next()){
-                    list[i][0] = re.getString("id");
-                    list[i][1] = re.getString("name");
-                    list[i][2] = re.getString("last_name_p");
-                    list[i][3] = re.getString("last_name_m");
-                    list[i][4] = re.getString("domicilio");
-                    list[i][5] = re.getString("tel");
-                    i++;
-                }
-                int id = Integer.parseInt(list[idcell][0]);
-                if(id <= 0){
-                    javax.swing.JOptionPane.showMessageDialog(this, "Debe seleccionar el usuario a borrar. \n", "AVISO", javax.swing.JOptionPane.INFORMATION_MESSAGE);
+                if(id.isEmpty()){
+                    javax.swing.JOptionPane.showMessageDialog(this, "Debe seleccionar el cliente a editar. \n", "AVISO", javax.swing.JOptionPane.INFORMATION_MESSAGE);
                 }
                 else{
-                    String usid = ""+id;
-                    String usname = list[idcell][1];
-                    String usap1 = list[idcell][2];
-                    String usap2 = list[idcell][3];
-                    String usdom = list[idcell][4];
-                    String ustel = list[idcell][5];
 
-                    UpUsers p1 = new UpUsers(usid, usname, usap1, usap2, usdom, ustel);
+                    UpClients p1 = new UpClients(list[idcell]);
                     p1.setSize(750, 430);
                     p1.setLocation(0, 0);
 
@@ -419,34 +354,17 @@ public class Clientes extends javax.swing.JPanel {
     }//GEN-LAST:event_editMousePressed
     // BUSCAR
     private void searchMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_searchMousePressed
+        
+        String inf = usrnm.getText();
         try {
-            String inf = usrnm.getText();
-            Statement stm = reg.createStatement();
-            ResultSet counter = stm.executeQuery("SELECT * FROM `users` WHERE name LIKE '"+inf+"%'");
-            
-            int count = 0;
-            while(counter.next()){count++;}
-            
-            String list[][] = new String[count][6];
-            int i = 0;
-            ResultSet re = stm.executeQuery("SELECT * FROM `users` WHERE name LIKE '"+inf+"%'");
-            while(re.next()){
-                list[i][0] = re.getString("id");
-                list[i][1] = re.getString("name");
-                list[i][2] = re.getString("last_name_p");
-                list[i][3] = re.getString("last_name_m");
-                list[i][4] = re.getString("domicilio");
-                list[i][5] = re.getString("tel");
-                i++;
-            }
+            String[][] datosNombre =  ComunicacionBD.datosBD(tabla, "nombre_completo", inf);
+            String[][] datosTel = ComunicacionBD.datosBD(tabla, "tel", inf);
             
             jTable1.setModel(new javax.swing.table.DefaultTableModel(
-                    list,
-                    new String [] {
-                        "ID", "Nombre", "Apellido P.", "Apellido M.", "Domicilio", "Teléfono"
-                    }));
+            ((datosNombre.length>datosTel.length)?datosNombre:datosTel),datosTabla));
+            
         } catch (SQLException ex) {
-            Logger.getLogger(Clientes.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(Libros.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_searchMousePressed
 
@@ -457,32 +375,7 @@ public class Clientes extends javax.swing.JPanel {
         panel.setBackground(new Color(18,90,173));
     }
     
-    private void GetUsers() throws SQLException{
-        Statement stm = reg.createStatement();
-        ResultSet counter = stm.executeQuery("SELECT * FROM `users`");
-        
-        int count = 0;
-        while(counter.next()){count++;}
-        
-        String list[][] = new String[count][6];
-        int i = 0;
-        ResultSet re = stm.executeQuery("SELECT * FROM `users`");
-        while(re.next()){
-            list[i][0] = re.getString("id");
-            list[i][1] = re.getString("name");
-            list[i][2] = re.getString("last_name_p");
-            list[i][3] = re.getString("last_name_m");
-            list[i][4] = re.getString("domicilio");
-            list[i][5] = re.getString("tel");
-            i++;
-        }
-        
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
-        list,
-        new String [] {
-            "ID", "Nombre", "Apellido P.", "Apellido M.", "Domicilio", "Teléfono"
-        }));
-    }
+ 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel Title;
