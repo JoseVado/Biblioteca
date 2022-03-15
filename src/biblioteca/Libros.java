@@ -83,7 +83,6 @@ public class Libros extends javax.swing.JPanel {
         jSeparator2.setPreferredSize(new java.awt.Dimension(250, 10));
         add(jSeparator2, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 70, 620, 10));
 
-        bid.setFont(new java.awt.Font("Segoe UI", 0, 12)); // NOI18N
         bid.setForeground(new java.awt.Color(102, 102, 102));
         bid.setText("Ingrese el ID del Libro a buscar");
         bid.setBorder(null);
