@@ -9,5 +9,6 @@ nbbuild/
 nbdist/
 
 nbproject/private/private.properties
+nbproject/private/private.xml
 nbproject/genfiles.properties
 nbproject/build-impl.xml
