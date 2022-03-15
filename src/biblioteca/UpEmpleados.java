@@ -105,7 +105,7 @@ public class UpEmpleados extends javax.swing.JPanel {
         add(body, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
 
         Title.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
-        Title.setText("Subir nuevo Libro");
+        Title.setText("Agregar nuevo empleado");
         add(Title, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 10, -1, -1));
 
         jSeparator3.setForeground(new java.awt.Color(204, 204, 204));
@@ -277,6 +277,7 @@ public class UpEmpleados extends javax.swing.JPanel {
                     } catch (SQLException ex) {
                         Logger.getLogger(UpBooks.class.getName()).log(Level.SEVERE, null, ex);
                         javax.swing.JOptionPane.showMessageDialog(this, "Formato de fecha no válida,\n no es posible agregar el empleado", "AVISO", javax.swing.JOptionPane.INFORMATION_MESSAGE);
+                        
                     }
                 }
                 
