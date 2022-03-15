@@ -12,51 +12,52 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JPanel;
 import static biblioteca.Dashboard.content;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 /**
  *
  * @author Antonio
  */
-public class UpClients extends javax.swing.JPanel {
+public class UpEmpleados extends javax.swing.JPanel {
 
+    private String pattern = "yyyy/MM/dd";
+    SimpleDateFormat simpleDateFormat = new SimpleDateFormat(pattern);
     boolean edition;
     String origId;
     private javax.swing.JTextField[] campos;
     private final String[] instrucciones = new String[]{
             "Ingrese el CURP",
             "Ingrese el Nombre completo",
-            "Ingrese el Domicilio",
-            "Ingrese el Teléfono",
-            "Ingrese el Correo electronico",
-            "0"
+            simpleDateFormat.format(new Date()),
+            simpleDateFormat.format(new Date())
         };
     
     
     /**
      * Creates new form Principal
      */
-    public UpClients() {
+    public UpEmpleados() {
         initComponents();
 
         edition = false;
         
         campos = new javax.swing.JTextField[]{
-            curp,nombre,domicilio,telefono,correo,sanciones
+            curp,nombre,fecha_nacimiento,fecha_ingreso
                         };
-        
         for(int i = 0; i<campos.length; i++){
             campos[i].setText(instrucciones[i]);
         } 
-        sanciones.setEditable(false);
+        
     }
     
-    public UpClients(String[] libro){
+    public UpEmpleados(String[] libro){
         initComponents();
 
         edition = true;
         
         campos = new javax.swing.JTextField[]{
-            curp,nombre,domicilio,telefono,correo,sanciones
+            curp,nombre,fecha_nacimiento,fecha_ingreso
                         };
         
         for(int i = 0; i<campos.length; i++){
@@ -88,17 +89,11 @@ public class UpClients extends javax.swing.JPanel {
         nombre = new javax.swing.JTextField();
         jSeparator7 = new javax.swing.JSeparator();
         Text7 = new javax.swing.JLabel();
-        domicilio = new javax.swing.JTextField();
+        fecha_nacimiento = new javax.swing.JTextField();
         jSeparator8 = new javax.swing.JSeparator();
         Text8 = new javax.swing.JLabel();
-        telefono = new javax.swing.JTextField();
+        fecha_ingreso = new javax.swing.JTextField();
         jSeparator9 = new javax.swing.JSeparator();
-        Text9 = new javax.swing.JLabel();
-        correo = new javax.swing.JTextField();
-        jSeparator10 = new javax.swing.JSeparator();
-        sanciones = new javax.swing.JTextField();
-        jSeparator11 = new javax.swing.JSeparator();
-        Text10 = new javax.swing.JLabel();
 
         setBackground(new java.awt.Color(255, 255, 255));
         setMinimumSize(new java.awt.Dimension(750, 430));
@@ -139,7 +134,7 @@ public class UpClients extends javax.swing.JPanel {
         jLabel1.setText("Subir");
         button.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 10, -1, 30));
 
-        add(button, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 290, 260, 50));
+        add(button, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 190, 260, 50));
 
         Text3.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         Text3.setText("CURP");
@@ -184,88 +179,47 @@ public class UpClients extends javax.swing.JPanel {
         add(jSeparator7, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 190, 310, 10));
 
         Text7.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        Text7.setText("Domicilio");
+        Text7.setText("Fecha nacimiento");
         add(Text7, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 220, -1, -1));
 
-        domicilio.setForeground(new java.awt.Color(102, 102, 102));
-        domicilio.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        domicilio.setBorder(null);
-        domicilio.addFocusListener(new java.awt.event.FocusAdapter() {
+        fecha_nacimiento.setForeground(new java.awt.Color(102, 102, 102));
+        fecha_nacimiento.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        fecha_nacimiento.setBorder(null);
+        fecha_nacimiento.addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusGained(java.awt.event.FocusEvent evt) {
-                domicilioFocusGained(evt);
+                fecha_nacimientoFocusGained(evt);
             }
             public void focusLost(java.awt.event.FocusEvent evt) {
-                domicilioFocusLost(evt);
+                fecha_nacimientoFocusLost(evt);
             }
         });
-        add(domicilio, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 240, 310, 30));
+        add(fecha_nacimiento, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 240, 310, 30));
 
         jSeparator8.setForeground(new java.awt.Color(0, 153, 255));
         jSeparator8.setPreferredSize(new java.awt.Dimension(200, 10));
         add(jSeparator8, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 270, 310, 10));
 
         Text8.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        Text8.setText("Teléfono");
+        Text8.setText("Fecha ingreso");
         add(Text8, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 300, -1, -1));
 
-        telefono.setForeground(new java.awt.Color(102, 102, 102));
-        telefono.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        telefono.setBorder(null);
-        telefono.addFocusListener(new java.awt.event.FocusAdapter() {
+        fecha_ingreso.setEditable(false);
+        fecha_ingreso.setForeground(new java.awt.Color(102, 102, 102));
+        fecha_ingreso.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        fecha_ingreso.setBorder(null);
+        fecha_ingreso.addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusGained(java.awt.event.FocusEvent evt) {
-                telefonoFocusGained(evt);
+                fecha_ingresoFocusGained(evt);
             }
             public void focusLost(java.awt.event.FocusEvent evt) {
-                telefonoFocusLost(evt);
+                fecha_ingresoFocusLost(evt);
             }
         });
-        add(telefono, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 320, 310, 30));
+        add(fecha_ingreso, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 320, 310, 30));
 
         jSeparator9.setForeground(new java.awt.Color(0, 153, 255));
         jSeparator9.setPreferredSize(new java.awt.Dimension(200, 10));
         add(jSeparator9, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 350, 310, 10));
-
-        Text9.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        Text9.setText("Correo electronico");
-        add(Text9, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 60, -1, -1));
-
-        correo.setForeground(new java.awt.Color(102, 102, 102));
-        correo.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        correo.setBorder(null);
-        correo.addFocusListener(new java.awt.event.FocusAdapter() {
-            public void focusGained(java.awt.event.FocusEvent evt) {
-                correoFocusGained(evt);
-            }
-            public void focusLost(java.awt.event.FocusEvent evt) {
-                correoFocusLost(evt);
-            }
-        });
-        add(correo, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 80, 310, 30));
-
-        jSeparator10.setForeground(new java.awt.Color(0, 153, 255));
-        jSeparator10.setPreferredSize(new java.awt.Dimension(200, 10));
-        add(jSeparator10, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 110, 310, 10));
-
-        sanciones.setForeground(new java.awt.Color(102, 102, 102));
-        sanciones.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        sanciones.setBorder(null);
-        sanciones.addFocusListener(new java.awt.event.FocusAdapter() {
-            public void focusGained(java.awt.event.FocusEvent evt) {
-                sancionesFocusGained(evt);
-            }
-            public void focusLost(java.awt.event.FocusEvent evt) {
-                sancionesFocusLost(evt);
-            }
-        });
-        add(sanciones, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 160, 310, 30));
-
-        jSeparator11.setForeground(new java.awt.Color(0, 153, 255));
-        jSeparator11.setPreferredSize(new java.awt.Dimension(200, 10));
-        add(jSeparator11, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 190, 310, 10));
-
-        Text10.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        Text10.setText("Sanciones");
-        add(Text10, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 140, -1, -1));
     }// </editor-fold>//GEN-END:initComponents
 
     private void buttonMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_buttonMouseEntered
@@ -299,38 +253,31 @@ public class UpClients extends javax.swing.JPanel {
             if( !nombre.getText().matches("^[a-zA-Z\\s]+$") ){
                 errores += "ERROR nombre debe ser alfabetico\n";
             }
-            if( !telefono.getText().matches("^\\d+$")){
-                errores += "ERROR teléfono debe ser númerico\n";
-            }
-            if( !correo.getText().matches("^(.+)@(.+)$") ){
-                errores += "ERROR correo invalida\n";
-            }
-            if( !sanciones.getText().matches("^\\d+$")){
-                errores += "ERROR sanciones invalidas\n";
-            }
+
+          
             
             if(errores.length() > 1){
                 javax.swing.JOptionPane.showMessageDialog(this, errores, "AVISO", javax.swing.JOptionPane.INFORMATION_MESSAGE);
             }else{
                 if(edition){
                     try {
-                        ComunicacionBD.actualizarBD("usuarios", subir, origId);
+                        ComunicacionBD.actualizarBD("empleados", subir, origId);
                         javax.swing.JOptionPane.showMessageDialog(this, 
-                                "¡Cliente editado correctamente! \n", "HECHO", javax.swing.JOptionPane.INFORMATION_MESSAGE);
+                                "¡Empleado editado correctamente! \n", "HECHO", javax.swing.JOptionPane.INFORMATION_MESSAGE);
                     } catch (SQLException ex) {
                         Logger.getLogger(UpBooks.class.getName()).log(Level.SEVERE, null, ex);
                     }
                 }else{
                     try {
-                        ComunicacionBD.subirBD("usuarios", subir);
+                        ComunicacionBD.subirBD("empleados", subir);
                         javax.swing.JOptionPane.showMessageDialog(this,
-                                "¡Cliente registrado correctamente! \n", "HECHO", javax.swing.JOptionPane.INFORMATION_MESSAGE);
+                                "¡Empleado registrado correctamente! \n", "HECHO", javax.swing.JOptionPane.INFORMATION_MESSAGE);
                     } catch (SQLException ex) {
                         Logger.getLogger(UpBooks.class.getName()).log(Level.SEVERE, null, ex);
                     }
                 }
                 
-                Clientes p1 = new Clientes();
+                Empleados p1 = new Empleados();
                 p1.setSize(750, 430);
                 p1.setLocation(0,0);
 
@@ -367,53 +314,29 @@ public class UpClients extends javax.swing.JPanel {
         }
     }//GEN-LAST:event_nombreFocusLost
 
-    private void domicilioFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_domicilioFocusGained
+    private void fecha_nacimientoFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_fecha_nacimientoFocusGained
         if(campos[2].getText().equals(instrucciones[2])){
             campos[2].setText("");
         }
-    }//GEN-LAST:event_domicilioFocusGained
+    }//GEN-LAST:event_fecha_nacimientoFocusGained
 
-    private void domicilioFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_domicilioFocusLost
+    private void fecha_nacimientoFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_fecha_nacimientoFocusLost
         if(campos[2].getText().isEmpty()){
             campos[2].setText(instrucciones[2]);
         }
-    }//GEN-LAST:event_domicilioFocusLost
+    }//GEN-LAST:event_fecha_nacimientoFocusLost
 
-    private void telefonoFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_telefonoFocusGained
+    private void fecha_ingresoFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_fecha_ingresoFocusGained
         if(campos[3].getText().equals(instrucciones[3])){
             campos[3].setText("");
         }
-    }//GEN-LAST:event_telefonoFocusGained
+    }//GEN-LAST:event_fecha_ingresoFocusGained
 
-    private void telefonoFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_telefonoFocusLost
+    private void fecha_ingresoFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_fecha_ingresoFocusLost
         if(campos[3].getText().isEmpty()){
             campos[3].setText(instrucciones[3]);
         }
-    }//GEN-LAST:event_telefonoFocusLost
-
-    private void correoFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_correoFocusLost
-        if(campos[4].getText().isEmpty()){
-            campos[4].setText(instrucciones[4]);
-        }
-    }//GEN-LAST:event_correoFocusLost
-
-    private void correoFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_correoFocusGained
-        if(campos[4].getText().equals(instrucciones[4])){
-            campos[4].setText("");
-        }
-    }//GEN-LAST:event_correoFocusGained
-
-    private void sancionesFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_sancionesFocusLost
-        if(campos[5].getText().isEmpty()){
-            campos[5].setText(instrucciones[5]);
-        }
-    }//GEN-LAST:event_sancionesFocusLost
-
-    private void sancionesFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_sancionesFocusGained
-        if(campos[5].getText().equals(instrucciones[5])){
-            campos[5].setText("");
-        }
-    }//GEN-LAST:event_sancionesFocusGained
+    }//GEN-LAST:event_fecha_ingresoFocusLost
 
     void setColor(JPanel panel){
         panel.setBackground(new Color(21,101,192));
@@ -424,28 +347,22 @@ public class UpClients extends javax.swing.JPanel {
     
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JLabel Text10;
     private javax.swing.JLabel Text3;
     private javax.swing.JLabel Text6;
     private javax.swing.JLabel Text7;
     private javax.swing.JLabel Text8;
-    private javax.swing.JLabel Text9;
     private javax.swing.JLabel Title;
     private javax.swing.JPanel body;
     private javax.swing.JPanel button;
-    private javax.swing.JTextField correo;
     private javax.swing.JTextField curp;
-    private javax.swing.JTextField domicilio;
+    private javax.swing.JTextField fecha_ingreso;
+    private javax.swing.JTextField fecha_nacimiento;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JSeparator jSeparator10;
-    private javax.swing.JSeparator jSeparator11;
     private javax.swing.JSeparator jSeparator3;
     private javax.swing.JSeparator jSeparator4;
     private javax.swing.JSeparator jSeparator7;
     private javax.swing.JSeparator jSeparator8;
     private javax.swing.JSeparator jSeparator9;
     private javax.swing.JTextField nombre;
-    private javax.swing.JTextField sanciones;
-    private javax.swing.JTextField telefono;
     // End of variables declaration//GEN-END:variables
 }
