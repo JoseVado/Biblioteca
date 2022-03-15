@@ -366,22 +366,13 @@ public class UpBooks extends javax.swing.JPanel {
         }else{
             String errores = "";
             if( !isbn.getText().matches("^\\d+$") ){
-<<<<<<< HEAD
                 errores += "ERROR isbn invalido(debe ser númerico)\n";
-=======
-                errores += "ERROR isbn invalido\n";
->>>>>>> fa0ea7b8274c71de342fd76317f4d1edee637ea1
             }
             if( !titulo.getText().matches("^[a-zA-Z0-9\\s]+$") ){
                 errores += "ERROR titulo debe ser alfanumerico\n";
             }
-<<<<<<< HEAD
-            if( !autor.getText().matches("^[a-zA-Z.,\\s]+$") ){
-                errores += "ERROR el nombre del autor debe ser alfabetico\n";
-=======
             if( !autor.getText().matches("^[a-zA-Z.\\s]+$") ){
                 errores += "ERROR autor debe ser alfabetico\n";
->>>>>>> fa0ea7b8274c71de342fd76317f4d1edee637ea1
             }
             if( !cantidad.getText().matches("^\\d+$") ){
                 errores += "ERROR cantidad invalida\n";
