@@ -254,6 +254,7 @@ public class UpEmpleados extends javax.swing.JPanel {
                 errores += "ERROR nombre debe ser alfabetico\n";
             }
 
+
           
             
             if(errores.length() > 1){
@@ -266,6 +267,7 @@ public class UpEmpleados extends javax.swing.JPanel {
                                 "¡Empleado editado correctamente! \n", "HECHO", javax.swing.JOptionPane.INFORMATION_MESSAGE);
                     } catch (SQLException ex) {
                         Logger.getLogger(UpBooks.class.getName()).log(Level.SEVERE, null, ex);
+                        
                     }
                 }else{
                     try {
@@ -274,6 +276,7 @@ public class UpEmpleados extends javax.swing.JPanel {
                                 "¡Empleado registrado correctamente! \n", "HECHO", javax.swing.JOptionPane.INFORMATION_MESSAGE);
                     } catch (SQLException ex) {
                         Logger.getLogger(UpBooks.class.getName()).log(Level.SEVERE, null, ex);
+                        javax.swing.JOptionPane.showMessageDialog(this, "Formato de fecha no válida,\n no es posible agregar el empleado", "AVISO", javax.swing.JOptionPane.INFORMATION_MESSAGE);
                     }
                 }
                 
