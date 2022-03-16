@@ -64,6 +64,7 @@ public class UpClients extends javax.swing.JPanel {
         }  
         origId = libro[0];
         
+        lblTitulo.setText("Actualizar nuevo cliente");
         jLabel1.setText("Guardar");
     }
 
@@ -77,7 +78,7 @@ public class UpClients extends javax.swing.JPanel {
     private void initComponents() {
 
         body = new javax.swing.JPanel();
-        Title = new javax.swing.JLabel();
+        lblTitulo = new javax.swing.JLabel();
         jSeparator3 = new javax.swing.JSeparator();
         button = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
@@ -99,6 +100,8 @@ public class UpClients extends javax.swing.JPanel {
         sanciones = new javax.swing.JTextField();
         jSeparator11 = new javax.swing.JSeparator();
         Text10 = new javax.swing.JLabel();
+        button1 = new javax.swing.JPanel();
+        jLabel2 = new javax.swing.JLabel();
 
         setBackground(new java.awt.Color(255, 255, 255));
         setMinimumSize(new java.awt.Dimension(750, 430));
@@ -109,9 +112,9 @@ public class UpClients extends javax.swing.JPanel {
         body.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
         add(body, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
 
-        Title.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
-        Title.setText("Agregar nuevo empleado");
-        add(Title, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 10, -1, -1));
+        lblTitulo.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
+        lblTitulo.setText("Agregar nuevo cliente");
+        add(lblTitulo, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 10, -1, -1));
 
         jSeparator3.setForeground(new java.awt.Color(204, 204, 204));
         jSeparator3.setOrientation(javax.swing.SwingConstants.VERTICAL);
@@ -139,7 +142,7 @@ public class UpClients extends javax.swing.JPanel {
         jLabel1.setText("Subir");
         button.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 10, -1, 30));
 
-        add(button, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 290, 260, 50));
+        add(button, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 280, 260, 50));
 
         Text3.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         Text3.setText("CURP");
@@ -266,6 +269,29 @@ public class UpClients extends javax.swing.JPanel {
         Text10.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         Text10.setText("Sanciones");
         add(Text10, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 140, -1, -1));
+
+        button1.setBackground(new java.awt.Color(18, 90, 173));
+        button1.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        button1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                button1MouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                button1MouseExited(evt);
+            }
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                button1MousePressed(evt);
+            }
+        });
+        button1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        jLabel2.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        jLabel2.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel2.setText("Cancelar");
+        button1.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 10, -1, 30));
+
+        add(button1, new org.netbeans.lib.awtextra.AbsoluteConstraints(500, 350, 130, 50));
     }// </editor-fold>//GEN-END:initComponents
 
     private void buttonMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_buttonMouseEntered
@@ -309,7 +335,7 @@ public class UpClients extends javax.swing.JPanel {
                 errores += "ERROR sanciones invalidas\n";
             }
             
-            if(errores.length() > 1){
+            if(errores.length() > 0){
                 javax.swing.JOptionPane.showMessageDialog(this, errores, "AVISO", javax.swing.JOptionPane.INFORMATION_MESSAGE);
             }else{
                 if(edition){
@@ -322,9 +348,14 @@ public class UpClients extends javax.swing.JPanel {
                     }
                 }else{
                     try {
-                        ComunicacionBD.subirBD("usuarios", subir);
-                        javax.swing.JOptionPane.showMessageDialog(this,
-                                "¡Cliente registrado correctamente! \n", "HECHO", javax.swing.JOptionPane.INFORMATION_MESSAGE);
+                        String[][] datos = ComunicacionBD.datosBD("usuarios", "curp", subir[0] );
+                        if(datos.length>0){
+                            javax.swing.JOptionPane.showMessageDialog(this, "Cliente anteriormente registrado", "AVISO", javax.swing.JOptionPane.INFORMATION_MESSAGE);
+                        }else{
+                            ComunicacionBD.subirBD("usuarios", subir);
+                            javax.swing.JOptionPane.showMessageDialog(this,
+                                    "¡Cliente registrado correctamente! \n", "HECHO", javax.swing.JOptionPane.INFORMATION_MESSAGE);
+                        }
                     } catch (SQLException ex) {
                         Logger.getLogger(UpBooks.class.getName()).log(Level.SEVERE, null, ex);
                     }
@@ -415,6 +446,25 @@ public class UpClients extends javax.swing.JPanel {
         }
     }//GEN-LAST:event_sancionesFocusGained
 
+    private void button1MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_button1MouseEntered
+        // TODO add your handling code here:
+    }//GEN-LAST:event_button1MouseEntered
+
+    private void button1MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_button1MouseExited
+        // TODO add your handling code here:
+    }//GEN-LAST:event_button1MouseExited
+
+    private void button1MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_button1MousePressed
+        Clientes p1 = new Clientes();
+                p1.setSize(750, 430);
+                p1.setLocation(0,0);
+
+                content.removeAll();
+                content.add(p1, BorderLayout.CENTER);
+                content.revalidate();
+                content.repaint();
+    }//GEN-LAST:event_button1MousePressed
+
     void setColor(JPanel panel){
         panel.setBackground(new Color(21,101,192));
     }
@@ -430,13 +480,14 @@ public class UpClients extends javax.swing.JPanel {
     private javax.swing.JLabel Text7;
     private javax.swing.JLabel Text8;
     private javax.swing.JLabel Text9;
-    private javax.swing.JLabel Title;
     private javax.swing.JPanel body;
     private javax.swing.JPanel button;
+    private javax.swing.JPanel button1;
     private javax.swing.JTextField correo;
     private javax.swing.JTextField curp;
     private javax.swing.JTextField domicilio;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
     private javax.swing.JSeparator jSeparator10;
     private javax.swing.JSeparator jSeparator11;
     private javax.swing.JSeparator jSeparator3;
@@ -444,6 +495,7 @@ public class UpClients extends javax.swing.JPanel {
     private javax.swing.JSeparator jSeparator7;
     private javax.swing.JSeparator jSeparator8;
     private javax.swing.JSeparator jSeparator9;
+    private javax.swing.JLabel lblTitulo;
     private javax.swing.JTextField nombre;
     private javax.swing.JTextField sanciones;
     private javax.swing.JTextField telefono;

@@ -23,10 +23,7 @@ CREATE TABLE `libros` (
   `fecha_de_ingreso`	DATE NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=UTF8;
 
-INSERT INTO `libros` (`isbn`,`nombre`,`autor`,`categorias`,`cantidad`,`disponible`,`descripcion`,`fecha_de_ingreso`) VALUES
-	('2313','LIBRO','DON PRUEBAS', 'NINGUNA', 2, 2, 'DESCRIPCION PRUEBA', '2022/03/09'),
-	('2313','LIBRO','DON PRUEBAS', 'NINGUNA', 2, 2, 'DESCRIPCION PRUEBA', '2022/03/09')
-	;
+
 
 -- --------------------------------------------------------
 

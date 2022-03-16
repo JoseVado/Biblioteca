@@ -33,7 +33,6 @@ public class UpBooks extends javax.swing.JPanel {
             "Ingrese las Categorias separadas por coma",
             "Ingrese la Cantidad total",
             "Ingrese los Disponibles",
-            "Ingrese la descripción del Libro",
             simpleDateFormat.format(new Date())
         };
     
@@ -47,12 +46,13 @@ public class UpBooks extends javax.swing.JPanel {
         edition = false;
         
         campos = new javax.swing.JTextField[]{
-            isbn,titulo,autor,categorias,cantidad,disponibles,descripcion,fecha
+            isbn,titulo,autor,categorias,cantidad,disponibles,fecha
                         };
         
         for(int i = 0; i<campos.length; i++){
             campos[i].setText(instrucciones[i]);
         } 
+        txtADescripcion.setText("Ingrese la descripción del Libro");
     }
     
     public UpBooks(String[] libro){
@@ -61,14 +61,19 @@ public class UpBooks extends javax.swing.JPanel {
         edition = true;
         
         campos = new javax.swing.JTextField[]{
-            isbn,titulo,autor,categorias,cantidad,disponibles,descripcion,fecha
+            isbn,titulo,autor,categorias,cantidad,disponibles,fecha
                         };
         
-        for(int i = 0; i<campos.length; i++){
+        for(int i = 0; i<campos.length-1; i++){
             campos[i].setText(libro[i+1]);
-        }  
+        }
+        
+        txtADescripcion.setText(libro[libro.length-2]);
+        campos[campos.length-1].setText(libro[libro.length-1]);
+        
         origId = libro[0];
         
+        lblTitulo.setText("Modificar Libro");
         jLabel1.setText("Guardar");
     }
 
@@ -82,7 +87,7 @@ public class UpBooks extends javax.swing.JPanel {
     private void initComponents() {
 
         body = new javax.swing.JPanel();
-        Title = new javax.swing.JLabel();
+        lblTitulo = new javax.swing.JLabel();
         jSeparator3 = new javax.swing.JSeparator();
         button = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
@@ -105,11 +110,14 @@ public class UpBooks extends javax.swing.JPanel {
         jSeparator11 = new javax.swing.JSeparator();
         Text10 = new javax.swing.JLabel();
         Text12 = new javax.swing.JLabel();
-        descripcion = new javax.swing.JTextField();
         jSeparator13 = new javax.swing.JSeparator();
         Text14 = new javax.swing.JLabel();
         fecha = new javax.swing.JTextField();
         jSeparator15 = new javax.swing.JSeparator();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        txtADescripcion = new javax.swing.JTextArea();
+        btnCancelar = new javax.swing.JPanel();
+        jLabel2 = new javax.swing.JLabel();
 
         setBackground(new java.awt.Color(255, 255, 255));
         setMinimumSize(new java.awt.Dimension(750, 430));
@@ -120,9 +128,9 @@ public class UpBooks extends javax.swing.JPanel {
         body.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
         add(body, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
 
-        Title.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
-        Title.setText("Subir nuevo Libro");
-        add(Title, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 10, -1, -1));
+        lblTitulo.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
+        lblTitulo.setText("Subir nuevo Libro");
+        add(lblTitulo, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 10, -1, -1));
 
         jSeparator3.setForeground(new java.awt.Color(204, 204, 204));
         jSeparator3.setOrientation(javax.swing.SwingConstants.VERTICAL);
@@ -148,15 +156,14 @@ public class UpBooks extends javax.swing.JPanel {
         jLabel1.setForeground(new java.awt.Color(255, 255, 255));
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel1.setText("Subir");
-        button.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 10, -1, 30));
+        button.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 10, -1, 30));
 
-        add(button, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 360, 260, 50));
+        add(button, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 360, 280, 50));
 
         Text3.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         Text3.setText("ISBN");
         add(Text3, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 40, -1, -1));
 
-        isbn.setFont(new java.awt.Font("Segoe UI", 0, 12)); // NOI18N
         isbn.setForeground(new java.awt.Color(102, 102, 102));
         isbn.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         isbn.setBorder(null);
@@ -178,7 +185,6 @@ public class UpBooks extends javax.swing.JPanel {
         Text6.setText("Título");
         add(Text6, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 100, -1, -1));
 
-        titulo.setFont(new java.awt.Font("Segoe UI", 0, 12)); // NOI18N
         titulo.setForeground(new java.awt.Color(102, 102, 102));
         titulo.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         titulo.setBorder(null);
@@ -200,7 +206,6 @@ public class UpBooks extends javax.swing.JPanel {
         Text7.setText("Autor");
         add(Text7, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 160, -1, -1));
 
-        autor.setFont(new java.awt.Font("Segoe UI", 0, 12)); // NOI18N
         autor.setForeground(new java.awt.Color(102, 102, 102));
         autor.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         autor.setBorder(null);
@@ -222,7 +227,6 @@ public class UpBooks extends javax.swing.JPanel {
         Text8.setText("Categorias");
         add(Text8, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 220, -1, -1));
 
-        categorias.setFont(new java.awt.Font("Segoe UI", 0, 12)); // NOI18N
         categorias.setForeground(new java.awt.Color(102, 102, 102));
         categorias.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         categorias.setBorder(null);
@@ -244,7 +248,6 @@ public class UpBooks extends javax.swing.JPanel {
         Text9.setText("Cantidad");
         add(Text9, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 290, -1, -1));
 
-        cantidad.setFont(new java.awt.Font("Segoe UI", 0, 12)); // NOI18N
         cantidad.setForeground(new java.awt.Color(102, 102, 102));
         cantidad.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         cantidad.setBorder(null);
@@ -262,7 +265,6 @@ public class UpBooks extends javax.swing.JPanel {
         jSeparator10.setPreferredSize(new java.awt.Dimension(200, 10));
         add(jSeparator10, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 340, 140, 10));
 
-        disponibles.setFont(new java.awt.Font("Segoe UI", 0, 12)); // NOI18N
         disponibles.setForeground(new java.awt.Color(102, 102, 102));
         disponibles.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         disponibles.setBorder(null);
@@ -288,48 +290,60 @@ public class UpBooks extends javax.swing.JPanel {
         Text12.setText("Descripción");
         add(Text12, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 40, -1, -1));
 
-        descripcion.setFont(new java.awt.Font("Segoe UI", 0, 12)); // NOI18N
-        descripcion.setForeground(new java.awt.Color(102, 102, 102));
-        descripcion.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        descripcion.setBorder(null);
-        descripcion.addFocusListener(new java.awt.event.FocusAdapter() {
-            public void focusGained(java.awt.event.FocusEvent evt) {
-                descripcionFocusGained(evt);
-            }
-            public void focusLost(java.awt.event.FocusEvent evt) {
-                descripcionFocusLost(evt);
-            }
-        });
-        add(descripcion, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 60, 260, 180));
-
         jSeparator13.setForeground(new java.awt.Color(0, 153, 255));
         jSeparator13.setPreferredSize(new java.awt.Dimension(200, 10));
-        add(jSeparator13, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 240, 260, 10));
+        add(jSeparator13, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 240, 280, 10));
 
         Text14.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         Text14.setText("Fecha de ingreso");
         add(Text14, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 280, -1, -1));
 
         fecha.setEditable(false);
-        fecha.setFont(new java.awt.Font("Segoe UI", 0, 12)); // NOI18N
         fecha.setForeground(new java.awt.Color(102, 102, 102));
         fecha.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         fecha.setBorder(null);
-        fecha.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mousePressed(java.awt.event.MouseEvent evt) {
-                fechaMousePressed(evt);
-            }
-        });
-        fecha.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                fechaActionPerformed(evt);
-            }
-        });
-        add(fecha, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 300, 260, 30));
+        add(fecha, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 300, 280, 30));
 
         jSeparator15.setForeground(new java.awt.Color(0, 153, 255));
         jSeparator15.setPreferredSize(new java.awt.Dimension(200, 10));
-        add(jSeparator15, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 330, 260, 10));
+        add(jSeparator15, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 330, 280, 10));
+
+        txtADescripcion.setColumns(20);
+        txtADescripcion.setRows(5);
+        txtADescripcion.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                txtADescripcionFocusGained(evt);
+            }
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                txtADescripcionFocusLost(evt);
+            }
+        });
+        jScrollPane1.setViewportView(txtADescripcion);
+
+        add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 60, 280, 180));
+
+        btnCancelar.setBackground(new java.awt.Color(18, 90, 173));
+        btnCancelar.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        btnCancelar.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                btnCancelarMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                btnCancelarMouseExited(evt);
+            }
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                btnCancelarMousePressed(evt);
+            }
+        });
+        btnCancelar.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        jLabel2.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        jLabel2.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel2.setText("Cancelar");
+        btnCancelar.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 10, -1, 30));
+
+        add(btnCancelar, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 360, 150, 50));
     }// </editor-fold>//GEN-END:initComponents
 
     private void buttonMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_buttonMouseEntered
@@ -340,18 +354,10 @@ public class UpBooks extends javax.swing.JPanel {
         resetColor(button);
     }//GEN-LAST:event_buttonMouseExited
 
-    private void fechaMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_fechaMousePressed
-
-    }//GEN-LAST:event_fechaMousePressed
-
-    private void fechaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_fechaActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_fechaActionPerformed
-
     // SUBIR
     private void buttonMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_buttonMousePressed
         boolean algunDatoVacio = false;
-        String[] subir = new String [campos.length];
+        String[] subir = new String [campos.length+1];
         for(int i = 0; i < campos.length-1; i++){
             subir[i] = campos[i].getText();
             if(campos[i].getText().equals(instrucciones[i])){
@@ -359,7 +365,10 @@ public class UpBooks extends javax.swing.JPanel {
                 break;
             }
         }
-        subir[campos.length-1] = campos[campos.length-1].getText();
+        if(txtADescripcion.getText().equals("Ingrese la descripción del Libro"))
+            algunDatoVacio = true;
+        subir[subir.length -2] = txtADescripcion.getText();
+        subir[subir.length -1] = campos[campos.length-1].getText();
         
         if(algunDatoVacio){
             javax.swing.JOptionPane.showMessageDialog(this, "Debe llenar todos los campos \n", "AVISO", javax.swing.JOptionPane.INFORMATION_MESSAGE);
@@ -380,8 +389,8 @@ public class UpBooks extends javax.swing.JPanel {
             if( !disponibles.getText().matches("^\\d+$")){
                 errores += "ERROR disponibles invalida\n";
             }
-            
-            if(errores.length() > 1){
+
+            if(errores.length() > 0){
                 javax.swing.JOptionPane.showMessageDialog(this, errores, "AVISO", javax.swing.JOptionPane.INFORMATION_MESSAGE);
             }else{
                 if(edition){
@@ -394,9 +403,14 @@ public class UpBooks extends javax.swing.JPanel {
                     }
                 }else{
                     try {
-                        ComunicacionBD.subirBD("libros", subir);
-                        javax.swing.JOptionPane.showMessageDialog(this,
-                                "¡Libro registrado correctamente! \n", "HECHO", javax.swing.JOptionPane.INFORMATION_MESSAGE);
+                        String[][] datos = ComunicacionBD.datosBD("libros", "isbn", subir[0] );
+                        if(datos.length>0){
+                            javax.swing.JOptionPane.showMessageDialog(this, "Libro anteriormente registrado", "AVISO", javax.swing.JOptionPane.INFORMATION_MESSAGE);
+                        }else{
+                            ComunicacionBD.subirBD("libros", subir);
+                            javax.swing.JOptionPane.showMessageDialog(this,
+                                    "¡Libro registrado correctamente! \n", "HECHO", javax.swing.JOptionPane.INFORMATION_MESSAGE);
+                        }
                     } catch (SQLException ex) {
                         Logger.getLogger(UpBooks.class.getName()).log(Level.SEVERE, null, ex);
                     }
@@ -487,17 +501,36 @@ public class UpBooks extends javax.swing.JPanel {
         }
     }//GEN-LAST:event_disponiblesFocusLost
 
-    private void descripcionFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_descripcionFocusGained
-        if(campos[6].getText().equals(instrucciones[6])){
-            campos[6].setText("");
+    private void txtADescripcionFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtADescripcionFocusGained
+        if(txtADescripcion.getText().equals("Ingrese la descripción del Libro")){
+            txtADescripcion.setText("");
         }
-    }//GEN-LAST:event_descripcionFocusGained
+    }//GEN-LAST:event_txtADescripcionFocusGained
 
-    private void descripcionFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_descripcionFocusLost
-        if(campos[6].getText().isEmpty()){
-            campos[6].setText(instrucciones[6]);
+    private void txtADescripcionFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtADescripcionFocusLost
+        if(txtADescripcion.getText().isEmpty()){
+            txtADescripcion.setText("Ingrese la descripción del Libro");
         }
-    }//GEN-LAST:event_descripcionFocusLost
+    }//GEN-LAST:event_txtADescripcionFocusLost
+
+    private void btnCancelarMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnCancelarMouseEntered
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnCancelarMouseEntered
+
+    private void btnCancelarMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnCancelarMouseExited
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnCancelarMouseExited
+
+    private void btnCancelarMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnCancelarMousePressed
+        Libros p1 = new Libros();
+                p1.setSize(750, 430);
+                p1.setLocation(0,0);
+
+                content.removeAll();
+                content.add(p1, BorderLayout.CENTER);
+                content.revalidate();
+                content.repaint();
+    }//GEN-LAST:event_btnCancelarMousePressed
 
     void setColor(JPanel panel){
         panel.setBackground(new Color(21,101,192));
@@ -516,17 +549,18 @@ public class UpBooks extends javax.swing.JPanel {
     private javax.swing.JLabel Text7;
     private javax.swing.JLabel Text8;
     private javax.swing.JLabel Text9;
-    private javax.swing.JLabel Title;
     private javax.swing.JTextField autor;
     private javax.swing.JPanel body;
+    private javax.swing.JPanel btnCancelar;
     private javax.swing.JPanel button;
     private javax.swing.JTextField cantidad;
     private javax.swing.JTextField categorias;
-    private javax.swing.JTextField descripcion;
     private javax.swing.JTextField disponibles;
     private javax.swing.JTextField fecha;
     private javax.swing.JTextField isbn;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JSeparator jSeparator10;
     private javax.swing.JSeparator jSeparator11;
     private javax.swing.JSeparator jSeparator13;
@@ -536,6 +570,8 @@ public class UpBooks extends javax.swing.JPanel {
     private javax.swing.JSeparator jSeparator7;
     private javax.swing.JSeparator jSeparator8;
     private javax.swing.JSeparator jSeparator9;
+    private javax.swing.JLabel lblTitulo;
     private javax.swing.JTextField titulo;
+    private javax.swing.JTextArea txtADescripcion;
     // End of variables declaration//GEN-END:variables
 }

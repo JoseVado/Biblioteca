@@ -2,37 +2,19 @@ package biblioteca;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
-import java.sql.Connection;
-import java.text.SimpleDateFormat;
-import java.time.LocalDate;
-import java.util.Calendar;
-import java.util.Date;
 import javax.swing.JPanel;
 
 public class Dashboard extends javax.swing.JFrame {
 
     int xMouse;
     int yMouse;
-    Conexion conn;
-    Connection reg;
     /**
      * Creates new form Dashboard
      */
     public Dashboard() {
         initComponents();
-        conn = new Conexion();
-        reg = conn.getConnection();
-        
-        /*
-        LocalDate now = LocalDate.now();
-        int year = now.getYear();
-        int dia = now.getDayOfMonth();
-        int month = now.getMonthValue();
-        String[] meses = {"Enero","Febrero","Marzo","Abril","Mayo","Junio","Julio","Agosto"," ;Septiembre"
-            ,"Octubre","Noviembre","Diciemrbre"};
-        fecha.setText("Hoy es "+dia+" de "+meses[month - 1]+" de "+year);
-        */
-        Inventario p1 = new Inventario();
+
+        Inicio p1 = new Inicio();
         p1.setSize(750, 430);
         p1.setLocation(0,0);
         
@@ -53,42 +35,33 @@ public class Dashboard extends javax.swing.JFrame {
 
         Background = new javax.swing.JPanel();
         Menu = new javax.swing.JPanel();
+        jLabel6 = new javax.swing.JLabel();
+        jLabel25 = new javax.swing.JLabel();
+        jSeparator1 = new javax.swing.JSeparator();
         btnInicio = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
-        btnDevolver = new javax.swing.JPanel();
-        jLabel3 = new javax.swing.JLabel();
-        jLabel4 = new javax.swing.JLabel();
-        btnClientes = new javax.swing.JPanel();
-        jLabel7 = new javax.swing.JLabel();
-        jLabel8 = new javax.swing.JLabel();
         btnLibros = new javax.swing.JPanel();
         jLabel9 = new javax.swing.JLabel();
         jLabel10 = new javax.swing.JLabel();
-        btnPrestamos = new javax.swing.JPanel();
-        jLabel11 = new javax.swing.JLabel();
-        jLabel12 = new javax.swing.JLabel();
-        btn_reports1 = new javax.swing.JPanel();
-        jLabel15 = new javax.swing.JLabel();
-        jLabel16 = new javax.swing.JLabel();
         btnPrestar = new javax.swing.JPanel();
         jLabel13 = new javax.swing.JLabel();
         jLabel14 = new javax.swing.JLabel();
-        jSeparator1 = new javax.swing.JSeparator();
+        btnDevolver = new javax.swing.JPanel();
+        jLabel3 = new javax.swing.JLabel();
+        jLabel4 = new javax.swing.JLabel();
+        btnPrestamos = new javax.swing.JPanel();
+        jLabel11 = new javax.swing.JLabel();
+        jLabel12 = new javax.swing.JLabel();
+        btnClientes = new javax.swing.JPanel();
+        jLabel7 = new javax.swing.JLabel();
+        jLabel8 = new javax.swing.JLabel();
         btnMultas = new javax.swing.JPanel();
         jLabel17 = new javax.swing.JLabel();
         jLabel18 = new javax.swing.JLabel();
-        btnMultas1 = new javax.swing.JPanel();
-        jLabel19 = new javax.swing.JLabel();
-        jLabel20 = new javax.swing.JLabel();
         btnEmpleados = new javax.swing.JPanel();
         jLabel21 = new javax.swing.JLabel();
         jLabel22 = new javax.swing.JLabel();
-        btnMultas3 = new javax.swing.JPanel();
-        jLabel23 = new javax.swing.JLabel();
-        jLabel24 = new javax.swing.JLabel();
-        jLabel6 = new javax.swing.JLabel();
-        jLabel25 = new javax.swing.JLabel();
         Header = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
         frase = new javax.swing.JLabel();
@@ -111,6 +84,19 @@ public class Dashboard extends javax.swing.JFrame {
         Menu.setBackground(new java.awt.Color(153, 51, 0));
         Menu.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
+        jLabel6.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
+        jLabel6.setIcon(new javax.swing.ImageIcon(getClass().getResource("/biblioteca/images/libro-abierto (1).png"))); // NOI18N
+        jLabel6.setToolTipText("");
+        Menu.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 20, -1, -1));
+
+        jLabel25.setFont(new java.awt.Font("Trebuchet MS", 1, 20)); // NOI18N
+        jLabel25.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel25.setText("El libro prestado");
+        Menu.add(jLabel25, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 90, -1, -1));
+
+        jSeparator1.setPreferredSize(new java.awt.Dimension(50, 5));
+        Menu.add(jSeparator1, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 120, 190, 20));
+
         btnInicio.setBackground(new java.awt.Color(204, 102, 0));
         btnInicio.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         btnInicio.setName("btnInicio"); // NOI18N
@@ -131,50 +117,6 @@ public class Dashboard extends javax.swing.JFrame {
         btnInicio.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 10, -1, 30));
 
         Menu.add(btnInicio, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 140, 270, 50));
-
-        btnDevolver.setBackground(new java.awt.Color(102, 51, 0));
-        btnDevolver.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
-        btnDevolver.setName("btnDevolver"); // NOI18N
-        btnDevolver.setPreferredSize(new java.awt.Dimension(270, 51));
-        btnDevolver.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mousePressed(java.awt.event.MouseEvent evt) {
-                btnDevolverMousePressed(evt);
-            }
-        });
-        btnDevolver.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-
-        jLabel3.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/biblioteca/images/calendar-multiple-check.png"))); // NOI18N
-        btnDevolver.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, 30, 30));
-
-        jLabel4.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        jLabel4.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel4.setText("Devolver");
-        btnDevolver.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 10, -1, 30));
-
-        Menu.add(btnDevolver, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 290, -1, -1));
-
-        btnClientes.setBackground(new java.awt.Color(102, 51, 0));
-        btnClientes.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
-        btnClientes.setName("btnClientes"); // NOI18N
-        btnClientes.setPreferredSize(new java.awt.Dimension(270, 51));
-        btnClientes.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mousePressed(java.awt.event.MouseEvent evt) {
-                btnClientesMousePressed(evt);
-            }
-        });
-        btnClientes.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-
-        jLabel7.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel7.setIcon(new javax.swing.ImageIcon(getClass().getResource("/biblioteca/images/account-multiple.png"))); // NOI18N
-        btnClientes.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, 30, 30));
-
-        jLabel8.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        jLabel8.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel8.setText("Clientes");
-        btnClientes.add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 10, -1, 30));
-
-        Menu.add(btnClientes, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 390, -1, -1));
 
         btnLibros.setBackground(new java.awt.Color(102, 51, 0));
         btnLibros.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
@@ -198,55 +140,6 @@ public class Dashboard extends javax.swing.JFrame {
 
         Menu.add(btnLibros, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 190, -1, -1));
 
-        btnPrestamos.setBackground(new java.awt.Color(102, 51, 0));
-        btnPrestamos.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
-        btnPrestamos.setName("btnPrestamos"); // NOI18N
-        btnPrestamos.setPreferredSize(new java.awt.Dimension(270, 51));
-        btnPrestamos.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mousePressed(java.awt.event.MouseEvent evt) {
-                btnPrestamosMousePressed(evt);
-            }
-        });
-        btnPrestamos.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-
-        jLabel11.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel11.setIcon(new javax.swing.ImageIcon(getClass().getResource("/biblioteca/images/file-chart.png"))); // NOI18N
-        btnPrestamos.add(jLabel11, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, 30, 30));
-
-        jLabel12.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        jLabel12.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel12.setText("Prestamos");
-        btnPrestamos.add(jLabel12, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 10, -1, 30));
-
-        btn_reports1.setBackground(new java.awt.Color(18, 90, 173));
-        btn_reports1.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
-        btn_reports1.setPreferredSize(new java.awt.Dimension(270, 51));
-        btn_reports1.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseEntered(java.awt.event.MouseEvent evt) {
-                btn_reports1MouseEntered(evt);
-            }
-            public void mouseExited(java.awt.event.MouseEvent evt) {
-                btn_reports1MouseExited(evt);
-            }
-            public void mousePressed(java.awt.event.MouseEvent evt) {
-                btn_reports1MousePressed(evt);
-            }
-        });
-        btn_reports1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-
-        jLabel15.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel15.setIcon(new javax.swing.ImageIcon(getClass().getResource("/biblioteca/images/file-chart.png"))); // NOI18N
-        btn_reports1.add(jLabel15, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, 30, 30));
-
-        jLabel16.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        jLabel16.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel16.setText("Reportes");
-        btn_reports1.add(jLabel16, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 10, -1, 30));
-
-        btnPrestamos.add(btn_reports1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 380, -1, -1));
-
-        Menu.add(btnPrestamos, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 340, -1, -1));
-
         btnPrestar.setBackground(new java.awt.Color(102, 51, 0));
         btnPrestar.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         btnPrestar.setName("btnPrestar"); // NOI18N
@@ -269,8 +162,71 @@ public class Dashboard extends javax.swing.JFrame {
 
         Menu.add(btnPrestar, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 240, -1, -1));
 
-        jSeparator1.setPreferredSize(new java.awt.Dimension(50, 5));
-        Menu.add(jSeparator1, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 120, 190, 20));
+        btnDevolver.setBackground(new java.awt.Color(102, 51, 0));
+        btnDevolver.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        btnDevolver.setName("btnDevolver"); // NOI18N
+        btnDevolver.setPreferredSize(new java.awt.Dimension(270, 51));
+        btnDevolver.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                btnDevolverMousePressed(evt);
+            }
+        });
+        btnDevolver.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        jLabel3.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/biblioteca/images/calendar-multiple-check.png"))); // NOI18N
+        btnDevolver.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, 30, 30));
+
+        jLabel4.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        jLabel4.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel4.setText("Devolver");
+        btnDevolver.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 10, -1, 30));
+
+        Menu.add(btnDevolver, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 290, -1, -1));
+
+        btnPrestamos.setBackground(new java.awt.Color(102, 51, 0));
+        btnPrestamos.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        btnPrestamos.setName("btnPrestamos"); // NOI18N
+        btnPrestamos.setPreferredSize(new java.awt.Dimension(270, 51));
+        btnPrestamos.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                btnPrestamosMousePressed(evt);
+            }
+        });
+        btnPrestamos.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        jLabel11.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel11.setIcon(new javax.swing.ImageIcon(getClass().getResource("/biblioteca/images/file-chart.png"))); // NOI18N
+        btnPrestamos.add(jLabel11, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, 30, 30));
+
+        jLabel12.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        jLabel12.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel12.setText("Prestamos");
+        btnPrestamos.add(jLabel12, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 10, -1, 30));
+
+        Menu.add(btnPrestamos, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 340, -1, -1));
+
+        btnClientes.setBackground(new java.awt.Color(102, 51, 0));
+        btnClientes.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        btnClientes.setName("btnClientes"); // NOI18N
+        btnClientes.setPreferredSize(new java.awt.Dimension(270, 51));
+        btnClientes.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                btnClientesMousePressed(evt);
+            }
+        });
+        btnClientes.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        jLabel7.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel7.setIcon(new javax.swing.ImageIcon(getClass().getResource("/biblioteca/images/account-multiple.png"))); // NOI18N
+        btnClientes.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, 30, 30));
+
+        jLabel8.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        jLabel8.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel8.setText("Clientes");
+        btnClientes.add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 10, -1, 30));
+
+        Menu.add(btnClientes, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 390, -1, -1));
 
         btnMultas.setBackground(new java.awt.Color(102, 51, 0));
         btnMultas.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
@@ -291,28 +247,6 @@ public class Dashboard extends javax.swing.JFrame {
         jLabel18.setForeground(new java.awt.Color(255, 255, 255));
         jLabel18.setText("Multas");
         btnMultas.add(jLabel18, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 10, -1, 30));
-
-        btnMultas1.setBackground(new java.awt.Color(102, 51, 0));
-        btnMultas1.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
-        btnMultas1.setName("btnMultas"); // NOI18N
-        btnMultas1.setPreferredSize(new java.awt.Dimension(270, 51));
-        btnMultas1.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mousePressed(java.awt.event.MouseEvent evt) {
-                btnMultas1MousePressed(evt);
-            }
-        });
-        btnMultas1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-
-        jLabel19.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel19.setIcon(new javax.swing.ImageIcon(getClass().getResource("/biblioteca/images/account-multiple.png"))); // NOI18N
-        btnMultas1.add(jLabel19, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, 30, 30));
-
-        jLabel20.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        jLabel20.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel20.setText("Multas");
-        btnMultas1.add(jLabel20, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 10, -1, 30));
-
-        btnMultas.add(btnMultas1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 510, 270, -1));
 
         Menu.add(btnMultas, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 440, 270, -1));
 
@@ -336,39 +270,7 @@ public class Dashboard extends javax.swing.JFrame {
         jLabel22.setText("Empleados");
         btnEmpleados.add(jLabel22, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 10, -1, 30));
 
-        btnMultas3.setBackground(new java.awt.Color(102, 51, 0));
-        btnMultas3.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
-        btnMultas3.setName("btnMultas"); // NOI18N
-        btnMultas3.setPreferredSize(new java.awt.Dimension(270, 51));
-        btnMultas3.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mousePressed(java.awt.event.MouseEvent evt) {
-                btnMultas3MousePressed(evt);
-            }
-        });
-        btnMultas3.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-
-        jLabel23.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel23.setIcon(new javax.swing.ImageIcon(getClass().getResource("/biblioteca/images/account-multiple.png"))); // NOI18N
-        btnMultas3.add(jLabel23, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, 30, 30));
-
-        jLabel24.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        jLabel24.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel24.setText("Multas");
-        btnMultas3.add(jLabel24, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 10, -1, 30));
-
-        btnEmpleados.add(btnMultas3, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 510, 270, -1));
-
         Menu.add(btnEmpleados, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 590, 270, -1));
-
-        jLabel6.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
-        jLabel6.setIcon(new javax.swing.ImageIcon(getClass().getResource("/biblioteca/images/libro-abierto (1).png"))); // NOI18N
-        jLabel6.setToolTipText("");
-        Menu.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 20, -1, -1));
-
-        jLabel25.setFont(new java.awt.Font("Trebuchet MS", 1, 20)); // NOI18N
-        jLabel25.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel25.setText("El libro prestado");
-        Menu.add(jLabel25, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 90, -1, -1));
 
         Background.add(Menu, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 270, 640));
 
@@ -451,7 +353,7 @@ public class Dashboard extends javax.swing.JFrame {
         resetColor(btnMultas);
         resetColor(btnEmpleados);
         // Abrir sección
-        Inventario p1 = new Inventario();
+        Inicio p1 = new Inicio();
         p1.setSize(750, 430);
         p1.setLocation(0,0);
         
@@ -462,6 +364,7 @@ public class Dashboard extends javax.swing.JFrame {
     }//GEN-LAST:event_btnInicioMousePressed
 
     private void btnPrestarMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnPrestarMousePressed
+        /*
         setColor(btnPrestar);
         resetColor(btnInicio);
         resetColor(btnDevolver);
@@ -480,9 +383,11 @@ public class Dashboard extends javax.swing.JFrame {
         content.add(p1, BorderLayout.CENTER);
         content.revalidate();
         content.repaint();
+        */
     }//GEN-LAST:event_btnPrestarMousePressed
 
     private void btnDevolverMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnDevolverMousePressed
+        /*
         setColor(btnDevolver);
         resetColor(btnInicio);
         resetColor(btnPrestar);
@@ -500,6 +405,7 @@ public class Dashboard extends javax.swing.JFrame {
         content.add(p1, BorderLayout.CENTER);
         content.revalidate();
         content.repaint();
+        */
     }//GEN-LAST:event_btnDevolverMousePressed
 
     private void btnClientesMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnClientesMousePressed
@@ -544,6 +450,7 @@ public class Dashboard extends javax.swing.JFrame {
     }//GEN-LAST:event_btnLibrosMousePressed
 
     private void btnPrestamosMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnPrestamosMousePressed
+        /*
         setColor(btnPrestamos);
         resetColor(btnInicio);
         resetColor(btnDevolver);
@@ -562,21 +469,11 @@ public class Dashboard extends javax.swing.JFrame {
         content.add(p1, BorderLayout.CENTER);
         content.revalidate();
         content.repaint();
+        */
     }//GEN-LAST:event_btnPrestamosMousePressed
 
-    private void btn_reports1MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_reports1MouseEntered
-       
-    }//GEN-LAST:event_btn_reports1MouseEntered
-
-    private void btn_reports1MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_reports1MouseExited
-        
-    }//GEN-LAST:event_btn_reports1MouseExited
-
-    private void btn_reports1MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_reports1MousePressed
-       
-    }//GEN-LAST:event_btn_reports1MousePressed
-
     private void btnMultasMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnMultasMousePressed
+        /*
         setColor(btnMultas);
         resetColor(btnInicio);
         resetColor(btnDevolver);
@@ -595,15 +492,8 @@ public class Dashboard extends javax.swing.JFrame {
         content.add(p1, BorderLayout.CENTER);
         content.revalidate();
         content.repaint();
+        */
     }//GEN-LAST:event_btnMultasMousePressed
-
-    private void btnMultas1MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnMultas1MousePressed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btnMultas1MousePressed
-
-    private void btnMultas3MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnMultas3MousePressed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btnMultas3MousePressed
 
     private void btnEmpleadosMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnEmpleadosMousePressed
         setColor(btnEmpleados);
@@ -677,11 +567,8 @@ public class Dashboard extends javax.swing.JFrame {
     private javax.swing.JPanel btnInicio;
     private javax.swing.JPanel btnLibros;
     private javax.swing.JPanel btnMultas;
-    private javax.swing.JPanel btnMultas1;
-    private javax.swing.JPanel btnMultas3;
     private javax.swing.JPanel btnPrestamos;
     private javax.swing.JPanel btnPrestar;
-    private javax.swing.JPanel btn_reports1;
     public static javax.swing.JPanel content;
     private javax.swing.JLabel frase;
     private javax.swing.JLabel jLabel1;
@@ -690,17 +577,11 @@ public class Dashboard extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel14;
-    private javax.swing.JLabel jLabel15;
-    private javax.swing.JLabel jLabel16;
     private javax.swing.JLabel jLabel17;
     private javax.swing.JLabel jLabel18;
-    private javax.swing.JLabel jLabel19;
     private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel20;
     private javax.swing.JLabel jLabel21;
     private javax.swing.JLabel jLabel22;
-    private javax.swing.JLabel jLabel23;
-    private javax.swing.JLabel jLabel24;
     private javax.swing.JLabel jLabel25;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;

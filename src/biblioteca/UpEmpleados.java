@@ -47,7 +47,7 @@ public class UpEmpleados extends javax.swing.JPanel {
                         };
         for(int i = 0; i<campos.length; i++){
             campos[i].setText(instrucciones[i]);
-        } 
+        }
         
     }
     
@@ -64,7 +64,7 @@ public class UpEmpleados extends javax.swing.JPanel {
             campos[i].setText(libro[i+1]);
         }  
         origId = libro[0];
-        
+        lblTitulo.setText("Actualizar nuevo empleado");
         jLabel1.setText("Guardar");
     }
 
@@ -78,7 +78,7 @@ public class UpEmpleados extends javax.swing.JPanel {
     private void initComponents() {
 
         body = new javax.swing.JPanel();
-        Title = new javax.swing.JLabel();
+        lblTitulo = new javax.swing.JLabel();
         jSeparator3 = new javax.swing.JSeparator();
         button = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
@@ -94,6 +94,8 @@ public class UpEmpleados extends javax.swing.JPanel {
         Text8 = new javax.swing.JLabel();
         fecha_ingreso = new javax.swing.JTextField();
         jSeparator9 = new javax.swing.JSeparator();
+        btnCancelar = new javax.swing.JPanel();
+        jLabel2 = new javax.swing.JLabel();
 
         setBackground(new java.awt.Color(255, 255, 255));
         setMinimumSize(new java.awt.Dimension(750, 430));
@@ -104,9 +106,9 @@ public class UpEmpleados extends javax.swing.JPanel {
         body.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
         add(body, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
 
-        Title.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
-        Title.setText("Agregar nuevo empleado");
-        add(Title, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 10, -1, -1));
+        lblTitulo.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
+        lblTitulo.setText("Agregar nuevo empleado");
+        add(lblTitulo, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 10, -1, -1));
 
         jSeparator3.setForeground(new java.awt.Color(204, 204, 204));
         jSeparator3.setOrientation(javax.swing.SwingConstants.VERTICAL);
@@ -132,9 +134,9 @@ public class UpEmpleados extends javax.swing.JPanel {
         jLabel1.setForeground(new java.awt.Color(255, 255, 255));
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel1.setText("Subir");
-        button.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 10, -1, 30));
+        button.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 10, -1, 30));
 
-        add(button, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 190, 260, 50));
+        add(button, new org.netbeans.lib.awtextra.AbsoluteConstraints(440, 160, 250, 50));
 
         Text3.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         Text3.setText("CURP");
@@ -220,6 +222,29 @@ public class UpEmpleados extends javax.swing.JPanel {
         jSeparator9.setForeground(new java.awt.Color(0, 153, 255));
         jSeparator9.setPreferredSize(new java.awt.Dimension(200, 10));
         add(jSeparator9, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 350, 310, 10));
+
+        btnCancelar.setBackground(new java.awt.Color(18, 90, 173));
+        btnCancelar.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        btnCancelar.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                btnCancelarMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                btnCancelarMouseExited(evt);
+            }
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                btnCancelarMousePressed(evt);
+            }
+        });
+        btnCancelar.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        jLabel2.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        jLabel2.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel2.setText("Cancelar");
+        btnCancelar.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 10, -1, 30));
+
+        add(btnCancelar, new org.netbeans.lib.awtextra.AbsoluteConstraints(500, 230, 130, 50));
     }// </editor-fold>//GEN-END:initComponents
 
     private void buttonMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_buttonMouseEntered
@@ -257,7 +282,7 @@ public class UpEmpleados extends javax.swing.JPanel {
 
           
             
-            if(errores.length() > 1){
+            if(errores.length() > 0){
                 javax.swing.JOptionPane.showMessageDialog(this, errores, "AVISO", javax.swing.JOptionPane.INFORMATION_MESSAGE);
             }else{
                 if(edition){
@@ -271,9 +296,14 @@ public class UpEmpleados extends javax.swing.JPanel {
                     }
                 }else{
                     try {
-                        ComunicacionBD.subirBD("empleados", subir);
-                        javax.swing.JOptionPane.showMessageDialog(this,
-                                "¡Empleado registrado correctamente! \n", "HECHO", javax.swing.JOptionPane.INFORMATION_MESSAGE);
+                        String[][] datos = ComunicacionBD.datosBD("empleados", "curp", subir[0] );
+                        if(datos.length>0){
+                            javax.swing.JOptionPane.showMessageDialog(this, "Empleado anteriormente registrado", "AVISO", javax.swing.JOptionPane.INFORMATION_MESSAGE);
+                        }else{
+                            ComunicacionBD.subirBD("empleados", subir);
+                            javax.swing.JOptionPane.showMessageDialog(this,
+                                    "¡Empleado registrado correctamente! \n", "HECHO", javax.swing.JOptionPane.INFORMATION_MESSAGE);
+                        }
                     } catch (SQLException ex) {
                         Logger.getLogger(UpBooks.class.getName()).log(Level.SEVERE, null, ex);
                         javax.swing.JOptionPane.showMessageDialog(this, "Formato de fecha no válida,\n no es posible agregar el empleado", "AVISO", javax.swing.JOptionPane.INFORMATION_MESSAGE);
@@ -342,6 +372,25 @@ public class UpEmpleados extends javax.swing.JPanel {
         }
     }//GEN-LAST:event_fecha_ingresoFocusLost
 
+    private void btnCancelarMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnCancelarMouseEntered
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnCancelarMouseEntered
+
+    private void btnCancelarMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnCancelarMouseExited
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnCancelarMouseExited
+
+    private void btnCancelarMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnCancelarMousePressed
+        Empleados p1 = new Empleados();
+                p1.setSize(750, 430);
+                p1.setLocation(0,0);
+
+                content.removeAll();
+                content.add(p1, BorderLayout.CENTER);
+                content.revalidate();
+                content.repaint();
+    }//GEN-LAST:event_btnCancelarMousePressed
+
     void setColor(JPanel panel){
         panel.setBackground(new Color(21,101,192));
     }
@@ -355,18 +404,20 @@ public class UpEmpleados extends javax.swing.JPanel {
     private javax.swing.JLabel Text6;
     private javax.swing.JLabel Text7;
     private javax.swing.JLabel Text8;
-    private javax.swing.JLabel Title;
     private javax.swing.JPanel body;
+    private javax.swing.JPanel btnCancelar;
     private javax.swing.JPanel button;
     private javax.swing.JTextField curp;
     private javax.swing.JTextField fecha_ingreso;
     private javax.swing.JTextField fecha_nacimiento;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
     private javax.swing.JSeparator jSeparator3;
     private javax.swing.JSeparator jSeparator4;
     private javax.swing.JSeparator jSeparator7;
     private javax.swing.JSeparator jSeparator8;
     private javax.swing.JSeparator jSeparator9;
+    private javax.swing.JLabel lblTitulo;
     private javax.swing.JTextField nombre;
     // End of variables declaration//GEN-END:variables
 }

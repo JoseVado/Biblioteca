@@ -9,12 +9,12 @@ package biblioteca;
  *
  * @author Antonio
  */
-public class Inventario extends javax.swing.JPanel {
+public class Inicio extends javax.swing.JPanel {
 
     /**
      * Creates new form Principal
      */
-    public Inventario() {
+    public Inicio() {
         initComponents();
     }
 
