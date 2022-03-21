@@ -81,17 +81,12 @@ public class Empleados extends javax.swing.JPanel {
         usrnm.setForeground(new java.awt.Color(102, 102, 102));
         usrnm.setText("Ingrese el nombre del empleado a buscar");
         usrnm.setBorder(null);
-        usrnm.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mousePressed(java.awt.event.MouseEvent evt) {
-                usrnmMousePressed(evt);
+        usrnm.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                usrnmFocusGained(evt);
             }
-            public void mouseReleased(java.awt.event.MouseEvent evt) {
-                usrnmMouseReleased(evt);
-            }
-        });
-        usrnm.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                usrnmActionPerformed(evt);
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                usrnmFocusLost(evt);
             }
         });
         add(usrnm, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 40, 620, 30));
@@ -229,11 +224,6 @@ public class Empleados extends javax.swing.JPanel {
             }
         });
         jTable1.getTableHeader().setReorderingAllowed(false);
-        jTable1.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mousePressed(java.awt.event.MouseEvent evt) {
-                jTable1MousePressed(evt);
-            }
-        });
         jScrollPane1.setViewportView(jTable1);
         if (jTable1.getColumnModel().getColumnCount() > 0) {
             jTable1.getColumnModel().getColumn(0).setPreferredWidth(10);
@@ -241,11 +231,6 @@ public class Empleados extends javax.swing.JPanel {
 
         add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 90, 750, 300));
     }// </editor-fold>//GEN-END:initComponents
-
-    private void usrnmMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_usrnmMousePressed
-       if(usrnm.getText().equals("Ingrese el nombre del empleado  a buscar"))
-        usrnm.setText("");
-    }//GEN-LAST:event_usrnmMousePressed
 
     private void deleteMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_deleteMouseEntered
         setColor(delete);
@@ -256,27 +241,27 @@ public class Empleados extends javax.swing.JPanel {
     }//GEN-LAST:event_deleteMouseExited
 
     private void editMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_editMouseEntered
-        // TODO add your handling code here:
+        setColor(edit);
     }//GEN-LAST:event_editMouseEntered
 
     private void editMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_editMouseExited
-        // TODO add your handling code here:
+        resetColor(edit);
     }//GEN-LAST:event_editMouseExited
 
     private void nuevoMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_nuevoMouseEntered
-        // TODO add your handling code here:
+        setColor(nuevo);
     }//GEN-LAST:event_nuevoMouseEntered
 
     private void nuevoMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_nuevoMouseExited
-        // TODO add your handling code here:
+        resetColor(nuevo);
     }//GEN-LAST:event_nuevoMouseExited
 
     private void searchMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_searchMouseEntered
-        // TODO add your handling code here:
+        setColor(search);
     }//GEN-LAST:event_searchMouseEntered
 
     private void searchMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_searchMouseExited
-        // TODO add your handling code here:
+        resetColor(search);
     }//GEN-LAST:event_searchMouseExited
 
     private void nuevoMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_nuevoMousePressed
@@ -290,15 +275,6 @@ public class Empleados extends javax.swing.JPanel {
         content.revalidate();
         content.repaint();
     }//GEN-LAST:event_nuevoMousePressed
-
-    private void usrnmMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_usrnmMouseReleased
-        //nothing
-    }//GEN-LAST:event_usrnmMouseReleased
-
-    private void jTable1MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable1MousePressed
-        if(usrnm.getText().isEmpty())
-            usrnm.setText("Ingrese el nombre del empleado a buscar");
-    }//GEN-LAST:event_jTable1MousePressed
     // BORRAR
     private void deleteMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_deleteMousePressed
         try {
@@ -315,10 +291,14 @@ public class Empleados extends javax.swing.JPanel {
                     javax.swing.JOptionPane.showMessageDialog(this, "Debe seleccionar el empleado a borrar. \n", "AVISO", javax.swing.JOptionPane.INFORMATION_MESSAGE);
                 }
                 else{
-                    ComunicacionBD.eliminarBD(tabla, id);
-                    javax.swing.JOptionPane.showMessageDialog(this, "¡Empleado borrado! \n", "HECHO", javax.swing.JOptionPane.INFORMATION_MESSAGE);
-                    jTable1.setModel(new javax.swing.table.DefaultTableModel(
+                    int aceptar = javax.swing.JOptionPane.showConfirmDialog(this, "¿Desea eliminar este empleado?", "ELIMINAR", javax.swing.JOptionPane.WARNING_MESSAGE);
+                    if(aceptar == javax.swing.JOptionPane.YES_OPTION){
+                        ComunicacionBD.eliminarBD(tabla, id);
+                        javax.swing.JOptionPane.showMessageDialog(this, "¡Empleado borrado! \n", "HECHO", javax.swing.JOptionPane.INFORMATION_MESSAGE);
+                        jTable1.setModel(new javax.swing.table.DefaultTableModel(
                             ComunicacionBD.datosBD(tabla),datosTabla));
+                    }
+                    
                 }
             } 
         }catch (SQLException ex) {
@@ -372,9 +352,15 @@ public class Empleados extends javax.swing.JPanel {
         }
     }//GEN-LAST:event_searchMousePressed
 
-    private void usrnmActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_usrnmActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_usrnmActionPerformed
+    private void usrnmFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_usrnmFocusGained
+        if(usrnm.getText().equals("Ingrese el nombre del empleado a buscar"))
+            usrnm.setText("");
+    }//GEN-LAST:event_usrnmFocusGained
+
+    private void usrnmFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_usrnmFocusLost
+        if(usrnm.getText().isEmpty())
+            usrnm.setText("Ingrese el nombre del empleado a buscar");
+    }//GEN-LAST:event_usrnmFocusLost
 
     void setColor(JPanel panel){
         panel.setBackground(new Color(21,101,192));

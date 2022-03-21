@@ -140,7 +140,7 @@ public class UpClients extends javax.swing.JPanel {
         jLabel1.setForeground(new java.awt.Color(255, 255, 255));
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel1.setText("Subir");
-        button.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 10, -1, 30));
+        button.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 10, -1, 30));
 
         add(button, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 280, 260, 50));
 
@@ -447,11 +447,11 @@ public class UpClients extends javax.swing.JPanel {
     }//GEN-LAST:event_sancionesFocusGained
 
     private void button1MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_button1MouseEntered
-        // TODO add your handling code here:
+        setColor(button1);
     }//GEN-LAST:event_button1MouseEntered
 
     private void button1MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_button1MouseExited
-        // TODO add your handling code here:
+        resetColor(button1);
     }//GEN-LAST:event_button1MouseExited
 
     private void button1MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_button1MousePressed

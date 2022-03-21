@@ -514,11 +514,11 @@ public class UpBooks extends javax.swing.JPanel {
     }//GEN-LAST:event_txtADescripcionFocusLost
 
     private void btnCancelarMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnCancelarMouseEntered
-        // TODO add your handling code here:
+        setColor(btnCancelar);
     }//GEN-LAST:event_btnCancelarMouseEntered
 
     private void btnCancelarMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnCancelarMouseExited
-        // TODO add your handling code here:
+        resetColor(btnCancelar);
     }//GEN-LAST:event_btnCancelarMouseExited
 
     private void btnCancelarMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnCancelarMousePressed

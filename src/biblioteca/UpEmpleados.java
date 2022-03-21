@@ -12,6 +12,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JPanel;
 import static biblioteca.Dashboard.content;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
@@ -134,7 +135,7 @@ public class UpEmpleados extends javax.swing.JPanel {
         jLabel1.setForeground(new java.awt.Color(255, 255, 255));
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel1.setText("Subir");
-        button.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 10, -1, 30));
+        button.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 10, -1, 30));
 
         add(button, new org.netbeans.lib.awtextra.AbsoluteConstraints(440, 160, 250, 50));
 
@@ -254,7 +255,24 @@ public class UpEmpleados extends javax.swing.JPanel {
     private void buttonMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_buttonMouseExited
         resetColor(button);
     }//GEN-LAST:event_buttonMouseExited
+    
+    
+    private static boolean isValidDate(String input) {
+        String formatString = "MM/dd/yyyy";
 
+        try {
+            SimpleDateFormat format = new SimpleDateFormat(formatString);
+            format.setLenient(false);
+            format.parse(input);
+        } catch (ParseException e) {
+            return false;
+        } catch (IllegalArgumentException e) {
+            return false;
+        }
+
+        return true;
+    }
+    
     // SUBIR
     private void buttonMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_buttonMousePressed
         boolean algunDatoVacio = false;
@@ -278,10 +296,10 @@ public class UpEmpleados extends javax.swing.JPanel {
             if( !nombre.getText().matches("^[a-zA-Z\\s]+$") ){
                 errores += "ERROR nombre debe ser alfabetico\n";
             }
+            if( !isValidDate(fecha_nacimiento.getText())){
+                errores += "ERROR fecha de nacimiento invalida";
+            }
 
-
-          
-            
             if(errores.length() > 0){
                 javax.swing.JOptionPane.showMessageDialog(this, errores, "AVISO", javax.swing.JOptionPane.INFORMATION_MESSAGE);
             }else{
@@ -373,11 +391,11 @@ public class UpEmpleados extends javax.swing.JPanel {
     }//GEN-LAST:event_fecha_ingresoFocusLost
 
     private void btnCancelarMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnCancelarMouseEntered
-        // TODO add your handling code here:
+        setColor(btnCancelar);
     }//GEN-LAST:event_btnCancelarMouseEntered
 
     private void btnCancelarMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnCancelarMouseExited
-        // TODO add your handling code here:
+        resetColor(btnCancelar);
     }//GEN-LAST:event_btnCancelarMouseExited
 
     private void btnCancelarMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnCancelarMousePressed

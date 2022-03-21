@@ -32,6 +32,7 @@ public class ComunicacionBD {
             }
         }
         re.close();
+        stm.close();
         
         return list;
     }
@@ -57,6 +58,7 @@ public class ComunicacionBD {
             }
         }
         re.close();
+        stm.close();
         
         return list;
     }
@@ -66,6 +68,7 @@ public class ComunicacionBD {
         Connection reg = conn.getConnection();
         Statement stm = reg.createStatement();
         stm.executeUpdate("DELETE FROM `"+tabla+"` WHERE `id` = '"+id+"' LIMIT 1");
+        stm.close();
         
     }
     
@@ -89,6 +92,7 @@ public class ComunicacionBD {
         
         stm.executeUpdate("INSERT INTO `"+ tabla
                  +"` ("+ columnas +") VALUES ("+ datosSubir +");");
+        stm.close();
     }
     public static void actualizarBD(String tabla, String[] datos, String id)throws SQLException{
         Conexion conn = new Conexion();
@@ -104,6 +108,7 @@ public class ComunicacionBD {
         res += "`"+ datosBD[datosBD.length-1] + "` = '" + datos[datos.length-1] +"' ";
         
         stm.executeUpdate("UPDATE "+ tabla +" SET " + res + " WHERE `id` = '" + id + "';");
+        stm.close();
     }
     
     public static String[] nombreColumnas(String nombre){

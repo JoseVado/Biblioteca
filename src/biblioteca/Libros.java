@@ -81,11 +81,14 @@ public class Libros extends javax.swing.JPanel {
         add(jSeparator2, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 70, 620, 10));
 
         bid.setForeground(new java.awt.Color(102, 102, 102));
-        bid.setText("Ingrese el ID del Libro a buscar");
+        bid.setText("Ingrese el ISBN o el Titulo Libro a buscar");
         bid.setBorder(null);
-        bid.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mousePressed(java.awt.event.MouseEvent evt) {
-                bidMousePressed(evt);
+        bid.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                bidFocusGained(evt);
+            }
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                bidFocusLost(evt);
             }
         });
         add(bid, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 40, 620, 30));
@@ -227,11 +230,6 @@ public class Libros extends javax.swing.JPanel {
             }
         });
         jTable1.getTableHeader().setReorderingAllowed(false);
-        jTable1.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mousePressed(java.awt.event.MouseEvent evt) {
-                jTable1MousePressed(evt);
-            }
-        });
         jScrollPane2.setViewportView(jTable1);
         if (jTable1.getColumnModel().getColumnCount() > 0) {
             jTable1.getColumnModel().getColumn(0).setPreferredWidth(10);
@@ -242,11 +240,6 @@ public class Libros extends javax.swing.JPanel {
 
         add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 80, 730, 300));
     }// </editor-fold>//GEN-END:initComponents
-
-    private void bidMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_bidMousePressed
-       if(bid.getText().equals("Ingrese el ID del Libro a buscar"))
-        bid.setText("");
-    }//GEN-LAST:event_bidMousePressed
 
     private void btnAgregarLibroMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnAgregarLibroMousePressed
         // Abrir sección
@@ -267,11 +260,6 @@ public class Libros extends javax.swing.JPanel {
     private void eliminarMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_eliminarMouseExited
         resetColor(eliminar);
     }//GEN-LAST:event_eliminarMouseExited
-
-    private void jTable1MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable1MousePressed
-        if(bid.getText().isEmpty())
-            bid.setText("Ingrese el ISBN o el Titulo Libro a buscar");
-    }//GEN-LAST:event_jTable1MousePressed
     
     
     
@@ -291,10 +279,13 @@ public class Libros extends javax.swing.JPanel {
                     javax.swing.JOptionPane.showMessageDialog(this, "Debe seleccionar el libro a borrar. \n", "AVISO", javax.swing.JOptionPane.INFORMATION_MESSAGE);
                 }
                 else{
-                    ComunicacionBD.eliminarBD(tabla, id);
-                    javax.swing.JOptionPane.showMessageDialog(this, "¡Libro borrado! \n", "HECHO", javax.swing.JOptionPane.INFORMATION_MESSAGE);
-                    jTable1.setModel(new javax.swing.table.DefaultTableModel(
-                            ComunicacionBD.datosBD(tabla),datosTabla));
+                    int aceptar = javax.swing.JOptionPane.showConfirmDialog(this, "¿Desea eliminar estos libros?", "ELIMINAR", javax.swing.JOptionPane.WARNING_MESSAGE);
+                    if(aceptar == javax.swing.JOptionPane.YES_OPTION){
+                        ComunicacionBD.eliminarBD(tabla, id);
+                        javax.swing.JOptionPane.showMessageDialog(this, "¡Libro borrado! \n", "HECHO", javax.swing.JOptionPane.INFORMATION_MESSAGE);
+                        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+                                ComunicacionBD.datosBD(tabla),datosTabla));
+                    }
                    
                 }
             }
@@ -374,6 +365,16 @@ public class Libros extends javax.swing.JPanel {
     private void btnModificarLibroMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnModificarLibroMouseExited
         resetColor(btnModificarLibro);
     }//GEN-LAST:event_btnModificarLibroMouseExited
+
+    private void bidFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_bidFocusGained
+        if(bid.getText().equals("Ingrese el ISBN o el Titulo Libro a buscar"))
+            bid.setText("");
+    }//GEN-LAST:event_bidFocusGained
+
+    private void bidFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_bidFocusLost
+        if(bid.getText().isEmpty())
+            bid.setText("Ingrese el ISBN o el Titulo Libro a buscar");
+    }//GEN-LAST:event_bidFocusLost
 
     void setColor(JPanel panel){
         panel.setBackground(new Color(204,102,0));
