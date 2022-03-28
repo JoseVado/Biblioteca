@@ -36,7 +36,8 @@ CREATE TABLE `prestamos` (
   `usuario` 		INT NOT NULL,
   `libro` 			INT NOT NULL,
   `date_out` 		DATE NOT NULL,
-  `date_return` 	DATE NOT NULL
+  `date_return` 	DATE NOT NULL,
+  `days` 		DATE NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------

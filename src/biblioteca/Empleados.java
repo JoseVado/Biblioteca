@@ -12,6 +12,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JPanel;
 import static biblioteca.Dashboard.content;
+import javax.swing.ListSelectionModel;
 
 /**
  *
@@ -32,6 +33,7 @@ public class Empleados extends javax.swing.JPanel {
         try {
             jTable1.setModel(new javax.swing.table.DefaultTableModel(
                             ComunicacionBD.datosBD(tabla),datosTabla));
+            jTable1.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         } catch (SQLException ex) {
             Logger.getLogger(Empleados.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -297,6 +299,7 @@ public class Empleados extends javax.swing.JPanel {
                         javax.swing.JOptionPane.showMessageDialog(this, "¡Empleado borrado! \n", "HECHO", javax.swing.JOptionPane.INFORMATION_MESSAGE);
                         jTable1.setModel(new javax.swing.table.DefaultTableModel(
                             ComunicacionBD.datosBD(tabla),datosTabla));
+                        jTable1.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
                     }
                     
                 }
@@ -345,7 +348,8 @@ public class Empleados extends javax.swing.JPanel {
             String[][] datosIngreso = ComunicacionBD.datosBD(tabla, "fecha_ingreso", inf);
             
             jTable1.setModel(new javax.swing.table.DefaultTableModel(
-            ((datosNombre.length>datosIngreso.length)?datosNombre:datosIngreso),datosTabla));
+                ((datosNombre.length>datosIngreso.length)?datosNombre:datosIngreso),datosTabla));
+            jTable1.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
             
         } catch (SQLException ex) {
             Logger.getLogger(Libros.class.getName()).log(Level.SEVERE, null, ex);

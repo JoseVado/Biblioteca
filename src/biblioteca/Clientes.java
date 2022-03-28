@@ -12,6 +12,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JPanel;
 import static biblioteca.Dashboard.content;
+import javax.swing.ListSelectionModel;
 
 /**
  *
@@ -32,6 +33,7 @@ public class Clientes extends javax.swing.JPanel {
         try {
             jTable1.setModel(new javax.swing.table.DefaultTableModel(
                             ComunicacionBD.datosBD(tabla),datosTabla));
+            jTable1.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         } catch (SQLException ex) {
             Logger.getLogger(Clientes.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -298,6 +300,7 @@ public class Clientes extends javax.swing.JPanel {
                         javax.swing.JOptionPane.showMessageDialog(this, "¡Cliente borrado! \n", "HECHO", javax.swing.JOptionPane.INFORMATION_MESSAGE);
                         jTable1.setModel(new javax.swing.table.DefaultTableModel(
                                 ComunicacionBD.datosBD(tabla),datosTabla));
+                        jTable1.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
                     }
                 }
             } 
@@ -345,8 +348,8 @@ public class Clientes extends javax.swing.JPanel {
             String[][] datosTel = ComunicacionBD.datosBD(tabla, "tel", inf);
             
             jTable1.setModel(new javax.swing.table.DefaultTableModel(
-            ((datosNombre.length>datosTel.length)?datosNombre:datosTel),datosTabla));
-            
+                ((datosNombre.length>datosTel.length)?datosNombre:datosTel),datosTabla));
+            jTable1.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         } catch (SQLException ex) {
             Logger.getLogger(Libros.class.getName()).log(Level.SEVERE, null, ex);
         }

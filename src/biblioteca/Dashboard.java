@@ -278,7 +278,7 @@ public class Dashboard extends javax.swing.JFrame {
 
         jLabel2.setFont(new java.awt.Font("Segoe UI", 1, 36)); // NOI18N
         jLabel2.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel2.setText("Biblioteca Municipal \"EL libro prestado\"");
+        jLabel2.setText("Biblioteca Municipal \"El libro prestado\"");
 
         frase.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
         frase.setForeground(new java.awt.Color(255, 255, 255));
@@ -342,7 +342,15 @@ public class Dashboard extends javax.swing.JFrame {
     private void formWindowActivated(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowActivated
         // TODO add your handling code here:
     }//GEN-LAST:event_formWindowActivated
-
+    private void ventanaError(){
+        Error p0 = new Error();
+        p0.setSize(750, 430);
+        p0.setLocation(0,0);
+        content.removeAll();
+        content.add(p0, BorderLayout.CENTER);
+        content.revalidate();
+        content.repaint();
+    }
     private void btnInicioMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnInicioMousePressed
         setColor(btnInicio);
         resetColor(btnPrestar);
@@ -352,6 +360,7 @@ public class Dashboard extends javax.swing.JFrame {
         resetColor(btnPrestamos);
         resetColor(btnMultas);
         resetColor(btnEmpleados);
+        
         // Abrir sección
         Inicio p1 = new Inicio();
         p1.setSize(750, 430);
@@ -417,6 +426,9 @@ public class Dashboard extends javax.swing.JFrame {
         resetColor(btnPrestamos);
         resetColor(btnMultas);
         resetColor(btnEmpleados);
+        
+        ventanaError();
+        
         // Abrir sección
         Clientes p1 = new Clientes();
         p1.setSize(750, 430);
@@ -437,6 +449,8 @@ public class Dashboard extends javax.swing.JFrame {
         resetColor(btnPrestamos);
         resetColor(btnMultas);
         resetColor(btnEmpleados);
+        
+        ventanaError();
         
         // Abrir sección
         Libros p1 = new Libros();
@@ -505,15 +519,21 @@ public class Dashboard extends javax.swing.JFrame {
         resetColor(btnPrestar);
         resetColor(btnMultas);
         
-        // Abrir sección
-        Empleados p1 = new Empleados();
-        p1.setSize(750, 430);
-        p1.setLocation(0,0);
+        try{
+            // Abrir sección
+            Empleados p1 = new Empleados();
+            p1.setSize(750, 430);
+            p1.setLocation(0,0);
         
-        content.removeAll();
-        content.add(p1, BorderLayout.CENTER);
-        content.revalidate();
-        content.repaint();
+            content.removeAll();
+            content.add(p1, BorderLayout.CENTER);
+            content.revalidate();
+            content.repaint();
+        
+        } catch(Exception e){
+            ventanaError();
+        }
+        
     }//GEN-LAST:event_btnEmpleadosMousePressed
 
     void setColor(JPanel panel){

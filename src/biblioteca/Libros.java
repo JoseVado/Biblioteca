@@ -13,6 +13,7 @@ import java.util.logging.Logger;
 import javax.swing.JPanel;
 import static biblioteca.Dashboard.content;
 import java.awt.BorderLayout;
+import javax.swing.ListSelectionModel;
 
 /**
  *
@@ -34,6 +35,7 @@ public class Libros extends javax.swing.JPanel {
         try {
             jTable1.setModel(new javax.swing.table.DefaultTableModel(
                             ComunicacionBD.datosBD(tabla),datosTabla));
+            jTable1.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         } catch (SQLException ex) {
             Logger.getLogger(Libros.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -285,6 +287,7 @@ public class Libros extends javax.swing.JPanel {
                         javax.swing.JOptionPane.showMessageDialog(this, "¡Libro borrado! \n", "HECHO", javax.swing.JOptionPane.INFORMATION_MESSAGE);
                         jTable1.setModel(new javax.swing.table.DefaultTableModel(
                                 ComunicacionBD.datosBD(tabla),datosTabla));
+                        jTable1.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
                     }
                    
                 }
@@ -334,7 +337,8 @@ public class Libros extends javax.swing.JPanel {
             String[][] datosNombre = ComunicacionBD.datosBD(tabla, "nombre", inf);
             
             jTable1.setModel(new javax.swing.table.DefaultTableModel(
-            ((datosISBN.length>datosNombre.length)?datosISBN:datosNombre),datosTabla));
+                ((datosISBN.length>datosNombre.length)?datosISBN:datosNombre),datosTabla));
+            jTable1.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
             
         } catch (SQLException ex) {
             Logger.getLogger(Libros.class.getName()).log(Level.SEVERE, null, ex);
