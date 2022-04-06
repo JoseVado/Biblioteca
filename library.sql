@@ -23,7 +23,10 @@ CREATE TABLE `libros` (
   `fecha_de_ingreso`	DATE NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=UTF8;
 
-
+INSERT INTO `libros` (`isbn`,`nombre`,`autor`,`categorias`,`cantidad`,`disponible`,`descripcion`,`fecha_de_ingreso`) VALUES
+	('1111','LIBRO','DON PRUEBAS', 'NINGUNA', 2, 2, 'DESCRIPCION PRUEBA', '2022/03/09'),
+	('2222','LIBRO','DON PRUEBAS', 'NINGUNA', 2, 2, 'DESCRIPCION PRUEBA', '2022/03/09')
+	;
 
 -- --------------------------------------------------------
 
@@ -37,7 +40,7 @@ CREATE TABLE `prestamos` (
   `libro` 			INT NOT NULL,
   `date_out` 		DATE NOT NULL,
   `date_return` 	DATE NOT NULL,
-  `days` 		DATE NOT NULL
+  `days` 	INT NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
@@ -72,19 +75,7 @@ CREATE TABLE `empleados` (
   `fecha_ingreso` 		DATE NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=UTF8;
 
--- --------------------------------------------------------
 
---
--- Estructura de tabla para la tabla `multas`
---
--- dias, precio, cliente, fecha_inicio, fecha_pago
-
-CREATE TABLE `multas` (
-  `id` 							INT NOT NULL PRIMARY KEY NOT NULL AUTO_INCREMENT,
-  `cliente` 					VARCHAR(250) NOT NULL,
-  `fecha_final` 				DATE NOT NULL,
-  `fecha_pago` 				DATE DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=UTF8;
 
 
 

@@ -23,7 +23,7 @@ public class Libros extends javax.swing.JPanel {
 
     private static final String tabla = "libros";
     private static final String[] datosTabla = new String [] {
-            "ID", "ISBN", "Titulo", "Autor", "Categorías", "Cantidad", "Disponible", "Descripición",
+            "Folio", "ISBN", "Titulo", "Autor", "Categorías", "Cantidad", "Disponible", "Descripición",
             "Fecha de ingreso"
             } ; 
 

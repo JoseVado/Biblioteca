@@ -373,7 +373,6 @@ public class Dashboard extends javax.swing.JFrame {
     }//GEN-LAST:event_btnInicioMousePressed
 
     private void btnPrestarMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnPrestarMousePressed
-        /*
         setColor(btnPrestar);
         resetColor(btnInicio);
         resetColor(btnDevolver);
@@ -392,11 +391,9 @@ public class Dashboard extends javax.swing.JFrame {
         content.add(p1, BorderLayout.CENTER);
         content.revalidate();
         content.repaint();
-        */
     }//GEN-LAST:event_btnPrestarMousePressed
 
     private void btnDevolverMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnDevolverMousePressed
-        /*
         setColor(btnDevolver);
         resetColor(btnInicio);
         resetColor(btnPrestar);
@@ -405,6 +402,8 @@ public class Dashboard extends javax.swing.JFrame {
         resetColor(btnPrestamos);
         resetColor(btnMultas);
         resetColor(btnEmpleados);
+        
+
         // Abrir sección
         Devolver p1 = new Devolver();
         p1.setSize(750, 430);
@@ -414,7 +413,8 @@ public class Dashboard extends javax.swing.JFrame {
         content.add(p1, BorderLayout.CENTER);
         content.revalidate();
         content.repaint();
-        */
+        
+
     }//GEN-LAST:event_btnDevolverMousePressed
 
     private void btnClientesMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnClientesMousePressed
@@ -464,7 +464,6 @@ public class Dashboard extends javax.swing.JFrame {
     }//GEN-LAST:event_btnLibrosMousePressed
 
     private void btnPrestamosMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnPrestamosMousePressed
-        /*
         setColor(btnPrestamos);
         resetColor(btnInicio);
         resetColor(btnDevolver);
@@ -473,7 +472,7 @@ public class Dashboard extends javax.swing.JFrame {
         resetColor(btnPrestar);
         resetColor(btnMultas);
         resetColor(btnEmpleados);
-        
+
         // Abrir sección
         Prestamos p1 = new Prestamos();
         p1.setSize(750, 430);
@@ -483,11 +482,10 @@ public class Dashboard extends javax.swing.JFrame {
         content.add(p1, BorderLayout.CENTER);
         content.revalidate();
         content.repaint();
-        */
+
     }//GEN-LAST:event_btnPrestamosMousePressed
 
     private void btnMultasMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnMultasMousePressed
-        /*
         setColor(btnMultas);
         resetColor(btnInicio);
         resetColor(btnDevolver);
@@ -496,7 +494,7 @@ public class Dashboard extends javax.swing.JFrame {
         resetColor(btnPrestamos);
         resetColor(btnPrestar);
         resetColor(btnEmpleados);
-        
+
         // Abrir sección
         Multas p1 = new Multas();
         p1.setSize(750, 430);
@@ -506,7 +504,7 @@ public class Dashboard extends javax.swing.JFrame {
         content.add(p1, BorderLayout.CENTER);
         content.revalidate();
         content.repaint();
-        */
+  
     }//GEN-LAST:event_btnMultasMousePressed
 
     private void btnEmpleadosMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnEmpleadosMousePressed

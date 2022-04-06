@@ -6,12 +6,7 @@
 package biblioteca;
 
 import java.awt.Color;
-import java.sql.Connection;
-import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
-import java.text.DateFormat;
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
@@ -26,15 +21,19 @@ import javax.swing.JPanel;
  */
 public class Prestar extends javax.swing.JPanel {
 
-    Conexion conn;
-    Connection reg;
+    final String usuario = "Ingrese el folio del usuario";
+    final String libro = "Ingrese el ID del Libro a devolver";
+    final int COLUMNA_LIBROS_DISPONIBLES = 6;
+    final int COLUMNA_ID_LIBRO = 2;
+    
     /**
      * Creates new form Principal
      */
     public Prestar() {
         initComponents();
-        conn = new Conexion();
-        reg = conn.getConnection();
+        
+        folio.setText(usuario);
+        book_id.setText(libro);
     }
 
     /**
@@ -73,11 +72,11 @@ public class Prestar extends javax.swing.JPanel {
         add(Title, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 10, -1, -1));
 
         Text1.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        Text1.setText("Libro ID");
+        Text1.setText("ISBN Libro");
         add(Text1, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 150, -1, -1));
 
         Text2.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        Text2.setText("Folio Usuario");
+        Text2.setText("Folio Cliente");
         add(Text2, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 50, -1, -1));
 
         jSeparator1.setForeground(new java.awt.Color(0, 153, 255));
@@ -95,27 +94,26 @@ public class Prestar extends javax.swing.JPanel {
 
         book_id.setFont(new java.awt.Font("Segoe UI", 0, 12)); // NOI18N
         book_id.setForeground(new java.awt.Color(102, 102, 102));
-        book_id.setText("Ingrese el ID del Libro a prestar");
         book_id.setBorder(null);
-        book_id.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mousePressed(java.awt.event.MouseEvent evt) {
-                book_idMousePressed(evt);
+        book_id.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                book_idFocusGained(evt);
             }
-        });
-        book_id.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                book_idActionPerformed(evt);
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                book_idFocusLost(evt);
             }
         });
         add(book_id, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 180, 260, 30));
 
         folio.setFont(new java.awt.Font("Segoe UI", 0, 12)); // NOI18N
         folio.setForeground(new java.awt.Color(102, 102, 102));
-        folio.setText("Ingrese el folio del usuario");
         folio.setBorder(null);
-        folio.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mousePressed(java.awt.event.MouseEvent evt) {
-                folioMousePressed(evt);
+        folio.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                folioFocusGained(evt);
+            }
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                folioFocusLost(evt);
             }
         });
         add(folio, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 80, 260, 30));
@@ -144,29 +142,10 @@ public class Prestar extends javax.swing.JPanel {
         add(button, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 270, 260, 50));
 
         Image.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        Image.setIcon(new javax.swing.ImageIcon(getClass().getResource("/biblioteca/images/prestamo.gif"))); // NOI18N
         Image.setMaximumSize(new java.awt.Dimension(750, 430));
         Image.setMinimumSize(new java.awt.Dimension(750, 430));
-        add(Image, new org.netbeans.lib.awtextra.AbsoluteConstraints(-180, -140, -1, -1));
+        add(Image, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 70, -1, -1));
     }// </editor-fold>//GEN-END:initComponents
-
-    private void book_idActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_book_idActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_book_idActionPerformed
-
-    private void folioMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_folioMousePressed
-       if(folio.getText().equals("Ingrese el folio del usuario"))
-        folio.setText("");
-       if(book_id.getText().equals("") || book_id.getText() == null || book_id.getText().equals(" "))
-        book_id.setText("Ingrese el ID del Libro a prestar");
-    }//GEN-LAST:event_folioMousePressed
-
-    private void book_idMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_book_idMousePressed
-        if(book_id.getText().equals("Ingrese el ID del Libro a prestar"))
-            book_id.setText("");
-        if(folio.getText().equals("") || folio.getText() == null || folio.getText().equals(" "))
-            folio.setText("Ingrese el folio del usuario");
-    }//GEN-LAST:event_book_idMousePressed
 
     private void buttonMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_buttonMouseEntered
         setColor(button);
@@ -179,58 +158,69 @@ public class Prestar extends javax.swing.JPanel {
     private void buttonMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_buttonMousePressed
         String fol = folio.getText();
         String book = book_id.getText();
-        int intfol = 0;
         
-        // Conditions
-        if(fol.equals("") || book.equals("")){
-            javax.swing.JOptionPane.showMessageDialog(this, "Debe llenar todos los campos \n", "AVISO", javax.swing.JOptionPane.INFORMATION_MESSAGE);
-            folio.requestFocus();
-        }
-        else{
-            try
-            {
-                intfol = Integer.parseInt(folio.getText());
-                
-                if(intfol <= 0){
-                    javax.swing.JOptionPane.showMessageDialog(this, "El folio del usuario debe ser mayor a 0. \n", "AVISO", javax.swing.JOptionPane.INFORMATION_MESSAGE);
-                     folio.requestFocus();
-                }
-            }catch(Exception ex){
-                javax.swing.JOptionPane.showMessageDialog(this, "El folio del usuario debe ser un número entero. \n", "AVISO", javax.swing.JOptionPane.INFORMATION_MESSAGE);
-                 folio.requestFocus();
-            }            
-        }
-        
+            
         try {
-            // Verificamos el usuario
-            boolean pase = UserExist(intfol);
-            if(!pase){
+        
+            
+            // Verificar el usuario
+            if(!UserExist(fol)){
                 javax.swing.JOptionPane.showMessageDialog(this, "No existe ningún usuario con ese Folio. \n", "AVISO", javax.swing.JOptionPane.INFORMATION_MESSAGE);
-                 folio.requestFocus();
+                folio.requestFocus();
             }
-            // Verificamos el libro
+            // Verificar el libro
             else if(!BookExist(book)){
-                javax.swing.JOptionPane.showMessageDialog(this, "No existe ningún libro con esa ID. \n", "AVISO", javax.swing.JOptionPane.INFORMATION_MESSAGE);
-                 book_id.requestFocus();
+                javax.swing.JOptionPane.showMessageDialog(this, "No existe ningún libro con esa ISBN. \n", "AVISO", javax.swing.JOptionPane.INFORMATION_MESSAGE);
+                book_id.requestFocus();
             }
-            else if(CheckLending(intfol, book)){
-                javax.swing.JOptionPane.showMessageDialog(this, "Esa persona ya cuenta con el préstamo de ese mismo Libro. \n", "AVISO", javax.swing.JOptionPane.INFORMATION_MESSAGE);
-                 book_id.requestFocus();
-            }
+            // No hay libros disponibles
             else if(!BookAvailable(book)){
-                javax.swing.JOptionPane.showMessageDialog(this, "Ya no hay más libros con esa ID para prestar. \n", "AVISO", javax.swing.JOptionPane.INFORMATION_MESSAGE);
-                 book_id.requestFocus();
+                javax.swing.JOptionPane.showMessageDialog(this, "Ya no hay más libros con esa ISBN para prestar. \n", "AVISO", javax.swing.JOptionPane.INFORMATION_MESSAGE);
+                book_id.requestFocus();
+            }
+            // Verificar si la persona tiene ya ese libro
+            else if(CheckLending(fol, book)){
+                javax.swing.JOptionPane.showMessageDialog(this, "Esa persona ya cuenta con el préstamo de ese mismo Libro. \n", "AVISO", javax.swing.JOptionPane.INFORMATION_MESSAGE);
+                book_id.requestFocus();
+            }
+            // Verificar si la persona ya tiene el máximo de libros permitidos
+            else if(!CheckMaxLending(fol)){
+                javax.swing.JOptionPane.showMessageDialog(this, "Esa persona ya cuenta con el máximo de prestamos permitido. \n", "AVISO", javax.swing.JOptionPane.INFORMATION_MESSAGE);
             }
             else{
-                InsertLending(intfol, book);// Insertamos el prestamo a la DB.
-                folio.setText("");
-                book_id.setText("");
+                InsertLending(fol, book);// Insertamos el prestamo a la DB.
+                folio.setText(usuario);
+                book_id.setText(libro);
+                javax.swing.JOptionPane.showMessageDialog(this, "¡Prestamo realizado correctamente! \n", "HECHO", javax.swing.JOptionPane.INFORMATION_MESSAGE);
+                
             }
-              
+
         } catch (SQLException ex) {
             Logger.getLogger(Prestar.class.getName()).log(Level.SEVERE, null, ex);
         }
+        
+        
     }//GEN-LAST:event_buttonMousePressed
+
+    private void folioFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_folioFocusGained
+        if(folio.getText().equals(usuario))
+            folio.setText("");
+    }//GEN-LAST:event_folioFocusGained
+
+    private void folioFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_folioFocusLost
+        if(folio.getText().isEmpty())
+            folio.setText(usuario);
+    }//GEN-LAST:event_folioFocusLost
+
+    private void book_idFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_book_idFocusGained
+        if(book_id.getText().equals(libro))
+            book_id.setText("");
+    }//GEN-LAST:event_book_idFocusGained
+
+    private void book_idFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_book_idFocusLost
+        if(book_id.getText().isEmpty())
+            book_id.setText(libro);
+    }//GEN-LAST:event_book_idFocusLost
 
     void setColor(JPanel panel){
         panel.setBackground(new Color(21,101,192));
@@ -239,114 +229,66 @@ public class Prestar extends javax.swing.JPanel {
         panel.setBackground(new Color(18,90,173));
     }
     
-    public boolean UserExist(int id) throws SQLException{
-        boolean res = false;
-        Statement stm = reg.createStatement();
-        ResultSet re = stm.executeQuery("SELECT `id` FROM `users` WHERE `id` = '"+id+"' LIMIT 1");
-        if(re.next())
-            res = true;
+    public boolean UserExist(String id) throws SQLException{
+        return ComunicacionBD.datosBD("usuarios", "id", id).length == 1;
+    }
+    
+    public boolean BookExist(String isbn) throws SQLException{
+        return ComunicacionBD.datosBD("libros", "isbn", isbn).length == 1;
+    }
+    
+    public boolean BookAvailable(String book) throws SQLException{
+        int cantidadLibros = Integer.valueOf(ComunicacionBD.datosBD("libros", "isbn", book)[0][COLUMNA_LIBROS_DISPONIBLES]);
+        return cantidadLibros > 0;
+    }
+    
+    
+    
+    public boolean CheckLending(String user, String bookid) throws SQLException{
         
-        return res;
-    }
-    
-    public boolean BookExist(String bookid) throws SQLException{
-        boolean res = false;
-        Statement stm = reg.createStatement();
-        ResultSet re = stm.executeQuery("SELECT `id` FROM `books` WHERE `id` = '"+bookid+"' LIMIT 1");
-        if(re.next())
-            res = true;
-        
-        return res;
-    }
-    
-    public boolean BookAvailable(String bookid) throws SQLException{
-        boolean res = false;
-        Statement stm = reg.createStatement();
-        ResultSet re = stm.executeQuery("SELECT `available` FROM `books` WHERE `id` = '"+bookid+"' LIMIT 1");
-        if(re.next()){
-            int av = Integer.parseInt(re.getString("available"));
-            if(av >= 1)
-                res = true;
-        }
-        
-        return res;
-    }
-    
-    public boolean CheckSanction(int userid, String bookid) throws SQLException, ParseException{
-        boolean res = false;
-        Statement stm = reg.createStatement();
-        ResultSet re = stm.executeQuery("SELECT * FROM `lendings` WHERE `id` = '"+bookid+"' AND `user_id` = '"+userid+"' LIMIT 1");
-        System.out.println("1");
-        if(re.next()){
-            System.out.println("2");
-            Date ahora = new Date();
-            Date returned = deStringToDate(re.getString("date_return"));
-            System.out.println("2");
-            int days = diferenciasDeFechas(returned, ahora);
-            System.out.println("3");
-            System.out.println(days);
-            int days2 = diferenciasDeFechas(ahora, returned);
-            System.out.println(days2);
-            if(days <= 0)
-                res = true;
-            System.out.println("4");
-        }
-        System.out.println("5");
-        return res;
-    }
-    
-    public boolean CheckLending(int userid, String bookid) throws SQLException{
-        boolean res = false;
-        Statement stm = reg.createStatement();
-        ResultSet re = stm.executeQuery("SELECT * FROM `lendings` WHERE `user_id` = '"+userid+"' AND `book_id` = '"+ bookid +"'");
-        if(re.next()){
-            res = true;
-        }
-        
-        return res;
-    }
-    
-    public void InsertLending(int id, String bookid) throws SQLException{
-        Statement stm = reg.createStatement();
-        String date = getFechaActual();
-        Date ahora = new Date();
-        Date devol = sumarFechasDias(ahora, 5);//Sumamos 5 días a la fecha actual.
-        SimpleDateFormat formateador = new SimpleDateFormat("dd-MM-yyyy");
-        String dev = formateador.format(devol);
-        stm.executeUpdate("INSERT INTO `lendings` (`id`, `user_id`, `book_id`, `date_out`, `date_return`) VALUES (NULL, '"+id+"', '"+ bookid +"', '"+ date +"', '"+dev+"')");
-        stm.executeUpdate("UPDATE `books` SET `available` = available-1 WHERE `id` = '"+ bookid +"';");
-        javax.swing.JOptionPane.showMessageDialog(this, "¡Prestamo realizado correctamente! \n", "HECHO", javax.swing.JOptionPane.INFORMATION_MESSAGE);
-        
-    }
-    
-    public void Devolutions(int fo, String bookid) throws SQLException, ParseException{
-        Statement stm = reg.createStatement();
-        int days = -1;
-        boolean ready = false;
-        do{
-            ResultSet re = stm.executeQuery("SELECT * FROM `lendings` WHERE `book_id` = '"+bookid+"' AND `user_id` = '"+fo+"' LIMIT 1");
-            if(re.next()){
-                Date ahora = new Date();
-                Date returned = deStringToDate(re.getString("date_return"));
-                days = diferenciasDeFechas(ahora, returned);                
+        for(String[] prestamo : ComunicacionBD.datosBD("prestamos", "usuario", user)){
+            if( bookid.equals(prestamo[COLUMNA_ID_LIBRO]) ){
+                return true;
             }
-            ready = true;
-        }while(!ready);
-        if(ready){
-            stm.executeUpdate("DELETE FROM `lendings` WHERE `book_id` = '"+ bookid +"' AND `user_id` = '"+ fo +"' LIMIT 1");
-            stm.executeUpdate("UPDATE `books` SET `available` = available+1 WHERE `id` = '"+ bookid +"';");
-            if(days <= 0){
-                int money = 0;
-                money = days * -1;
-                int cost = 5;// Costo por día retardado.
-                money = money * cost;
-                stm.executeUpdate("UPDATE `users` SET `sanctions` = sanctions+1, `sanc_money` = sanc_money+'"+ money +"' WHERE `id` = '"+ fo +"';");
-                javax.swing.JOptionPane.showMessageDialog(this, "¡SANCIONADO POR ENTREGA A DESTIEMPO! ($"+money+") \n", "AVISO", javax.swing.JOptionPane.INFORMATION_MESSAGE);
-            }
-            javax.swing.JOptionPane.showMessageDialog(this, "¡Devolución realizada correctamente! \n", "HECHO", javax.swing.JOptionPane.INFORMATION_MESSAGE);
+        }
+        return false;
+    }
+    
+    public boolean CheckMaxLending(String user) throws SQLException{
+        return ComunicacionBD.datosBD("prestamos","usuario",user).length < 3;
+    }
+    
+    public void InsertLending(String user, String bookid) throws SQLException{
 
-        }
+        Date ahora = new Date();
+        Date devol = sumarFechasDias(ahora, 7);//Sumamos 7 días a la fecha actual.
+        SimpleDateFormat formateador = new SimpleDateFormat("yyyy-MM-dd");
+        
+        String dev = formateador.format(devol);
+        String date = formateador.format(ahora);
+        
+        ComunicacionBD.subirBD("prestamos", new String[]{user,bookid,date,dev,"7"});
+        
+        RefreshBooksStock(bookid, -1);
+        
     }
+    
+    public void RefreshBooksStock(String bookid, int cantidad)throws SQLException{
+        String[][] libro = ComunicacionBD.datosBD("libros","isbn",bookid);
+
+        int cambio = Integer.parseInt(libro[0][COLUMNA_LIBROS_DISPONIBLES]) + cantidad; 
+        
+        libro[0][COLUMNA_LIBROS_DISPONIBLES] = "" + cambio;
+        
+        String[] res = new String[libro[0].length-1];
+        
+        for(int i = 0; i<res.length; i++){
+            res[i] = libro[0][i+1];
+        }
+        
+        ComunicacionBD.actualizarBD("libros", res, libro[0][0]);
+    }
+
     
     public static String getFechaActual() {
         Date ahora = new Date();
@@ -361,43 +303,6 @@ public class Prestar extends javax.swing.JPanel {
         return new java.sql.Date(cal.getTimeInMillis());
     }
     
-    //Diferencias entre dos fechas
-    //@param fechaInicial La fecha de inicio
-    //@param fechaFinal  La fecha de fin
-    //@return Retorna el numero de dias entre dos fechas
-    public static synchronized int diferenciasDeFechas(Date fechaInicial, Date fechaFinal) throws ParseException {
-
-        DateFormat df = DateFormat.getDateInstance(DateFormat.MEDIUM);
-        String fechaInicioString = df.format(fechaInicial);
-        try {
-            fechaInicial = df.parse(fechaInicioString);
-        } catch (ParseException ex) {
-        }
-
-        String fechaFinalString = df.format(fechaFinal);
-        fechaFinal = df.parse(fechaFinalString);
-
-        long fechaInicialMs = fechaInicial.getTime();
-        long fechaFinalMs = fechaFinal.getTime();
-        long diferencia = fechaFinalMs - fechaInicialMs;
-        double dias = Math.floor(diferencia / (1000 * 60 * 60 * 24));
-        return ((int) dias);
-    }
-
-    //Devuele un java.util.Date desde un String en formato dd-MM-yyyy
-    //@param La fecha a convertir a formato date
-    //@return Retorna la fecha en formato Date
-    public static synchronized java.util.Date deStringToDate(String fecha) {
-        SimpleDateFormat formatoDelTexto = new SimpleDateFormat("dd-MM-yyyy");
-        Date fechaEnviar = null;
-        try {
-            fechaEnviar = formatoDelTexto.parse(fecha);
-            return fechaEnviar;
-        } catch (ParseException ex) {
-            ex.printStackTrace();
-            return null;
-        }
-    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel Image;

@@ -63,6 +63,59 @@ public class ComunicacionBD {
         return list;
     }
     
+    public static String[] verPrestamoBD(String libro, String usuario)throws SQLException{
+        Conexion conn = new Conexion();
+        Connection reg = conn.getConnection();
+        Statement stm = reg.createStatement();
+        
+        String[] datosBD = nombreColumnas("prestamos");
+        ResultSet prestamo = stm.executeQuery("SELECT * FROM `prestamos`  WHERE `usuario` = "+usuario+" AND `libro` = "+libro+" LIMIT 1 ");
+        
+        String list[] = new String[datosBD.length+1];
+        
+        prestamo.next();
+        for(int c = 0; c < datosBD.length; c++){
+                list[c] = prestamo.getString(datosBD[c]);
+        }
+        prestamo.close();
+        
+        ResultSet multa = stm.executeQuery("SELECT * FROM prestamos WHERE date_return - CURDATE() < 0 AND `usuario` = "+usuario+" AND `libro` = "+libro+" LIMIT 1 ");
+        list[datosBD.length] = (multa.next()?"1":"0");
+        
+        multa.close();
+        
+        stm.close();
+        
+        return list;
+    }
+    
+    public static String[][] verMultasBD() throws SQLException{
+        Conexion conn = new Conexion();
+        Connection reg = conn.getConnection();
+        Statement stm = reg.createStatement();
+        
+        String[] datosBD = nombreColumnas("prestamos");
+        
+        ResultSet counter = stm.executeQuery("SELECT COUNT(*) AS contar FROM prestamos WHERE date_return - CURDATE() < 0");
+        counter.next();
+        int count = counter.getInt("contar");
+        counter.close();
+
+        String list[][] = new String[count][datosBD.length];
+        
+        ResultSet re = stm.executeQuery("SELECT * FROM prestamos WHERE date_return - CURDATE() < 0");
+        for(int i = 0; i < count; i++){
+            re.next();
+            for(int c = 0; c < datosBD.length; c++){
+                list[i][c] = re.getString(datosBD[c]);
+            }
+        }
+        re.close();
+        stm.close();
+        
+        return list;
+    }
+    
     public static void eliminarBD(String tabla, String id)throws SQLException{
         Conexion conn = new Conexion();
         Connection reg = conn.getConnection();
@@ -126,6 +179,10 @@ public class ComunicacionBD {
                 return new String []{
                   "id", "curp", "nombre_completo", "fecha_nacimiento",
                     "fecha_ingreso"
+                };
+            case "prestamos":
+                return new String[]{
+                    "id", "usuario","libro","date_out","date_return","days"
                 };
             default:
                 return new String[1];

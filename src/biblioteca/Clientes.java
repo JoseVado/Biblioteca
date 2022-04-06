@@ -22,7 +22,7 @@ public class Clientes extends javax.swing.JPanel {
 
     private static final String tabla = "usuarios";
     private static final String[] datosTabla = new String [] {
-        "ID", "Curp", "Nombre", "Domicilio", "Teléfono","Correo","Sanciones"
+        "ID", "Curp", "Nombre", "Domicilio", "Teléfono","Correo"
     };
     
     /**

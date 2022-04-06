@@ -5,8 +5,12 @@
  */
 package biblioteca;
 
+
 import java.awt.Color;
 import java.sql.SQLException;
+import java.text.ParseException;
+import java.time.LocalDate;
+import static java.time.temporal.ChronoUnit.DAYS;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JPanel;
@@ -17,12 +21,17 @@ import javax.swing.JPanel;
  */
 public class Devolver extends javax.swing.JPanel {
     Prestar Inter;
+    String usuario = "Ingrese el folio del usuario";
+    String libro = "Ingrese el ID del Libro a devolver";
+    final int COLUMNA_DATE_RETURN = 4;
     /**
      * Creates new form Principal
      */
     public Devolver() {
         initComponents();
         Inter = new Prestar();
+        folio.setText(usuario);
+        book_id.setText(libro);
     }
 
     /**
@@ -83,27 +92,26 @@ public class Devolver extends javax.swing.JPanel {
 
         book_id.setFont(new java.awt.Font("Segoe UI", 0, 12)); // NOI18N
         book_id.setForeground(new java.awt.Color(102, 102, 102));
-        book_id.setText("Ingrese el ID del Libro a devolver");
         book_id.setBorder(null);
-        book_id.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mousePressed(java.awt.event.MouseEvent evt) {
-                book_idMousePressed(evt);
+        book_id.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                book_idFocusGained(evt);
             }
-        });
-        book_id.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                book_idActionPerformed(evt);
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                book_idFocusLost(evt);
             }
         });
         add(book_id, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 200, 260, 30));
 
         folio.setFont(new java.awt.Font("Segoe UI", 0, 12)); // NOI18N
         folio.setForeground(new java.awt.Color(102, 102, 102));
-        folio.setText("Ingrese el folio del usuario");
         folio.setBorder(null);
-        folio.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mousePressed(java.awt.event.MouseEvent evt) {
-                folioMousePressed(evt);
+        folio.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                folioFocusGained(evt);
+            }
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                folioFocusLost(evt);
             }
         });
         add(folio, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 100, 260, 30));
@@ -132,29 +140,10 @@ public class Devolver extends javax.swing.JPanel {
         add(button, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 290, 260, 50));
 
         Image.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        Image.setIcon(new javax.swing.ImageIcon(getClass().getResource("/biblioteca/images/iStock.jpg"))); // NOI18N
         Image.setMaximumSize(new java.awt.Dimension(750, 430));
         Image.setMinimumSize(new java.awt.Dimension(750, 430));
         add(Image, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 50, -1, -1));
     }// </editor-fold>//GEN-END:initComponents
-
-    private void book_idActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_book_idActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_book_idActionPerformed
-
-    private void folioMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_folioMousePressed
-       if(folio.getText().equals("Ingrese el folio del usuario"))
-        folio.setText("");
-       if(book_id.getText().equals("") || book_id.getText() == null || book_id.getText().equals(" "))
-        book_id.setText("Ingrese el ID del Libro a devolver");
-    }//GEN-LAST:event_folioMousePressed
-
-    private void book_idMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_book_idMousePressed
-        if(book_id.getText().equals("Ingrese el ID del Libro a devolver"))
-            book_id.setText("");
-        if(folio.getText().equals("") || folio.getText() == null || folio.getText().equals(" "))
-            folio.setText("Ingrese el folio del usuario");
-    }//GEN-LAST:event_book_idMousePressed
 
     private void buttonMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_buttonMouseEntered
         setColor(button);
@@ -163,67 +152,97 @@ public class Devolver extends javax.swing.JPanel {
     private void buttonMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_buttonMouseExited
         resetColor(button);
     }//GEN-LAST:event_buttonMouseExited
+    
+    
+    public void Devolutions(String fo, String bookid) throws SQLException, ParseException{
+
+        String[] prestamo = ComunicacionBD.verPrestamoBD(bookid, fo);
+
+        ComunicacionBD.eliminarBD("prestamos", prestamo[0]);
+        Inter.RefreshBooksStock(bookid, 1);
+
+        if( prestamo[prestamo.length-1].equals("1") ){
+            int days = diferenciasDeFechas(prestamo[COLUMNA_DATE_RETURN]);
+            int cost = 2;// Costo por día retardado.
+            int money = days * cost;
+            javax.swing.JOptionPane.showMessageDialog(this, "¡SANCIONADO POR ENTREGA A DESTIEMPO! ($"+money+") \n", "AVISO", javax.swing.JOptionPane.INFORMATION_MESSAGE);
+        }else{
+            javax.swing.JOptionPane.showMessageDialog(this, "¡Devolución realizada correctamente! \n", "HECHO", javax.swing.JOptionPane.INFORMATION_MESSAGE);
+        }
+          
+    }
+    
     // DEVOLVER
     private void buttonMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_buttonMousePressed
         String book = book_id.getText();
         String fol = folio.getText();
-        int intfol = 0;
-        
-        // Conditions
-        if(fol.equals("") || book.equals("")){
-            javax.swing.JOptionPane.showMessageDialog(this, "Debe rellenar todos los campos. \n", "AVISO", javax.swing.JOptionPane.INFORMATION_MESSAGE);
-            book_id.requestFocus();
-        }
-        else{
-            try
-            {
-                intfol = Integer.parseInt(folio.getText());
-                
-                if(intfol <= 0){
-                    javax.swing.JOptionPane.showMessageDialog(this, "El folio del usuario debe ser mayor a 0. \n", "AVISO", javax.swing.JOptionPane.INFORMATION_MESSAGE);
-                     folio.requestFocus();
-                }
-                
-                try {
-                    // Verificamos el usuario
-                    boolean pase = Inter.UserExist(intfol);
-                    if(!pase){
-                        javax.swing.JOptionPane.showMessageDialog(this, "No existe ningún usuario con ese Folio. \n", "AVISO", javax.swing.JOptionPane.INFORMATION_MESSAGE);
-                         folio.requestFocus();
-                    }
-                    // Verificamos el libro
-                    else if (!Inter.BookExist(book))
-                    {
-                        javax.swing.JOptionPane.showMessageDialog(this, "No existe ningún libro con esa ID. \n", "AVISO", javax.swing.JOptionPane.INFORMATION_MESSAGE);
-                        book_id.requestFocus();
-                    }
-                    else if(!Inter.CheckLending(intfol, book)){
-                        javax.swing.JOptionPane.showMessageDialog(this, "No se ha podido encontrar el préstamo correspiendote a los datos ingresados. \n", "AVISO", javax.swing.JOptionPane.INFORMATION_MESSAGE);
-                        book_id.requestFocus();
-                    }
-                    else{
-                        // DEVOLVEMOS
-                        Inter.Devolutions(intfol, book);
-                        folio.setText("");
-                        book_id.setText("");
-                    }
 
-                } catch (SQLException ex) {
-                    Logger.getLogger(Devolver.class.getName()).log(Level.SEVERE, null, ex);
-                }
-                
-            }catch(Exception ex){
-                javax.swing.JOptionPane.showMessageDialog(this, "El folio del usuario debe ser un número entero. \n", "AVISO", javax.swing.JOptionPane.INFORMATION_MESSAGE);
-                 folio.requestFocus();
-            }            
-        }   
+        try {
+            // Verificamos el usuario
+            boolean pase = Inter.UserExist(fol);
+            if(!pase){
+                javax.swing.JOptionPane.showMessageDialog(this, "No existe ningún usuario con ese Folio. \n", "AVISO", javax.swing.JOptionPane.INFORMATION_MESSAGE);
+                folio.requestFocus();
+            }
+            // Verificamos el libro
+            else if (!Inter.BookExist(book)){
+                javax.swing.JOptionPane.showMessageDialog(this, "No existe ningún libro con esa ID. \n", "AVISO", javax.swing.JOptionPane.INFORMATION_MESSAGE);
+                book_id.requestFocus();
+            }
+            else if(!Inter.CheckLending(fol, book)){
+                javax.swing.JOptionPane.showMessageDialog(this, "No se ha podido encontrar el préstamo correspiendote a los datos ingresados. \n", "AVISO", javax.swing.JOptionPane.INFORMATION_MESSAGE);
+                book_id.requestFocus();
+            }
+            // DEVOLVEMOS
+            else{
+                Devolutions(fol, book);
+                folio.setText(usuario);
+                book_id.setText(libro);
+            }
+
+        } catch (SQLException ex) {
+            Logger.getLogger(Devolver.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (ParseException ex) {
+            Logger.getLogger(Devolver.class.getName()).log(Level.SEVERE, null, ex);
+        }
+                       
+         
     }//GEN-LAST:event_buttonMousePressed
+
+    private void folioFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_folioFocusGained
+        if(folio.getText().equals(usuario))
+            folio.setText("");
+    }//GEN-LAST:event_folioFocusGained
+
+    private void folioFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_folioFocusLost
+        if(folio.getText().isEmpty())
+            folio.setText(usuario);
+    }//GEN-LAST:event_folioFocusLost
+
+    private void book_idFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_book_idFocusGained
+        if(book_id.getText().equals(libro))
+            book_id.setText("");
+    }//GEN-LAST:event_book_idFocusGained
+
+    private void book_idFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_book_idFocusLost
+        if(book_id.getText().isEmpty())
+            book_id.setText(libro);
+    }//GEN-LAST:event_book_idFocusLost
 
     void setColor(JPanel panel){
         panel.setBackground(new Color(21,101,192));
     }
     void resetColor(JPanel panel){
         panel.setBackground(new Color(18,90,173));
+    }
+
+    public static synchronized int diferenciasDeFechas(String fechaFinal) {
+	LocalDate myDate = LocalDate.parse(fechaFinal);
+
+        LocalDate currentDate = LocalDate.now();
+
+        long numberOFDays = DAYS.between(myDate, currentDate);
+	return (int) numberOFDays;
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

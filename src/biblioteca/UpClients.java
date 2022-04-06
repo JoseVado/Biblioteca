@@ -50,7 +50,7 @@ public class UpClients extends javax.swing.JPanel {
         sanciones.setEditable(false);
     }
     
-    public UpClients(String[] libro){
+    public UpClients(String[] cliente){
         initComponents();
 
         edition = true;
@@ -60,9 +60,9 @@ public class UpClients extends javax.swing.JPanel {
                         };
         
         for(int i = 0; i<campos.length; i++){
-            campos[i].setText(libro[i+1]);
+            campos[i].setText(cliente[i+1]);
         }  
-        origId = libro[0];
+        origId = cliente[0];
         
         lblTitulo.setText("Actualizar nuevo cliente");
         jLabel1.setText("Guardar");

@@ -52,7 +52,7 @@ public class UpEmpleados extends javax.swing.JPanel {
         
     }
     
-    public UpEmpleados(String[] libro){
+    public UpEmpleados(String[] empleado){
         initComponents();
 
         edition = true;
@@ -62,9 +62,9 @@ public class UpEmpleados extends javax.swing.JPanel {
                         };
         
         for(int i = 0; i<campos.length; i++){
-            campos[i].setText(libro[i+1]);
+            campos[i].setText(empleado[i+1]);
         }  
-        origId = libro[0];
+        origId = empleado[0];
         lblTitulo.setText("Actualizar nuevo empleado");
         jLabel1.setText("Guardar");
     }
