@@ -12,6 +12,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JPanel;
 import static biblioteca.Dashboard.content;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 /**
@@ -21,6 +22,7 @@ import java.util.Date;
 public class UpPrestamo extends javax.swing.JPanel {
     String[] multa;
     final int COLUMNA_TIEMPO_PRESTAMO = 5;
+    final int COLUMNA_FECHA_SALIDA = 3;
     final int COLUMNA_FECHA_REGRESO = 4;
     
     final String valorTiempo = "Ingrese cuantos días es el prestamo";
@@ -183,7 +185,7 @@ public class UpPrestamo extends javax.swing.JPanel {
                 javax.swing.JOptionPane.showMessageDialog(this, "El tiempo debe ser un valor numerico positivo", "AVISO", javax.swing.JOptionPane.INFORMATION_MESSAGE);
         }else{ 
             try {
-                Date ahora = new Date();
+                Date ahora = new SimpleDateFormat("yyyy-MM-dd").parse(multa[COLUMNA_FECHA_SALIDA]);  
                 Date devol = Prestar.sumarFechasDias(ahora, Integer.parseInt(tiempo));
                 SimpleDateFormat formateador = new SimpleDateFormat("yyyy-MM-dd");
         
@@ -204,6 +206,8 @@ public class UpPrestamo extends javax.swing.JPanel {
                     
             } catch (SQLException ex) {
                     Logger.getLogger(UpPrestamo.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (ParseException ex) {
+                Logger.getLogger(UpPrestamo.class.getName()).log(Level.SEVERE, null, ex);
             }     
         }
     }//GEN-LAST:event_buttonMousePressed

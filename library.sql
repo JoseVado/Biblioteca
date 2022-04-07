@@ -5,7 +5,6 @@ DROP DATABASE IF EXISTS library;
 CREATE DATABASE library;
 USE library;
 -- --------------------------------------------------------
-
 --
 -- Estructura de tabla para la tabla `libros`
 -- 
@@ -23,11 +22,6 @@ CREATE TABLE `libros` (
   `fecha_de_ingreso`	DATE NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=UTF8;
 
-INSERT INTO `libros` (`isbn`,`nombre`,`autor`,`categorias`,`cantidad`,`disponible`,`descripcion`,`fecha_de_ingreso`) VALUES
-	('1111','LIBRO','DON PRUEBAS', 'NINGUNA', 2, 2, 'DESCRIPCION PRUEBA', '2022/03/09'),
-	('2222','LIBRO','DON PRUEBAS', 'NINGUNA', 2, 2, 'DESCRIPCION PRUEBA', '2022/03/09')
-	;
-
 -- --------------------------------------------------------
 
 --
@@ -40,7 +34,8 @@ CREATE TABLE `prestamos` (
   `libro` 			INT NOT NULL,
   `date_out` 		DATE NOT NULL,
   `date_return` 	DATE NOT NULL,
-  `days` 	INT NOT NULL
+  `days` 			INT NOT NULL,
+  `days_cost` 		INT NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
@@ -56,9 +51,9 @@ CREATE TABLE `usuarios` (
   `nombre_completo` 		VARCHAR(100) NOT NULL,
   `domicilio` 				VARCHAR(250) NOT NULL,
   `tel` 						VARCHAR(25) NOT NULL,
-  `correo_electronico` 	VARCHAR(250) NOT NULL,
-  `sanciones` 				INT DEFAULT '0'
+  `correo_electronico` 	VARCHAR(250) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
 
 -- --------------------------------------------------------
 
@@ -75,7 +70,41 @@ CREATE TABLE `empleados` (
   `fecha_ingreso` 		DATE NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=UTF8;
 
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `multas`
+--
+-- id, fecha de cambio, precio por dia
+
+CREATE TABLE `multas` (
+  `id` 						INT NOT NULL PRIMARY KEY NOT NULL AUTO_INCREMENT,
+  `fecha_cambio` 				DATE NOT NULL,
+  `precio_por_dia` 				INT NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=UTF8;
 
 
+-- --------------------------------------------------------
 
+INSERT INTO `libros` (`isbn`,`nombre`,`autor`,`categorias`,`cantidad`,`disponible`,`descripcion`,`fecha_de_ingreso`) VALUES
+	('1111','LIBRO','PRUEBA', 'NINGUNA', 2, 2, 'DESCRIPCION PRUEBA', '2022/03/09'),
+	('2222','LIBRO','PRUEBA', 'NINGUNA', 2, 2, 'DESCRIPCION PRUEBA', '2022/03/09')
+	;
+
+INSERT INTO `prestamos` (`date_out`,`date_return`,`usuario`,`libro`,`days_cost`,`days`) VALUES
+	('2022/03/09','2022/03/09',1,1111,2,0),
+	('2022/03/09','2022/03/11',1,2222,3,2),
+	('2022/03/09','2022/03/12',2,1111,3,3),
+	('2022/03/09','2022/03/15',2,2222,5,6)
+	;
+	
+INSERT INTO `usuarios` (`curp`,`nombre_completo`,`domicilio`,`tel`,`correo_electronico`) VALUES
+	('prueba','zaira','domicilio','111111','zaira@gmail.com'),
+	('prueba','vado','domicilio','22222','vado@gmail.com')
+	;
+	
+INSERT INTO `multas` (`fecha_cambio`,`precio_por_dia`) VALUES
+	('2022/03/09',2),
+	('2022/03/11',3),
+	('2022/03/15',5);
 

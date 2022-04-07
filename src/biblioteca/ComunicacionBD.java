@@ -69,18 +69,26 @@ public class ComunicacionBD {
         Statement stm = reg.createStatement();
         
         String[] datosBD = nombreColumnas("prestamos");
-        ResultSet prestamo = stm.executeQuery("SELECT * FROM `prestamos`  WHERE `usuario` = "+usuario+" AND `libro` = "+libro+" LIMIT 1 ");
+        String[] datosMulta = nombreColumnas("multas");
+        ResultSet prestamo = stm.executeQuery("SELECT * FROM prestamos p " +
+                                                "INNER JOIN multas m " +
+                                                "	ON p.date_out >= m.fecha_cambio " +
+                                                "WHERE p.usuario = "+ usuario +" AND p.libro = "+ libro +" " +
+                                                "ORDER BY m.id DESC " +
+                                                "LIMIT 1");
         
-        String list[] = new String[datosBD.length+1];
+        String list[] = new String[datosBD.length+datosMulta.length+1];
         
         prestamo.next();
-        for(int c = 0; c < datosBD.length; c++){
-                list[c] = prestamo.getString(datosBD[c]);
+        for(int c = 0; c < list.length-1; c++){
+            list[c] = prestamo.getString(   (c<datosBD.length
+                                            ?datosBD[c]
+                                            :datosMulta[c%datosBD.length]) );  
         }
         prestamo.close();
         
         ResultSet multa = stm.executeQuery("SELECT * FROM prestamos WHERE date_return - CURDATE() < 0 AND `usuario` = "+usuario+" AND `libro` = "+libro+" LIMIT 1 ");
-        list[datosBD.length] = (multa.next()?"1":"0");
+        list[list.length-1] = (multa.next()?"1":"0");
         
         multa.close();
         
@@ -173,7 +181,7 @@ public class ComunicacionBD {
             case "usuarios":
                 return new String []{
                     "id", "curp", "nombre_completo", "domicilio", "tel", 
-                    "correo_electronico", "sanciones"
+                    "correo_electronico"
                 };
             case "empleados":
                 return new String []{
@@ -182,7 +190,11 @@ public class ComunicacionBD {
                 };
             case "prestamos":
                 return new String[]{
-                    "id", "usuario","libro","date_out","date_return","days"
+                    "id", "usuario","libro","date_out","date_return","days","days_cost"
+                };
+            case "multas":
+                return new String[]{
+                    "id","fecha_cambio","precio_por_dia"
                 };
             default:
                 return new String[1];

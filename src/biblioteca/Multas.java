@@ -7,6 +7,8 @@ package biblioteca;
 
 import java.awt.Color;
 import java.sql.SQLException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JPanel;
@@ -24,6 +26,8 @@ public class Multas extends javax.swing.JPanel {
         initComponents();
         try {
             GetUsers();
+            String[][]precios = ComunicacionBD.datosBD("multas");
+            txtFieldPrecio.setText(precios[precios.length-1][2]);
         } catch (SQLException ex) {
             Logger.getLogger(Multas.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -41,21 +45,24 @@ public class Multas extends javax.swing.JPanel {
         Title = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
+        jSeparator2 = new javax.swing.JSeparator();
+        txtFieldPrecio = new javax.swing.JTextField();
+        btnActualizarPrecio = new javax.swing.JPanel();
+        jLabel1 = new javax.swing.JLabel();
+        Title1 = new javax.swing.JLabel();
 
         setBackground(new java.awt.Color(255, 255, 255));
         setMinimumSize(new java.awt.Dimension(750, 430));
         setPreferredSize(new java.awt.Dimension(750, 430));
         setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        Title.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
-        Title.setText("Multas");
-        add(Title, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 10, -1, -1));
+        Title.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        Title.setText("Precio por dia actual");
+        add(Title, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 40, -1, -1));
 
         jTable1.setFont(new java.awt.Font("Segoe UI", 0, 11)); // NOI18N
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
                 {null, null, null, null, null, null},
                 {null, null, null, null, null, null},
                 {null, null, null, null, null, null},
@@ -99,8 +106,94 @@ public class Multas extends javax.swing.JPanel {
             jTable1.getColumnModel().getColumn(0).setPreferredWidth(1);
         }
 
-        add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 50, 750, 340));
+        add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 90, 750, 300));
+
+        jSeparator2.setForeground(new java.awt.Color(0, 153, 255));
+        jSeparator2.setPreferredSize(new java.awt.Dimension(250, 10));
+        add(jSeparator2, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 70, 150, 10));
+
+        txtFieldPrecio.setForeground(new java.awt.Color(102, 102, 102));
+        txtFieldPrecio.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        txtFieldPrecio.setBorder(null);
+        txtFieldPrecio.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                txtFieldPrecioFocusLost(evt);
+            }
+        });
+        add(txtFieldPrecio, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 40, 150, 30));
+
+        btnActualizarPrecio.setBackground(new java.awt.Color(102, 51, 0));
+        btnActualizarPrecio.setToolTipText("");
+        btnActualizarPrecio.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        btnActualizarPrecio.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                btnActualizarPrecioMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                btnActualizarPrecioMouseExited(evt);
+            }
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                btnActualizarPrecioMousePressed(evt);
+            }
+        });
+        btnActualizarPrecio.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        jLabel1.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel1.setText("Actualizar");
+        btnActualizarPrecio.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 0, 100, -1));
+
+        add(btnActualizarPrecio, new org.netbeans.lib.awtextra.AbsoluteConstraints(620, 40, 120, 30));
+
+        Title1.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
+        Title1.setText("Multas");
+        add(Title1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 30, -1, -1));
     }// </editor-fold>//GEN-END:initComponents
+
+    private void txtFieldPrecioFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtFieldPrecioFocusLost
+        try {
+            String[][]precios = ComunicacionBD.datosBD("multas");
+            if(txtFieldPrecio.getText().isEmpty())
+                txtFieldPrecio.setText(precios[precios.length-1][2]);
+        } catch (SQLException ex) {
+            Logger.getLogger(Multas.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_txtFieldPrecioFocusLost
+
+    private void btnActualizarPrecioMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnActualizarPrecioMouseEntered
+        setColor(btnActualizarPrecio);
+    }//GEN-LAST:event_btnActualizarPrecioMouseEntered
+
+    private void btnActualizarPrecioMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnActualizarPrecioMouseExited
+        resetColor(btnActualizarPrecio);
+    }//GEN-LAST:event_btnActualizarPrecioMouseExited
+
+    private void btnActualizarPrecioMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnActualizarPrecioMousePressed
+        String inf = txtFieldPrecio.getText();
+        if(inf.isEmpty()){
+            javax.swing.JOptionPane.showMessageDialog(this, "Debe llenar todos los campos \n", "AVISO", javax.swing.JOptionPane.INFORMATION_MESSAGE);
+        }else if( !inf.matches("^\\d+$") ){
+                javax.swing.JOptionPane.showMessageDialog(this, "El tiempo debe ser un valor númerico positivo", "AVISO", javax.swing.JOptionPane.INFORMATION_MESSAGE);
+        }else{ 
+            int aceptar = javax.swing.JOptionPane.showConfirmDialog(this, "¿Desea cambiar el precio por: $"+inf+"?", "ELIMINAR", javax.swing.JOptionPane.WARNING_MESSAGE);
+            if(aceptar == javax.swing.JOptionPane.YES_OPTION){
+            
+                try {
+                    Date ahora = new Date();
+                    SimpleDateFormat formateador = new SimpleDateFormat("yyyy-MM-dd");
+                    
+                    ComunicacionBD.subirBD("multas",new String[]{formateador.format(ahora),inf});
+                    txtFieldPrecio.setText(inf);
+                    javax.swing.JOptionPane.showMessageDialog(this, "¡Actualización del precio realizada! \n", "HECHO", javax.swing.JOptionPane.INFORMATION_MESSAGE);
+                } catch (SQLException ex) {
+                    Logger.getLogger(Multas.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+        }    
+        
+        
+    }//GEN-LAST:event_btnActualizarPrecioMousePressed
 
     void setColor(JPanel panel){
         panel.setBackground(new Color(21,101,192));
@@ -115,14 +208,14 @@ public class Multas extends javax.swing.JPanel {
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             list,
             new String [] {
-                "ID","Folio Cliente", "ISBN libro", "Fecha de Salida", "Fecha de Entrega", "Días prestamo"
+                "ID","Folio Cliente", "ISBN libro", "Fecha de Salida", "Fecha de Entrega", "Días prestamo","Precio por días"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
+                java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
             };
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, false, false
+                false, false, false, false, false, false, false
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -137,7 +230,12 @@ public class Multas extends javax.swing.JPanel {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel Title;
+    private javax.swing.JLabel Title1;
+    private javax.swing.JPanel btnActualizarPrecio;
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JSeparator jSeparator2;
     private javax.swing.JTable jTable1;
+    private javax.swing.JTextField txtFieldPrecio;
     // End of variables declaration//GEN-END:variables
 }

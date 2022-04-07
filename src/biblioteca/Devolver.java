@@ -24,6 +24,7 @@ public class Devolver extends javax.swing.JPanel {
     String usuario = "Ingrese el folio del usuario";
     String libro = "Ingrese el ID del Libro a devolver";
     final int COLUMNA_DATE_RETURN = 4;
+    final int COLUMNA_PRECIO_DIA = 9;
     /**
      * Creates new form Principal
      */
@@ -70,7 +71,7 @@ public class Devolver extends javax.swing.JPanel {
         add(Title, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 10, -1, -1));
 
         Text1.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        Text1.setText("Libro ID");
+        Text1.setText("ISBN Libro");
         add(Text1, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 170, -1, -1));
 
         Text2.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
@@ -158,14 +159,15 @@ public class Devolver extends javax.swing.JPanel {
 
         String[] prestamo = ComunicacionBD.verPrestamoBD(bookid, fo);
 
-        ComunicacionBD.eliminarBD("prestamos", prestamo[0]);
         Inter.RefreshBooksStock(bookid, 1);
-
+        
         if( prestamo[prestamo.length-1].equals("1") ){
             int days = diferenciasDeFechas(prestamo[COLUMNA_DATE_RETURN]);
-            int cost = 2;// Costo por día retardado.
+            int cost = Integer.parseInt(prestamo[COLUMNA_PRECIO_DIA]);// Costo por día retardado.
             int money = days * cost;
-            javax.swing.JOptionPane.showMessageDialog(this, "¡SANCIONADO POR ENTREGA A DESTIEMPO! ($"+money+") \n", "AVISO", javax.swing.JOptionPane.INFORMATION_MESSAGE);
+            int aceptar = javax.swing.JOptionPane.showConfirmDialog(this, "¡SANCIONADO POR ENTREGA A DESTIEMPO!\n          (costo "+cost+" x dias "+days+" = $"+money+")" , "AVISO", javax.swing.JOptionPane.OK_CANCEL_OPTION);
+            if(aceptar == javax.swing.JOptionPane.YES_OPTION)
+                ComunicacionBD.eliminarBD("prestamos", prestamo[0]);
         }else{
             javax.swing.JOptionPane.showMessageDialog(this, "¡Devolución realizada correctamente! \n", "HECHO", javax.swing.JOptionPane.INFORMATION_MESSAGE);
         }

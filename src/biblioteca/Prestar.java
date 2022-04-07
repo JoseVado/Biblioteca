@@ -267,7 +267,9 @@ public class Prestar extends javax.swing.JPanel {
         String dev = formateador.format(devol);
         String date = formateador.format(ahora);
         
-        ComunicacionBD.subirBD("prestamos", new String[]{user,bookid,date,dev,"7"});
+        String[][]precios = ComunicacionBD.datosBD("multas");
+        
+        ComunicacionBD.subirBD("prestamos", new String[]{user,bookid,date,dev,"7",precios[precios.length-1][2]});
         
         RefreshBooksStock(bookid, -1);
         

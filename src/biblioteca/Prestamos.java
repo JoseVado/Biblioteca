@@ -12,6 +12,7 @@ import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JPanel;
+import javax.swing.ListSelectionModel;
 
 /**
  *
@@ -27,6 +28,7 @@ public class Prestamos extends javax.swing.JPanel {
 
         try {
             GetReports();
+            jTable1.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         } catch (SQLException ex) {
             Logger.getLogger(Prestamos.class.getName()).log(Level.SEVERE, null, ex);
         }

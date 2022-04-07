@@ -27,8 +27,7 @@ public class UpClients extends javax.swing.JPanel {
             "Ingrese el Nombre completo",
             "Ingrese el Domicilio",
             "Ingrese el Teléfono",
-            "Ingrese el Correo electronico",
-            "0"
+            "Ingrese el Correo electronico"
         };
     
     
@@ -41,13 +40,12 @@ public class UpClients extends javax.swing.JPanel {
         edition = false;
         
         campos = new javax.swing.JTextField[]{
-            curp,nombre,domicilio,telefono,correo,sanciones
+            curp,nombre,domicilio,telefono,correo
                         };
         
         for(int i = 0; i<campos.length; i++){
             campos[i].setText(instrucciones[i]);
         } 
-        sanciones.setEditable(false);
     }
     
     public UpClients(String[] cliente){
@@ -56,7 +54,7 @@ public class UpClients extends javax.swing.JPanel {
         edition = true;
         
         campos = new javax.swing.JTextField[]{
-            curp,nombre,domicilio,telefono,correo,sanciones
+            curp,nombre,domicilio,telefono,correo
                         };
         
         for(int i = 0; i<campos.length; i++){
@@ -97,9 +95,6 @@ public class UpClients extends javax.swing.JPanel {
         Text9 = new javax.swing.JLabel();
         correo = new javax.swing.JTextField();
         jSeparator10 = new javax.swing.JSeparator();
-        sanciones = new javax.swing.JTextField();
-        jSeparator11 = new javax.swing.JSeparator();
-        Text10 = new javax.swing.JLabel();
         button1 = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
 
@@ -142,7 +137,7 @@ public class UpClients extends javax.swing.JPanel {
         jLabel1.setText("Subir");
         button.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 10, -1, 30));
 
-        add(button, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 280, 260, 50));
+        add(button, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 310, 260, 50));
 
         Text3.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         Text3.setText("CURP");
@@ -209,7 +204,7 @@ public class UpClients extends javax.swing.JPanel {
 
         Text8.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         Text8.setText("Teléfono");
-        add(Text8, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 300, -1, -1));
+        add(Text8, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 190, -1, -1));
 
         telefono.setForeground(new java.awt.Color(102, 102, 102));
         telefono.setHorizontalAlignment(javax.swing.JTextField.CENTER);
@@ -222,15 +217,15 @@ public class UpClients extends javax.swing.JPanel {
                 telefonoFocusLost(evt);
             }
         });
-        add(telefono, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 320, 310, 30));
+        add(telefono, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 210, 310, 30));
 
         jSeparator9.setForeground(new java.awt.Color(0, 153, 255));
         jSeparator9.setPreferredSize(new java.awt.Dimension(200, 10));
-        add(jSeparator9, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 350, 310, 10));
+        add(jSeparator9, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 240, 310, 10));
 
         Text9.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         Text9.setText("Correo electronico");
-        add(Text9, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 60, -1, -1));
+        add(Text9, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 90, -1, -1));
 
         correo.setForeground(new java.awt.Color(102, 102, 102));
         correo.setHorizontalAlignment(javax.swing.JTextField.CENTER);
@@ -243,32 +238,11 @@ public class UpClients extends javax.swing.JPanel {
                 correoFocusLost(evt);
             }
         });
-        add(correo, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 80, 310, 30));
+        add(correo, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 110, 310, 30));
 
         jSeparator10.setForeground(new java.awt.Color(0, 153, 255));
         jSeparator10.setPreferredSize(new java.awt.Dimension(200, 10));
-        add(jSeparator10, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 110, 310, 10));
-
-        sanciones.setForeground(new java.awt.Color(102, 102, 102));
-        sanciones.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        sanciones.setBorder(null);
-        sanciones.addFocusListener(new java.awt.event.FocusAdapter() {
-            public void focusGained(java.awt.event.FocusEvent evt) {
-                sancionesFocusGained(evt);
-            }
-            public void focusLost(java.awt.event.FocusEvent evt) {
-                sancionesFocusLost(evt);
-            }
-        });
-        add(sanciones, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 160, 310, 30));
-
-        jSeparator11.setForeground(new java.awt.Color(0, 153, 255));
-        jSeparator11.setPreferredSize(new java.awt.Dimension(200, 10));
-        add(jSeparator11, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 190, 310, 10));
-
-        Text10.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        Text10.setText("Sanciones");
-        add(Text10, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 140, -1, -1));
+        add(jSeparator10, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 140, 310, 10));
 
         button1.setBackground(new java.awt.Color(18, 90, 173));
         button1.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
@@ -291,7 +265,7 @@ public class UpClients extends javax.swing.JPanel {
         jLabel2.setText("Cancelar");
         button1.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 10, -1, 30));
 
-        add(button1, new org.netbeans.lib.awtextra.AbsoluteConstraints(500, 350, 130, 50));
+        add(button1, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 310, 130, 50));
     }// </editor-fold>//GEN-END:initComponents
 
     private void buttonMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_buttonMouseEntered
@@ -331,9 +305,7 @@ public class UpClients extends javax.swing.JPanel {
             if( !correo.getText().matches("^(.+)@(.+)$") ){
                 errores += "ERROR correo invalida\n";
             }
-            if( !sanciones.getText().matches("^\\d+$")){
-                errores += "ERROR sanciones invalidas\n";
-            }
+
             
             if(errores.length() > 0){
                 javax.swing.JOptionPane.showMessageDialog(this, errores, "AVISO", javax.swing.JOptionPane.INFORMATION_MESSAGE);
@@ -434,18 +406,6 @@ public class UpClients extends javax.swing.JPanel {
         }
     }//GEN-LAST:event_correoFocusGained
 
-    private void sancionesFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_sancionesFocusLost
-        if(campos[5].getText().isEmpty()){
-            campos[5].setText(instrucciones[5]);
-        }
-    }//GEN-LAST:event_sancionesFocusLost
-
-    private void sancionesFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_sancionesFocusGained
-        if(campos[5].getText().equals(instrucciones[5])){
-            campos[5].setText("");
-        }
-    }//GEN-LAST:event_sancionesFocusGained
-
     private void button1MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_button1MouseEntered
         setColor(button1);
     }//GEN-LAST:event_button1MouseEntered
@@ -474,7 +434,6 @@ public class UpClients extends javax.swing.JPanel {
     
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JLabel Text10;
     private javax.swing.JLabel Text3;
     private javax.swing.JLabel Text6;
     private javax.swing.JLabel Text7;
@@ -489,7 +448,6 @@ public class UpClients extends javax.swing.JPanel {
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JSeparator jSeparator10;
-    private javax.swing.JSeparator jSeparator11;
     private javax.swing.JSeparator jSeparator3;
     private javax.swing.JSeparator jSeparator4;
     private javax.swing.JSeparator jSeparator7;
@@ -497,7 +455,6 @@ public class UpClients extends javax.swing.JPanel {
     private javax.swing.JSeparator jSeparator9;
     private javax.swing.JLabel lblTitulo;
     private javax.swing.JTextField nombre;
-    private javax.swing.JTextField sanciones;
     private javax.swing.JTextField telefono;
     // End of variables declaration//GEN-END:variables
 }
