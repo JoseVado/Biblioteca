@@ -170,6 +170,7 @@ public class Devolver extends javax.swing.JPanel {
                 ComunicacionBD.eliminarBD("prestamos", prestamo[0]);
         }else{
             javax.swing.JOptionPane.showMessageDialog(this, "¡Devolución realizada correctamente! \n", "HECHO", javax.swing.JOptionPane.INFORMATION_MESSAGE);
+            ComunicacionBD.eliminarBD("prestamos", prestamo[0]);
         }
           
     }
