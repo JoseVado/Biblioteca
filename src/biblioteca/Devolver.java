@@ -193,7 +193,7 @@ public class Devolver extends javax.swing.JPanel {
                 book_id.requestFocus();
             }
             else if(!Inter.CheckLending(fol, book)){
-                javax.swing.JOptionPane.showMessageDialog(this, "No se ha podido encontrar el préstamo correspiendote a los datos ingresados. \n", "AVISO", javax.swing.JOptionPane.INFORMATION_MESSAGE);
+                javax.swing.JOptionPane.showMessageDialog(this, "No se ha podido encontrar el préstamo correspondiente a los datos ingresados. \n", "AVISO", javax.swing.JOptionPane.INFORMATION_MESSAGE);
                 book_id.requestFocus();
             }
             // DEVOLVEMOS

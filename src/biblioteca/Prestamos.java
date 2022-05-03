@@ -23,6 +23,10 @@ public class Prestamos extends javax.swing.JPanel {
     /**
      * Creates new form Principal
      */
+    final String tabla = "prestamos";
+    final String[] datosTabla = new String [] {
+            "ID","Folio Cliente", "ISBN libro", "Fecha de Salida", "Fecha de Entrega", "Días prestamo"};
+    
     public Prestamos() {
         initComponents();
 
@@ -49,6 +53,10 @@ public class Prestamos extends javax.swing.JPanel {
         jTable1 = new javax.swing.JTable();
         Modificar = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
+        usrnm = new javax.swing.JTextField();
+        jSeparator2 = new javax.swing.JSeparator();
+        search = new javax.swing.JPanel();
+        jLabel4 = new javax.swing.JLabel();
 
         setBackground(new java.awt.Color(255, 255, 255));
         setMinimumSize(new java.awt.Dimension(750, 430));
@@ -107,15 +115,15 @@ public class Prestamos extends javax.swing.JPanel {
         });
         jTable1.getTableHeader().setReorderingAllowed(false);
         jTable1.addInputMethodListener(new java.awt.event.InputMethodListener() {
-            public void caretPositionChanged(java.awt.event.InputMethodEvent evt) {
-            }
             public void inputMethodTextChanged(java.awt.event.InputMethodEvent evt) {
                 jTable1InputMethodTextChanged(evt);
+            }
+            public void caretPositionChanged(java.awt.event.InputMethodEvent evt) {
             }
         });
         jScrollPane1.setViewportView(jTable1);
 
-        add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 50, 750, 330));
+        add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 90, 750, 290));
 
         Modificar.setBackground(new java.awt.Color(18, 90, 173));
         Modificar.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
@@ -139,6 +147,46 @@ public class Prestamos extends javax.swing.JPanel {
         Modificar.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 0, 100, 30));
 
         add(Modificar, new org.netbeans.lib.awtextra.AbsoluteConstraints(600, 390, 140, 30));
+
+        usrnm.setForeground(new java.awt.Color(102, 102, 102));
+        usrnm.setText("Ingrese la fecha a buscar");
+        usrnm.setBorder(null);
+        usrnm.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                usrnmFocusGained(evt);
+            }
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                usrnmFocusLost(evt);
+            }
+        });
+        add(usrnm, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 40, 620, 30));
+
+        jSeparator2.setForeground(new java.awt.Color(0, 153, 255));
+        jSeparator2.setPreferredSize(new java.awt.Dimension(250, 10));
+        add(jSeparator2, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 70, 620, 10));
+
+        search.setBackground(new java.awt.Color(18, 90, 173));
+        search.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        search.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                searchMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                searchMouseExited(evt);
+            }
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                searchMousePressed(evt);
+            }
+        });
+        search.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        jLabel4.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        jLabel4.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel4.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel4.setText("Buscar");
+        search.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 0, 60, -1));
+
+        add(search, new org.netbeans.lib.awtextra.AbsoluteConstraints(650, 40, 80, 30));
     }// </editor-fold>//GEN-END:initComponents
 
     private void jTable1InputMethodTextChanged(java.awt.event.InputMethodEvent evt) {//GEN-FIRST:event_jTable1InputMethodTextChanged
@@ -159,7 +207,7 @@ public class Prestamos extends javax.swing.JPanel {
             if(idcell <= -1){
                 javax.swing.JOptionPane.showMessageDialog(this, "Debe seleccionar un prestamo a ediar. \n", "AVISO", javax.swing.JOptionPane.INFORMATION_MESSAGE);
             } else{
-                String list[][] = ComunicacionBD.datosBD("prestamos");
+                String list[][] = ComunicacionBD.datosBD(tabla);
                 String id = list[idcell][0];
 
                 if(id.isEmpty()){
@@ -180,6 +228,41 @@ public class Prestamos extends javax.swing.JPanel {
             Logger.getLogger(Empleados.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_ModificarMousePressed
+    
+    
+    
+    private void usrnmFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_usrnmFocusGained
+        if(usrnm.getText().equals("Ingrese la fecha a buscar"))
+        usrnm.setText("");
+    }//GEN-LAST:event_usrnmFocusGained
+
+    private void usrnmFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_usrnmFocusLost
+        if(usrnm.getText().isEmpty())
+        usrnm.setText("Ingrese la fecha a buscar");
+    }//GEN-LAST:event_usrnmFocusLost
+
+    private void searchMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_searchMouseEntered
+        setColor(search);
+    }//GEN-LAST:event_searchMouseEntered
+
+    private void searchMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_searchMouseExited
+        resetColor(search);
+    }//GEN-LAST:event_searchMouseExited
+
+    private void searchMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_searchMousePressed
+
+        String inf = usrnm.getText();
+        try {
+            String[][] datosFecha = ComunicacionBD.datosBD(tabla, "date_out", inf);
+
+            jTable1.setModel(new javax.swing.table.DefaultTableModel(
+                datosFecha,datosTabla));
+        jTable1.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+
+        } catch (SQLException ex) {
+            Logger.getLogger(Libros.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_searchMousePressed
 
     void setColor(JPanel panel){
         panel.setBackground(new Color(21,101,192));
@@ -193,10 +276,7 @@ public class Prestamos extends javax.swing.JPanel {
         String list[][] = ComunicacionBD.datosBD("prestamos");
         
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
-        list,
-        new String [] {
-            "ID","Folio Cliente", "ISBN libro", "Fecha de Salida", "Fecha de Entrega", "Días prestamo"
-        }));
+        list,datosTabla));
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -204,7 +284,11 @@ public class Prestamos extends javax.swing.JPanel {
     private javax.swing.JLabel Title;
     private javax.swing.JPanel body;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel4;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JSeparator jSeparator2;
     private javax.swing.JTable jTable1;
+    private javax.swing.JPanel search;
+    private javax.swing.JTextField usrnm;
     // End of variables declaration//GEN-END:variables
 }

@@ -258,7 +258,7 @@ public class UpEmpleados extends javax.swing.JPanel {
     
     
     private static boolean isValidDate(String input) {
-        String formatString = "MM/dd/yyyy";
+        String formatString = "yyyy/MM/dd";
 
         try {
             SimpleDateFormat format = new SimpleDateFormat(formatString);

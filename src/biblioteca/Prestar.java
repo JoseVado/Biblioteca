@@ -25,6 +25,7 @@ public class Prestar extends javax.swing.JPanel {
     final String libro = "Ingrese el ID del Libro a devolver";
     final int COLUMNA_LIBROS_DISPONIBLES = 6;
     final int COLUMNA_ID_LIBRO = 2;
+    final int COLUMNA_USUARIO = 1;
     
     /**
      * Creates new form Principal
@@ -187,6 +188,10 @@ public class Prestar extends javax.swing.JPanel {
             else if(!CheckMaxLending(fol)){
                 javax.swing.JOptionPane.showMessageDialog(this, "Esa persona ya cuenta con el máximo de prestamos permitido. \n", "AVISO", javax.swing.JOptionPane.INFORMATION_MESSAGE);
             }
+            // Verificar si la persona tiene multas
+            else if(LedingOutTime(fol,book)){
+                javax.swing.JOptionPane.showMessageDialog(this, "Esa persona tiene multas pendientes. \n", "AVISO", javax.swing.JOptionPane.INFORMATION_MESSAGE);
+            }
             else{
                 InsertLending(fol, book);// Insertamos el prestamo a la DB.
                 folio.setText(usuario);
@@ -242,7 +247,17 @@ public class Prestar extends javax.swing.JPanel {
         return cantidadLibros > 0;
     }
     
+    public boolean LedingOutTime(String user, String bookid) throws SQLException{
+        String[][] multas = ComunicacionBD.verMultasBD();
+        
+        for (String[] multa: multas){
+            if(multa[COLUMNA_USUARIO].equals(user)){
+                return true;
+            }
+        }
     
+        return false;
+    }
     
     public boolean CheckLending(String user, String bookid) throws SQLException{
         
