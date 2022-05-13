@@ -2,26 +2,43 @@ package biblioteca;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JPanel;
 
 public class Dashboard extends javax.swing.JFrame {
 
     int xMouse;
     int yMouse;
-    /**
-     * Creates new form Dashboard
-     */
-    public Dashboard() {
-        initComponents();
+    private javax.swing.JPanel botonActual;
+    private final int TIEMPO_CARGA_PANTALLA = 400;
+    private Thread base;
+    private Runnable MENSJAE_ERROR_RUN = new Runnable() {
+        @Override
+        public void run() {
+            try {
+                Thread.sleep(TIEMPO_CARGA_PANTALLA);
+                if (base.isAlive()){
+                    base.interrupt();
+                    ventanaError();
+                }
+            } catch (InterruptedException ex) {
+                Logger.getLogger(Dashboard.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+    };
+    
+    private Login parent;
 
-        Inicio p1 = new Inicio();
-        p1.setSize(750, 430);
-        p1.setLocation(0,0);
+    public Dashboard(Login parent, boolean esAdmin) {
+        initComponents();
         
-        content.removeAll();
-        content.add(p1, BorderLayout.CENTER);
-        content.revalidate();
-        content.repaint();
+        btnEmpleados.setVisible(esAdmin);
+        this.parent = parent;
+        
+        actualizarPantalla(new Inicio());
+        
+        botonActual = btnInicio;
     }
 
     /**
@@ -33,6 +50,10 @@ public class Dashboard extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        barraArriba = new javax.swing.JPanel();
+        btnCerrar = new javax.swing.JPanel();
+        txtCerra = new javax.swing.JLabel();
+        jLabel15 = new javax.swing.JLabel();
         Background = new javax.swing.JPanel();
         Menu = new javax.swing.JPanel();
         jLabel6 = new javax.swing.JLabel();
@@ -68,15 +89,85 @@ public class Dashboard extends javax.swing.JFrame {
         content = new javax.swing.JPanel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setBackground(new java.awt.Color(255, 255, 255));
+        setBackground(new java.awt.Color(153, 51, 0));
         setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         setLocationByPlatform(true);
+        setUndecorated(true);
         setResizable(false);
-        addWindowListener(new java.awt.event.WindowAdapter() {
-            public void windowActivated(java.awt.event.WindowEvent evt) {
-                formWindowActivated(evt);
+
+        barraArriba.setBackground(new java.awt.Color(153, 51, 0));
+        barraArriba.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        barraArriba.addMouseMotionListener(new java.awt.event.MouseMotionAdapter() {
+            public void mouseDragged(java.awt.event.MouseEvent evt) {
+                barraArribaMouseDragged(evt);
             }
         });
+        barraArriba.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                barraArribaMousePressed(evt);
+            }
+        });
+
+        btnCerrar.setBackground(new java.awt.Color(153, 51, 0));
+        btnCerrar.setMinimumSize(new java.awt.Dimension(40, 40));
+        btnCerrar.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnCerrarMouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                btnCerrarMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                btnCerrarMouseExited(evt);
+            }
+        });
+
+        txtCerra.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
+        txtCerra.setForeground(new java.awt.Color(255, 255, 255));
+        txtCerra.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        txtCerra.setIcon(new javax.swing.ImageIcon(getClass().getResource("/biblioteca/images/cerrar-sesion.png"))); // NOI18N
+        txtCerra.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        txtCerra.setMinimumSize(new java.awt.Dimension(40, 40));
+        txtCerra.setPreferredSize(new java.awt.Dimension(40, 40));
+
+        jLabel15.setBackground(new java.awt.Color(204, 204, 204));
+        jLabel15.setForeground(new java.awt.Color(204, 204, 204));
+        jLabel15.setText("Cerrar Seción");
+
+        javax.swing.GroupLayout btnCerrarLayout = new javax.swing.GroupLayout(btnCerrar);
+        btnCerrar.setLayout(btnCerrarLayout);
+        btnCerrarLayout.setHorizontalGroup(
+            btnCerrarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, btnCerrarLayout.createSequentialGroup()
+                .addContainerGap(15, Short.MAX_VALUE)
+                .addComponent(jLabel15)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(txtCerra, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+        );
+        btnCerrarLayout.setVerticalGroup(
+            btnCerrarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(btnCerrarLayout.createSequentialGroup()
+                .addGap(15, 15, 15)
+                .addComponent(jLabel15)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(btnCerrarLayout.createSequentialGroup()
+                .addComponent(txtCerra, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 6, Short.MAX_VALUE))
+        );
+
+        javax.swing.GroupLayout barraArribaLayout = new javax.swing.GroupLayout(barraArriba);
+        barraArriba.setLayout(barraArribaLayout);
+        barraArribaLayout.setHorizontalGroup(
+            barraArribaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, barraArribaLayout.createSequentialGroup()
+                .addContainerGap(874, Short.MAX_VALUE)
+                .addComponent(btnCerrar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
+        );
+        barraArribaLayout.setVerticalGroup(
+            barraArribaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(btnCerrar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+        );
 
         Background.setBackground(new java.awt.Color(255, 255, 255));
         Background.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -296,7 +387,7 @@ public class Dashboard extends javax.swing.JFrame {
                     .addGroup(HeaderLayout.createSequentialGroup()
                         .addGap(25, 25, 25)
                         .addComponent(jLabel2)))
-                .addContainerGap(23, Short.MAX_VALUE))
+                .addContainerGap(27, Short.MAX_VALUE))
         );
         HeaderLayout.setVerticalGroup(
             HeaderLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -305,7 +396,7 @@ public class Dashboard extends javax.swing.JFrame {
                 .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 58, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(frase, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(62, Short.MAX_VALUE))
+                .addContainerGap(61, Short.MAX_VALUE))
         );
 
         Background.add(Header, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 0, 750, 210));
@@ -329,210 +420,170 @@ public class Dashboard extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(Background, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(Background, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addComponent(barraArriba, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(Background, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap(33, Short.MAX_VALUE)
+                .addComponent(Background, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(layout.createSequentialGroup()
+                    .addComponent(barraArriba, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGap(0, 627, Short.MAX_VALUE)))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
-    private void formWindowActivated(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowActivated
-        // TODO add your handling code here:
-    }//GEN-LAST:event_formWindowActivated
     private void ventanaError(){
-        Error p0 = new Error();
-        p0.setSize(750, 430);
-        p0.setLocation(0,0);
+        actualizarPantalla(new Error());
+    }
+
+    public void actualizarPantalla(javax.swing.JPanel panelActualizar){
+        panelActualizar.setSize(750, 430);
+        panelActualizar.setLocation(0,0);
+        
         content.removeAll();
-        content.add(p0, BorderLayout.CENTER);
+        content.add(panelActualizar, BorderLayout.CENTER);
         content.revalidate();
         content.repaint();
     }
+    
+    private void actualizarBoton(javax.swing.JPanel btnAux){
+        resetColor(botonActual);
+        botonActual = btnAux;
+        setColor(btnAux);
+    }
+    
     private void btnInicioMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnInicioMousePressed
-        setColor(btnInicio);
-        resetColor(btnPrestar);
-        resetColor(btnDevolver);
-        resetColor(btnClientes);
-        resetColor(btnLibros);
-        resetColor(btnPrestamos);
-        resetColor(btnMultas);
-        resetColor(btnEmpleados);
+        actualizarBoton( btnInicio );
         
         // Abrir sección
-        Inicio p1 = new Inicio();
-        p1.setSize(750, 430);
-        p1.setLocation(0,0);
-        
-        content.removeAll();
-        content.add(p1, BorderLayout.CENTER);
-        content.revalidate();
-        content.repaint();
+        actualizarPantalla(new Inicio());
     }//GEN-LAST:event_btnInicioMousePressed
 
     private void btnPrestarMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnPrestarMousePressed
-        setColor(btnPrestar);
-        resetColor(btnInicio);
-        resetColor(btnDevolver);
-        resetColor(btnClientes);
-        resetColor(btnLibros);
-        resetColor(btnPrestamos);
-        resetColor(btnMultas);
-        resetColor(btnEmpleados);
+        actualizarBoton( btnPrestar );
         
         // Abrir sección
-        Prestar p1 = new Prestar();
-        p1.setSize(750, 430);
-        p1.setLocation(0,0);
-        
-        content.removeAll();
-        content.add(p1, BorderLayout.CENTER);
-        content.revalidate();
-        content.repaint();
+        actualizarPantalla(new Prestar());
     }//GEN-LAST:event_btnPrestarMousePressed
 
     private void btnDevolverMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnDevolverMousePressed
-        setColor(btnDevolver);
-        resetColor(btnInicio);
-        resetColor(btnPrestar);
-        resetColor(btnClientes);
-        resetColor(btnLibros);
-        resetColor(btnPrestamos);
-        resetColor(btnMultas);
-        resetColor(btnEmpleados);
+        actualizarBoton( btnDevolver );
         
-
         // Abrir sección
-        Devolver p1 = new Devolver();
-        p1.setSize(750, 430);
-        p1.setLocation(0,0);
-        
-        content.removeAll();
-        content.add(p1, BorderLayout.CENTER);
-        content.revalidate();
-        content.repaint();
-        
-
+        actualizarPantalla(new Devolver());
     }//GEN-LAST:event_btnDevolverMousePressed
 
     private void btnClientesMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnClientesMousePressed
-        setColor(btnClientes);
-        resetColor(btnInicio);
-        resetColor(btnDevolver);
-        resetColor(btnPrestar);
-        resetColor(btnLibros);
-        resetColor(btnPrestamos);
-        resetColor(btnMultas);
-        resetColor(btnEmpleados);
+        actualizarBoton( btnClientes );
         
-        ventanaError();
-        
-        // Abrir sección
-        Clientes p1 = new Clientes();
-        p1.setSize(750, 430);
-        p1.setLocation(0,0);
-        
-        content.removeAll();
-        content.add(p1, BorderLayout.CENTER);
-        content.revalidate();
-        content.repaint();
+        base = new Thread(
+            new Runnable() {
+                @Override
+                public void run() {
+                    // Abrir sección
+                    actualizarPantalla(new Clientes());
+                }
+            }
+        );
+        Thread error = new Thread(MENSJAE_ERROR_RUN);
+        base.start();
+        error.start();
     }//GEN-LAST:event_btnClientesMousePressed
 
     private void btnLibrosMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnLibrosMousePressed
-        setColor(btnLibros);
-        resetColor(btnInicio);
-        resetColor(btnDevolver);
-        resetColor(btnClientes);
-        resetColor(btnPrestar);
-        resetColor(btnPrestamos);
-        resetColor(btnMultas);
-        resetColor(btnEmpleados);
+        actualizarBoton( btnLibros );
         
-        ventanaError();
         
-        // Abrir sección
-        Libros p1 = new Libros();
-        p1.setSize(750, 430);
-        p1.setLocation(0,0);
-        
-        content.removeAll();
-        content.add(p1, BorderLayout.CENTER);
-        content.revalidate();
-        content.repaint();
+        base = new Thread(
+            new Runnable() {
+                @Override
+                public void run() {
+                    // Abrir sección
+                    actualizarPantalla(new Libros());
+                }
+            }
+        );
+        Thread error = new Thread(MENSJAE_ERROR_RUN);
+        base.start();
+        error.start();
     }//GEN-LAST:event_btnLibrosMousePressed
 
     private void btnPrestamosMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnPrestamosMousePressed
-        setColor(btnPrestamos);
-        resetColor(btnInicio);
-        resetColor(btnDevolver);
-        resetColor(btnClientes);
-        resetColor(btnLibros);
-        resetColor(btnPrestar);
-        resetColor(btnMultas);
-        resetColor(btnEmpleados);
-
-        // Abrir sección
-        Prestamos p1 = new Prestamos();
-        p1.setSize(750, 430);
-        p1.setLocation(0,0);
-        
-        content.removeAll();
-        content.add(p1, BorderLayout.CENTER);
-        content.revalidate();
-        content.repaint();
-
+        actualizarBoton( btnPrestamos );
+        base = new Thread(
+            new Runnable() {
+                @Override
+                public void run() {
+                    // Abrir sección
+                    actualizarPantalla(new Prestamos());
+                }
+            }
+        );
+        Thread error = new Thread(MENSJAE_ERROR_RUN);
+        base.start();
+        error.start();
     }//GEN-LAST:event_btnPrestamosMousePressed
 
     private void btnMultasMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnMultasMousePressed
-        setColor(btnMultas);
-        resetColor(btnInicio);
-        resetColor(btnDevolver);
-        resetColor(btnClientes);
-        resetColor(btnLibros);
-        resetColor(btnPrestamos);
-        resetColor(btnPrestar);
-        resetColor(btnEmpleados);
-
-        // Abrir sección
-        Multas p1 = new Multas();
-        p1.setSize(750, 430);
-        p1.setLocation(0,0);
-        
-        content.removeAll();
-        content.add(p1, BorderLayout.CENTER);
-        content.revalidate();
-        content.repaint();
-  
+        actualizarBoton( btnMultas );
+        base = new Thread(
+            new Runnable() {
+                @Override
+                public void run() {
+                    // Abrir sección
+                    actualizarPantalla(new Multas());
+                }
+            }
+        );
+        Thread error = new Thread(MENSJAE_ERROR_RUN);
+        base.start();
+        error.start();
     }//GEN-LAST:event_btnMultasMousePressed
 
     private void btnEmpleadosMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnEmpleadosMousePressed
-        setColor(btnEmpleados);
-        resetColor(btnInicio);
-        resetColor(btnDevolver);
-        resetColor(btnClientes);
-        resetColor(btnLibros);
-        resetColor(btnPrestamos);
-        resetColor(btnPrestar);
-        resetColor(btnMultas);
-        
-        try{
-            // Abrir sección
-            Empleados p1 = new Empleados();
-            p1.setSize(750, 430);
-            p1.setLocation(0,0);
-        
-            content.removeAll();
-            content.add(p1, BorderLayout.CENTER);
-            content.revalidate();
-            content.repaint();
-        
-        } catch(Exception e){
-            ventanaError();
-        }
-        
+        actualizarBoton( btnEmpleados );
+        base = new Thread(
+            new Runnable() {
+                @Override
+                public void run() {
+                    actualizarPantalla(new Empleados());
+                }
+            }
+        );
+        Thread error = new Thread(MENSJAE_ERROR_RUN);
+        base.start();
+        error.start();
     }//GEN-LAST:event_btnEmpleadosMousePressed
+
+    private void barraArribaMouseDragged(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_barraArribaMouseDragged
+        int x = evt.getXOnScreen();
+        int y = evt.getYOnScreen();
+        this.setLocation(x - xMouse, y - yMouse);
+    }//GEN-LAST:event_barraArribaMouseDragged
+
+    private void barraArribaMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_barraArribaMousePressed
+        xMouse = evt.getX();
+        yMouse = evt.getY();
+    }//GEN-LAST:event_barraArribaMousePressed
+
+    private void btnCerrarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnCerrarMouseClicked
+        parent.setVisible(true);
+        parent.requestFocus();
+        this.dispose();
+    }//GEN-LAST:event_btnCerrarMouseClicked
+
+    private void btnCerrarMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnCerrarMouseEntered
+        btnCerrar.setBackground(Color.red);
+    }//GEN-LAST:event_btnCerrarMouseEntered
+
+    private void btnCerrarMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnCerrarMouseExited
+        btnCerrar.setBackground(new Color(153,51,0));
+    }//GEN-LAST:event_btnCerrarMouseExited
 
     void setColor(JPanel panel){
         panel.setBackground(new Color(204,102,0));
@@ -540,45 +591,14 @@ public class Dashboard extends javax.swing.JFrame {
     void resetColor(JPanel panel){
         panel.setBackground(new Color(102,51,0));
     }
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Windows".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(Dashboard.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(Dashboard.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(Dashboard.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(Dashboard.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
 
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new Dashboard().setVisible(true);
-            }
-        });
-    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel Background;
     private javax.swing.JPanel Header;
     private javax.swing.JPanel Menu;
+    private javax.swing.JPanel barraArriba;
+    private javax.swing.JPanel btnCerrar;
     private javax.swing.JPanel btnClientes;
     private javax.swing.JPanel btnDevolver;
     private javax.swing.JPanel btnEmpleados;
@@ -595,6 +615,7 @@ public class Dashboard extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel14;
+    private javax.swing.JLabel jLabel15;
     private javax.swing.JLabel jLabel17;
     private javax.swing.JLabel jLabel18;
     private javax.swing.JLabel jLabel2;
@@ -609,5 +630,6 @@ public class Dashboard extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JSeparator jSeparator1;
+    private javax.swing.JLabel txtCerra;
     // End of variables declaration//GEN-END:variables
 }

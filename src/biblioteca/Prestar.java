@@ -143,9 +143,10 @@ public class Prestar extends javax.swing.JPanel {
         add(button, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 270, 260, 50));
 
         Image.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        Image.setIcon(new javax.swing.ImageIcon(getClass().getResource("/biblioteca/images/Knowledge (1).gif"))); // NOI18N
         Image.setMaximumSize(new java.awt.Dimension(750, 430));
         Image.setMinimumSize(new java.awt.Dimension(750, 430));
-        add(Image, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 70, -1, -1));
+        add(Image, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 40, -1, -1));
     }// </editor-fold>//GEN-END:initComponents
 
     private void buttonMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_buttonMouseEntered

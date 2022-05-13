@@ -141,9 +141,10 @@ public class Devolver extends javax.swing.JPanel {
         add(button, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 290, 260, 50));
 
         Image.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        Image.setIcon(new javax.swing.ImageIcon(getClass().getResource("/biblioteca/images/Library.gif"))); // NOI18N
         Image.setMaximumSize(new java.awt.Dimension(750, 430));
         Image.setMinimumSize(new java.awt.Dimension(750, 430));
-        add(Image, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 50, -1, -1));
+        add(Image, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 60, -1, -1));
     }// </editor-fold>//GEN-END:initComponents
 
     private void buttonMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_buttonMouseEntered

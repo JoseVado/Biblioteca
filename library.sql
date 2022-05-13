@@ -67,7 +67,10 @@ CREATE TABLE `empleados` (
   `curp` 					VARCHAR(18) NOT NULL,
   `nombre_completo` 		VARCHAR(100) NOT NULL,
   `fecha_nacimiento` 	DATE NOT NULL,
-  `fecha_ingreso` 		DATE NOT NULL
+  `fecha_ingreso` 		DATE NOT NULL,
+  `trabajo` 		VARCHAR(100) NOT NULL,
+  `usuario` 		VARCHAR(100) NOT NULL,
+  `contraseña` 		VARCHAR(100) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=UTF8;
 
 -- --------------------------------------------------------
@@ -107,4 +110,9 @@ INSERT INTO `multas` (`fecha_cambio`,`precio_por_dia`) VALUES
 	('2022/03/09',2),
 	('2022/03/11',3),
 	('2022/03/15',5);
+
+INSERT INTO `empleados` (`curp`,`nombre_completo`,`fecha_nacimiento`,`fecha_ingreso`,`trabajo`,`usuario`,`contraseña`) VALUES
+	('CURP','Admin','2000/01/01','2022/03/09','Administrador','admin','admin'),
+	('CURP2','Empleado','2000/01/01','2022/03/09','Empleado','juanPerez','12345');
+
 

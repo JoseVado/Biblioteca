@@ -186,7 +186,7 @@ public class ComunicacionBD {
             case "empleados":
                 return new String []{
                   "id", "curp", "nombre_completo", "fecha_nacimiento",
-                    "fecha_ingreso"
+                    "fecha_ingreso", "trabajo", "usuario", "contraseña"
                 };
             case "prestamos":
                 return new String[]{

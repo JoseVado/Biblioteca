@@ -22,16 +22,21 @@ import java.util.Date;
  */
 public class UpEmpleados extends javax.swing.JPanel {
 
-    private String pattern = "yyyy/MM/dd";
+    private String pattern = "yyyy-MM-dd";
     SimpleDateFormat simpleDateFormat = new SimpleDateFormat(pattern);
     boolean edition;
     String origId;
     private javax.swing.JTextField[] campos;
+    private int numFecha = 3;
+    private int numCargo = 4;
     private final String[] instrucciones = new String[]{
             "Ingrese el CURP",
             "Ingrese el Nombre completo",
             simpleDateFormat.format(new Date()),
-            simpleDateFormat.format(new Date())
+            simpleDateFormat.format(new Date()),
+            "<Seleccionar un cargp>",
+            "Ingrese usuario",
+            "Ingrese contraseña"
         };
     
     
@@ -44,7 +49,7 @@ public class UpEmpleados extends javax.swing.JPanel {
         edition = false;
         
         campos = new javax.swing.JTextField[]{
-            curp,nombre,fecha_nacimiento,fecha_ingreso
+            curp,nombre,fecha_nacimiento,fecha_ingreso,txtAux,usuario,contraseña
                         };
         for(int i = 0; i<campos.length; i++){
             campos[i].setText(instrucciones[i]);
@@ -58,12 +63,20 @@ public class UpEmpleados extends javax.swing.JPanel {
         edition = true;
         
         campos = new javax.swing.JTextField[]{
-            curp,nombre,fecha_nacimiento,fecha_ingreso
+            curp,nombre,fecha_nacimiento,fecha_ingreso,txtAux,usuario,contraseña
                         };
         
         for(int i = 0; i<campos.length; i++){
             campos[i].setText(empleado[i+1]);
-        }  
+        }
+        
+        if(txtAux.getText().equals(cboxCargo.getItemAt(1))){
+            cboxCargo.setSelectedIndex(1);
+        }
+        if(txtAux.getText().equals(cboxCargo.getItemAt(2))){
+            cboxCargo.setSelectedIndex(2);
+        }
+        
         origId = empleado[0];
         lblTitulo.setText("Actualizar nuevo empleado");
         jLabel1.setText("Guardar");
@@ -78,6 +91,7 @@ public class UpEmpleados extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        txtAux = new javax.swing.JTextField();
         body = new javax.swing.JPanel();
         lblTitulo = new javax.swing.JLabel();
         jSeparator3 = new javax.swing.JSeparator();
@@ -97,6 +111,17 @@ public class UpEmpleados extends javax.swing.JPanel {
         jSeparator9 = new javax.swing.JSeparator();
         btnCancelar = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
+        Text4 = new javax.swing.JLabel();
+        cboxCargo = new javax.swing.JComboBox<>();
+        jSeparator10 = new javax.swing.JSeparator();
+        usuario = new javax.swing.JTextField();
+        jSeparator5 = new javax.swing.JSeparator();
+        Text9 = new javax.swing.JLabel();
+        contraseña = new javax.swing.JTextField();
+        Text5 = new javax.swing.JLabel();
+        jSeparator11 = new javax.swing.JSeparator();
+
+        txtAux.setText("jTextField1");
 
         setBackground(new java.awt.Color(255, 255, 255));
         setMinimumSize(new java.awt.Dimension(750, 430));
@@ -135,13 +160,13 @@ public class UpEmpleados extends javax.swing.JPanel {
         jLabel1.setForeground(new java.awt.Color(255, 255, 255));
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel1.setText("Subir");
-        button.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 10, -1, 30));
+        button.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 10, -1, 30));
 
-        add(button, new org.netbeans.lib.awtextra.AbsoluteConstraints(440, 160, 250, 50));
+        add(button, new org.netbeans.lib.awtextra.AbsoluteConstraints(450, 360, 250, 50));
 
         Text3.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        Text3.setText("CURP");
-        add(Text3, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 60, -1, -1));
+        Text3.setText("Cargo");
+        add(Text3, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 80, -1, -1));
 
         curp.setForeground(new java.awt.Color(102, 102, 102));
         curp.setHorizontalAlignment(javax.swing.JTextField.CENTER);
@@ -154,11 +179,11 @@ public class UpEmpleados extends javax.swing.JPanel {
                 curpFocusLost(evt);
             }
         });
-        add(curp, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 80, 310, 30));
+        add(curp, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 90, 310, 30));
 
         jSeparator4.setForeground(new java.awt.Color(0, 153, 255));
         jSeparator4.setPreferredSize(new java.awt.Dimension(200, 10));
-        add(jSeparator4, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 110, 310, 10));
+        add(jSeparator4, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 120, 310, 10));
 
         Text6.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         Text6.setText("Nombre");
@@ -179,11 +204,11 @@ public class UpEmpleados extends javax.swing.JPanel {
 
         jSeparator7.setForeground(new java.awt.Color(0, 153, 255));
         jSeparator7.setPreferredSize(new java.awt.Dimension(200, 10));
-        add(jSeparator7, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 190, 310, 10));
+        add(jSeparator7, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 110, 180, 10));
 
         Text7.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         Text7.setText("Fecha nacimiento");
-        add(Text7, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 220, -1, -1));
+        add(Text7, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 210, -1, -1));
 
         fecha_nacimiento.setForeground(new java.awt.Color(102, 102, 102));
         fecha_nacimiento.setHorizontalAlignment(javax.swing.JTextField.CENTER);
@@ -196,15 +221,15 @@ public class UpEmpleados extends javax.swing.JPanel {
                 fecha_nacimientoFocusLost(evt);
             }
         });
-        add(fecha_nacimiento, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 240, 310, 30));
+        add(fecha_nacimiento, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 230, 310, 30));
 
         jSeparator8.setForeground(new java.awt.Color(0, 153, 255));
         jSeparator8.setPreferredSize(new java.awt.Dimension(200, 10));
-        add(jSeparator8, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 270, 310, 10));
+        add(jSeparator8, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 260, 310, 10));
 
         Text8.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         Text8.setText("Fecha ingreso");
-        add(Text8, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 300, -1, -1));
+        add(Text8, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 280, -1, -1));
 
         fecha_ingreso.setEditable(false);
         fecha_ingreso.setForeground(new java.awt.Color(102, 102, 102));
@@ -218,11 +243,11 @@ public class UpEmpleados extends javax.swing.JPanel {
                 fecha_ingresoFocusLost(evt);
             }
         });
-        add(fecha_ingreso, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 320, 310, 30));
+        add(fecha_ingreso, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 300, 310, 30));
 
         jSeparator9.setForeground(new java.awt.Color(0, 153, 255));
         jSeparator9.setPreferredSize(new java.awt.Dimension(200, 10));
-        add(jSeparator9, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 350, 310, 10));
+        add(jSeparator9, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 330, 310, 10));
 
         btnCancelar.setBackground(new java.awt.Color(18, 90, 173));
         btnCancelar.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
@@ -245,7 +270,61 @@ public class UpEmpleados extends javax.swing.JPanel {
         jLabel2.setText("Cancelar");
         btnCancelar.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 10, -1, 30));
 
-        add(btnCancelar, new org.netbeans.lib.awtextra.AbsoluteConstraints(500, 230, 130, 50));
+        add(btnCancelar, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 360, 130, 50));
+
+        Text4.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        Text4.setText("CURP");
+        add(Text4, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 70, -1, -1));
+
+        cboxCargo.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
+        cboxCargo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "<Selecciona un cargo>", "Empleado", "Administrador" }));
+        add(cboxCargo, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 110, 180, 30));
+
+        jSeparator10.setForeground(new java.awt.Color(0, 153, 255));
+        jSeparator10.setPreferredSize(new java.awt.Dimension(200, 10));
+        add(jSeparator10, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 190, 310, 10));
+
+        usuario.setForeground(new java.awt.Color(102, 102, 102));
+        usuario.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        usuario.setBorder(null);
+        usuario.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                usuarioFocusGained(evt);
+            }
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                usuarioFocusLost(evt);
+            }
+        });
+        add(usuario, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 180, 310, 30));
+
+        jSeparator5.setForeground(new java.awt.Color(0, 153, 255));
+        jSeparator5.setPreferredSize(new java.awt.Dimension(200, 10));
+        add(jSeparator5, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 210, 310, 10));
+
+        Text9.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        Text9.setText("Contraseña");
+        add(Text9, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 240, -1, -1));
+
+        contraseña.setForeground(new java.awt.Color(102, 102, 102));
+        contraseña.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        contraseña.setBorder(null);
+        contraseña.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                contraseñaFocusGained(evt);
+            }
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                contraseñaFocusLost(evt);
+            }
+        });
+        add(contraseña, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 260, 310, 30));
+
+        Text5.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        Text5.setText("Usuario");
+        add(Text5, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 160, -1, -1));
+
+        jSeparator11.setForeground(new java.awt.Color(0, 153, 255));
+        jSeparator11.setPreferredSize(new java.awt.Dimension(200, 10));
+        add(jSeparator11, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 290, 310, 10));
     }// </editor-fold>//GEN-END:initComponents
 
     private void buttonMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_buttonMouseEntered
@@ -258,7 +337,7 @@ public class UpEmpleados extends javax.swing.JPanel {
     
     
     private static boolean isValidDate(String input) {
-        String formatString = "yyyy/MM/dd";
+        String formatString = "yyyy-MM-dd";
 
         try {
             SimpleDateFormat format = new SimpleDateFormat(formatString);
@@ -272,19 +351,21 @@ public class UpEmpleados extends javax.swing.JPanel {
 
         return true;
     }
+
     
     // SUBIR
     private void buttonMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_buttonMousePressed
         boolean algunDatoVacio = false;
         String[] subir = new String [campos.length];
-        for(int i = 0; i < campos.length-1; i++){
+        for(int i = 0; i < subir.length; i++){
             subir[i] = campos[i].getText();
-            if(campos[i].getText().equals(instrucciones[i])){
+            if(campos[i].getText().equals(instrucciones[i]) && i != numFecha && i!= numCargo){
                 algunDatoVacio = true;
                 break;
             }
         }
-        subir[campos.length-1] = campos[campos.length-1].getText();
+        
+        subir[numCargo] = cboxCargo.getItemAt(cboxCargo.getSelectedIndex());
         
         if(algunDatoVacio){
             javax.swing.JOptionPane.showMessageDialog(this, "Debe llenar todos los campos \n", "AVISO", javax.swing.JOptionPane.INFORMATION_MESSAGE);
@@ -299,7 +380,7 @@ public class UpEmpleados extends javax.swing.JPanel {
             if( !isValidDate(fecha_nacimiento.getText())){
                 errores += "ERROR fecha de nacimiento invalida";
             }
-
+            
             if(errores.length() > 0){
                 javax.swing.JOptionPane.showMessageDialog(this, errores, "AVISO", javax.swing.JOptionPane.INFORMATION_MESSAGE);
             }else{
@@ -337,6 +418,7 @@ public class UpEmpleados extends javax.swing.JPanel {
                 content.add(p1, BorderLayout.CENTER);
                 content.revalidate();
                 content.repaint();
+                content.requestFocus();
                 
             }
         }
@@ -409,6 +491,30 @@ public class UpEmpleados extends javax.swing.JPanel {
                 content.repaint();
     }//GEN-LAST:event_btnCancelarMousePressed
 
+    private void usuarioFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_usuarioFocusGained
+        if(campos[4].getText().equals(instrucciones[4])){
+            campos[4].setText("");
+        }
+    }//GEN-LAST:event_usuarioFocusGained
+
+    private void usuarioFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_usuarioFocusLost
+        if(campos[4].getText().isEmpty()){
+            campos[4].setText(instrucciones[4]);
+        }
+    }//GEN-LAST:event_usuarioFocusLost
+
+    private void contraseñaFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_contraseñaFocusGained
+        if(campos[5].getText().equals(instrucciones[5])){
+            campos[5].setText("");
+        }
+    }//GEN-LAST:event_contraseñaFocusGained
+
+    private void contraseñaFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_contraseñaFocusLost
+        if(campos[5].getText().isEmpty()){
+            campos[5].setText(instrucciones[5]);
+        }
+    }//GEN-LAST:event_contraseñaFocusLost
+
     void setColor(JPanel panel){
         panel.setBackground(new Color(21,101,192));
     }
@@ -419,23 +525,33 @@ public class UpEmpleados extends javax.swing.JPanel {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel Text3;
+    private javax.swing.JLabel Text4;
+    private javax.swing.JLabel Text5;
     private javax.swing.JLabel Text6;
     private javax.swing.JLabel Text7;
     private javax.swing.JLabel Text8;
+    private javax.swing.JLabel Text9;
     private javax.swing.JPanel body;
     private javax.swing.JPanel btnCancelar;
     private javax.swing.JPanel button;
+    private javax.swing.JComboBox<String> cboxCargo;
+    private javax.swing.JTextField contraseña;
     private javax.swing.JTextField curp;
     private javax.swing.JTextField fecha_ingreso;
     private javax.swing.JTextField fecha_nacimiento;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JSeparator jSeparator10;
+    private javax.swing.JSeparator jSeparator11;
     private javax.swing.JSeparator jSeparator3;
     private javax.swing.JSeparator jSeparator4;
+    private javax.swing.JSeparator jSeparator5;
     private javax.swing.JSeparator jSeparator7;
     private javax.swing.JSeparator jSeparator8;
     private javax.swing.JSeparator jSeparator9;
     private javax.swing.JLabel lblTitulo;
     private javax.swing.JTextField nombre;
+    private javax.swing.JTextField txtAux;
+    private javax.swing.JTextField usuario;
     // End of variables declaration//GEN-END:variables
 }
