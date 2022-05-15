@@ -15,13 +15,12 @@ import static biblioteca.Dashboard.content;
 import java.awt.BorderLayout;
 import javax.swing.ListSelectionModel;
 
-/**
- *
- * @author Antonio
- */
+
 public class Libros extends javax.swing.JPanel {
 
     private static final String tabla = "libros";
+    private static final String busquedaTexto = "Ingrese el ISBN o del Titulo del libro a buscar";
+    
     private static final String[] datosTabla = new String [] {
             "Folio", "ISBN", "Titulo", "Autor", "Categorías", "Cantidad", "Disponible", "Descripición",
             "Fecha de ingreso"
@@ -83,7 +82,7 @@ public class Libros extends javax.swing.JPanel {
         add(jSeparator2, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 70, 620, 10));
 
         bid.setForeground(new java.awt.Color(102, 102, 102));
-        bid.setText("Ingrese el ISBN o el Titulo Libro a buscar");
+        bid.setText("Ingrese el ISBN o del Titulo del libro a buscar");
         bid.setBorder(null);
         bid.addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusGained(java.awt.event.FocusEvent evt) {
@@ -371,13 +370,13 @@ public class Libros extends javax.swing.JPanel {
     }//GEN-LAST:event_btnModificarLibroMouseExited
 
     private void bidFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_bidFocusGained
-        if(bid.getText().equals("Ingrese el ISBN o el Titulo Libro a buscar"))
+        if(bid.getText().equals(busquedaTexto))
             bid.setText("");
     }//GEN-LAST:event_bidFocusGained
 
     private void bidFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_bidFocusLost
         if(bid.getText().isEmpty())
-            bid.setText("Ingrese el ISBN o el Titulo Libro a buscar");
+            bid.setText(busquedaTexto);
     }//GEN-LAST:event_bidFocusLost
 
     void setColor(JPanel panel){

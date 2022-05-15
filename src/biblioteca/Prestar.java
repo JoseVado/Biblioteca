@@ -15,14 +15,10 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JPanel;
 
-/**
- *
- * @author Antonio
- */
 public class Prestar extends javax.swing.JPanel {
 
     final String usuario = "Ingrese el folio del usuario";
-    final String libro = "Ingrese el ID del Libro a devolver";
+    final String libro = "Ingrese el ISBN del Libro a prestar";
     final int COLUMNA_LIBROS_DISPONIBLES = 6;
     final int COLUMNA_ID_LIBRO = 2;
     final int COLUMNA_USUARIO = 1;

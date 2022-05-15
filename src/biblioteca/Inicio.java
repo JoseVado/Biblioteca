@@ -5,10 +5,6 @@
  */
 package biblioteca;
 
-/**
- *
- * @author Antonio
- */
 public class Inicio extends javax.swing.JPanel {
 
     /**

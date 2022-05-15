@@ -14,13 +14,11 @@ import javax.swing.JPanel;
 import static biblioteca.Dashboard.content;
 import javax.swing.ListSelectionModel;
 
-/**
- *
- * @author Antonio
- */
 public class Empleados extends javax.swing.JPanel {
 
     private static final String tabla = "empleados";
+    private static final String buscarTexto = "Ingrese el nombre o fecha de ingreso del empleado a buscar";
+    
     private static final String[] datosTabla = new String [] {
         "ID", "Curp", "Nombre", "fecha_nacimiento", "fecha_ingreso"
     };
@@ -81,7 +79,7 @@ public class Empleados extends javax.swing.JPanel {
         add(jSeparator2, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 70, 620, 10));
 
         usrnm.setForeground(new java.awt.Color(102, 102, 102));
-        usrnm.setText("Ingrese el nombre del empleado a buscar");
+        usrnm.setText("Ingrese el nombre o fecha de ingreso del empleado a buscar");
         usrnm.setBorder(null);
         usrnm.addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusGained(java.awt.event.FocusEvent evt) {
@@ -357,13 +355,13 @@ public class Empleados extends javax.swing.JPanel {
     }//GEN-LAST:event_searchMousePressed
 
     private void usrnmFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_usrnmFocusGained
-        if(usrnm.getText().equals("Ingrese el nombre del empleado a buscar"))
+        if(usrnm.getText().equals(buscarTexto))
             usrnm.setText("");
     }//GEN-LAST:event_usrnmFocusGained
 
     private void usrnmFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_usrnmFocusLost
         if(usrnm.getText().isEmpty())
-            usrnm.setText("Ingrese el nombre del empleado a buscar");
+            usrnm.setText(buscarTexto);
     }//GEN-LAST:event_usrnmFocusLost
 
     void setColor(JPanel panel){

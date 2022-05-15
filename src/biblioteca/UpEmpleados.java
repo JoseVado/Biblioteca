@@ -16,10 +16,6 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-/**
- *
- * @author Antonio
- */
 public class UpEmpleados extends javax.swing.JPanel {
 
     private String pattern = "yyyy-MM-dd";
@@ -54,12 +50,14 @@ public class UpEmpleados extends javax.swing.JPanel {
         for(int i = 0; i<campos.length; i++){
             campos[i].setText(instrucciones[i]);
         }
+        fecha_ingreso.setFocusable(false);
         
     }
     
     public UpEmpleados(String[] empleado){
         initComponents();
-
+        
+        
         edition = true;
         
         campos = new javax.swing.JTextField[]{

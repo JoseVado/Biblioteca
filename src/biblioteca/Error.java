@@ -5,10 +5,6 @@
  */
 package biblioteca;
 
-/**
- *
- * @author Antonio
- */
 public class Error extends javax.swing.JPanel {
 
     /**

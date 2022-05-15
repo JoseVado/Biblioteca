@@ -15,10 +15,7 @@ import static biblioteca.Dashboard.content;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-/**
- *
- * @author Antonio
- */
+
 public class UpPrestamo extends javax.swing.JPanel {
     String[] multa;
     final int COLUMNA_TIEMPO_PRESTAMO = 5;

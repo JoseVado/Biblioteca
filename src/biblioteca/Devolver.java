@@ -15,14 +15,10 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JPanel;
 
-/**
- *
- * @author Antonio
- */
 public class Devolver extends javax.swing.JPanel {
     Prestar Inter;
     String usuario = "Ingrese el folio del usuario";
-    String libro = "Ingrese el ID del Libro a devolver";
+    String libro = "Ingrese el ISBN del Libro a devolver";
     final int COLUMNA_DATE_RETURN = 4;
     final int COLUMNA_PRECIO_DIA = 9;
     /**

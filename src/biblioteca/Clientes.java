@@ -14,13 +14,11 @@ import javax.swing.JPanel;
 import static biblioteca.Dashboard.content;
 import javax.swing.ListSelectionModel;
 
-/**
- *
- * @author Antonio
- */
 public class Clientes extends javax.swing.JPanel {
 
     private static final String tabla = "usuarios";
+    private static final String buscarTexto = "Ingrese el nombre o el número de teléfono del cliente a buscar";
+    
     private static final String[] datosTabla = new String [] {
         "ID", "Curp", "Nombre", "Domicilio", "Teléfono","Correo"
     };
@@ -82,7 +80,7 @@ public class Clientes extends javax.swing.JPanel {
 
         usrnm.setFont(new java.awt.Font("Segoe UI", 0, 12)); // NOI18N
         usrnm.setForeground(new java.awt.Color(102, 102, 102));
-        usrnm.setText("Ingrese el nombre del cliente a buscar");
+        usrnm.setText("Ingrese el nombre o el número de teléfono del cliente a buscar");
         usrnm.setBorder(null);
         usrnm.addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusGained(java.awt.event.FocusEvent evt) {
@@ -356,13 +354,13 @@ public class Clientes extends javax.swing.JPanel {
     }//GEN-LAST:event_searchMousePressed
 
     private void usrnmFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_usrnmFocusGained
-        if(usrnm.getText().equals("Ingrese el nombre del cliente a buscar"))
+        if(usrnm.getText().equals(buscarTexto))
             usrnm.setText("");
     }//GEN-LAST:event_usrnmFocusGained
 
     private void usrnmFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_usrnmFocusLost
         if(usrnm.getText().isEmpty())
-            usrnm.setText("Ingrese el nombre del cliente a buscar");
+            usrnm.setText(buscarTexto);
     }//GEN-LAST:event_usrnmFocusLost
 
     void setColor(JPanel panel){

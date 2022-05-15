@@ -13,10 +13,6 @@ import java.util.logging.Logger;
 import javax.swing.JPanel;
 import static biblioteca.Dashboard.content;
 
-/**
- *
- * @author Antonio
- */
 public class UpClients extends javax.swing.JPanel {
 
     boolean edition;

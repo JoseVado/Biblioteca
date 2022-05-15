@@ -14,10 +14,7 @@ import javax.swing.JPanel;
 import static biblioteca.Dashboard.content;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-/**
- *
- * @author Antonio
- */
+
 public class UpBooks extends javax.swing.JPanel {
 
     boolean edition;

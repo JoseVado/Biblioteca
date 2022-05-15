@@ -8,19 +8,13 @@ package biblioteca;
 import java.awt.Color;
 import java.io.File;
 import java.io.IOException;
-import java.net.URL;
 import java.sql.SQLException;
 import java.util.Arrays;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.imageio.ImageIO;
-import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 
-/**
- *
- * @author Zaira
- */
 public class Login extends javax.swing.JFrame {
 
     int xMouse, yMouse;
@@ -389,6 +383,15 @@ public class Login extends javax.swing.JFrame {
     }//GEN-LAST:event_contrapwfFocusLost
 
     private void txtEntrarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_txtEntrarMouseClicked
+        if(usuariotxt.getText().equals(textoUsuario) || usuariotxt.getText().isEmpty()){
+            JOptionPane.showMessageDialog(this, "Ingrese un usuario.");
+            return;
+        }
+        
+        if( Arrays.equals(textoContraseña.toCharArray(), contrapwf.getPassword())  ||  contrapwf.getPassword().length==0 ){
+            JOptionPane.showMessageDialog(this, "Ingrese su contraseña.");
+            return;
+        }
         if( esUsuario(usuariotxt.getText(), contrapwf.getPassword()) ){
             Dashboard dashboard = new Dashboard(this,esAdmin);
             

@@ -132,7 +132,7 @@ public class Dashboard extends javax.swing.JFrame {
 
         jLabel15.setBackground(new java.awt.Color(204, 204, 204));
         jLabel15.setForeground(new java.awt.Color(204, 204, 204));
-        jLabel15.setText("Cerrar Seción");
+        jLabel15.setText("Cerrar Sesión");
 
         javax.swing.GroupLayout btnCerrarLayout = new javax.swing.GroupLayout(btnCerrar);
         btnCerrar.setLayout(btnCerrarLayout);
@@ -468,14 +468,40 @@ public class Dashboard extends javax.swing.JFrame {
         actualizarBoton( btnPrestar );
         
         // Abrir sección
-        actualizarPantalla(new Prestar());
+        base = new Thread(
+            new Runnable() {
+                @Override
+                public void run() {
+                    // Abrir sección
+                    new Clientes();
+                    actualizarPantalla(new Prestar());
+                }
+            }
+        );
+        Thread error = new Thread(MENSJAE_ERROR_RUN);
+        base.start();
+        error.start();
+        
     }//GEN-LAST:event_btnPrestarMousePressed
 
     private void btnDevolverMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnDevolverMousePressed
         actualizarBoton( btnDevolver );
         
         // Abrir sección
-        actualizarPantalla(new Devolver());
+        base = new Thread(
+            new Runnable() {
+                @Override
+                public void run() {
+                    // Abrir sección
+                    new Clientes();
+                    actualizarPantalla(new Devolver());
+                }
+            }
+        );
+        Thread error = new Thread(MENSJAE_ERROR_RUN);
+        base.start();
+        error.start();
+        
     }//GEN-LAST:event_btnDevolverMousePressed
 
     private void btnClientesMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnClientesMousePressed
@@ -572,9 +598,13 @@ public class Dashboard extends javax.swing.JFrame {
     }//GEN-LAST:event_barraArribaMousePressed
 
     private void btnCerrarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnCerrarMouseClicked
-        parent.setVisible(true);
-        parent.requestFocus();
-        this.dispose();
+        int aceptar = javax.swing.JOptionPane.showConfirmDialog(this, "¿Está seguro de cerrar sesión?", "SALIR", javax.swing.JOptionPane.WARNING_MESSAGE);
+        if(aceptar == javax.swing.JOptionPane.YES_OPTION){
+            parent.setVisible(true);
+            parent.requestFocus();
+            this.dispose();
+        }
+        
     }//GEN-LAST:event_btnCerrarMouseClicked
 
     private void btnCerrarMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnCerrarMouseEntered

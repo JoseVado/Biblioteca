@@ -14,10 +14,6 @@ import java.util.logging.Logger;
 import javax.swing.JPanel;
 import javax.swing.ListSelectionModel;
 
-/**
- *
- * @author Antonio
- */
 public class Multas extends javax.swing.JPanel {
 
     /**
