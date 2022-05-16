@@ -13,6 +13,7 @@ import java.util.Arrays;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.imageio.ImageIO;
+import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 
 public class Login extends javax.swing.JFrame {
@@ -28,16 +29,9 @@ public class Login extends javax.swing.JFrame {
     
     public Login() {
         initComponents();
-        imagen(this);
+        setIconImage(new ImageIcon(getClass().getResource("/icon/libro-abierto.png")).getImage());
     }
-    
-    public static void imagen(javax.swing.JFrame frame){
-        try {
-            frame.setIconImage(ImageIO.read(new File("res/libro-abierto.png")));
-        } catch (IOException ex) {
-            Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }
+
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -397,7 +391,7 @@ public class Login extends javax.swing.JFrame {
             
             esAdmin = false;
             
-            imagen(dashboard);
+            dashboard.setIconImage(new ImageIcon(getClass().getResource("/icon/libro-abierto.png")).getImage());
             dashboard.setVisible(true);
             dashboard.setLocationRelativeTo(null);
             
