@@ -11,7 +11,7 @@ public class Dashboard extends javax.swing.JFrame {
     int xMouse;
     int yMouse;
     private javax.swing.JPanel botonActual;
-    private final int TIEMPO_CARGA_PANTALLA = 400;
+    private final int TIEMPO_CARGA_PANTALLA = 2000;
     private Thread base;
     private Runnable MENSJAE_ERROR_RUN = new Runnable() {
         @Override
